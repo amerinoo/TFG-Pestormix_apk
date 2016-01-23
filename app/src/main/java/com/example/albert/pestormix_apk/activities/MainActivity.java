@@ -70,6 +70,10 @@ public class MainActivity extends PestormixMaster implements NavigationView.OnNa
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
+    private boolean isDrawerOpen() {
+        return drawerLayout.isDrawerOpen(GravityCompat.START);
+    }
+
     public void setToolbarTitleText(CharSequence text) {
         this.toolbarTitle.setText(text);
     }
@@ -92,5 +96,14 @@ public class MainActivity extends PestormixMaster implements NavigationView.OnNa
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isDrawerOpen()) {
+            closeNavigationDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMaster;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 public class WelcomeActivity extends PestormixMaster {
 
@@ -17,7 +18,9 @@ public class WelcomeActivity extends PestormixMaster {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getPestormixApplication(), MainActivity.class);
+                getPestormixApplication().putBoolean(Constants.PREFERENCE_TUTORIAL_KEY, false);
                 startActivity(intent);
+                finish();
             }
         });
     }

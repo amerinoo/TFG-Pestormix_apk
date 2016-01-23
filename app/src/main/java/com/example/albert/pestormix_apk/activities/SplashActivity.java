@@ -25,7 +25,6 @@ public class SplashActivity extends PestormixMaster {
 
     private void initApp() {
         if (getPestormixApplication().getBoolean(Constants.PREFERENCE_TUTORIAL_KEY, true)) {
-            getPestormixApplication().putBoolean(Constants.PREFERENCE_TUTORIAL_KEY, false);
             openTutorial();
         } else {
             openMain();
@@ -36,11 +35,13 @@ public class SplashActivity extends PestormixMaster {
     private void openTutorial() {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void openMain() {
         Intent intent = new Intent(getPestormixApplication(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }
