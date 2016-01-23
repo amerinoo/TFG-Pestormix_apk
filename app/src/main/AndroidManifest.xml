@@ -3,6 +3,7 @@
     package="com.example.albert.pestormix_apk">
 
     <application
+        android:name=".application.PestormixApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
