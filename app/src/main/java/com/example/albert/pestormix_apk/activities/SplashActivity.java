@@ -1,11 +1,12 @@
 package com.example.albert.pestormix_apk.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.utils.Constants;
 import com.example.albert.pestormix_apk.application.PestormixMaster;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 public class SplashActivity extends PestormixMaster {
 
@@ -19,7 +20,7 @@ public class SplashActivity extends PestormixMaster {
             public void run() {
                 initApp();
             }
-        }, 1500);
+        }, 2000);
     }
 
     private void initApp() {
@@ -33,11 +34,13 @@ public class SplashActivity extends PestormixMaster {
 
 
     private void openTutorial() {
-        showToast("Open Tutorial");
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
     }
 
     private void openMain() {
-        showToast("Open Main");
+        Intent intent = new Intent(getPestormixApplication(), MainActivity.class);
+        startActivity(intent);
     }
 
 }

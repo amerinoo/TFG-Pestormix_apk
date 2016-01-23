@@ -7,8 +7,7 @@ import android.widget.Toast;
  * Created by Albert on 23/01/2016.
  */
 public class PestormixMaster extends AppCompatActivity {
-
-
+    
     public PestormixApplication getPestormixApplication() {
         return (PestormixApplication) getApplication();
     }
