@@ -17,7 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.WelcomeActivity" />
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:label=""
+            android:configChanges="orientation|screenSize">
+        </activity>
     </application>
 
 </manifest>
