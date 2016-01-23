@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.Utils.Constants;
+import com.example.albert.pestormix_apk.utils.Constants;
 import com.example.albert.pestormix_apk.application.PestormixMaster;
 
 public class SplashActivity extends PestormixMaster {

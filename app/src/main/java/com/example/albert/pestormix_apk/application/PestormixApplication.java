@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.albert.pestormix_apk.Utils.Constants;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 /**
  * Created by Albert on 23/01/2016.

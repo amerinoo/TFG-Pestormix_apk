@@ -1,4 +1,4 @@
-package com.example.albert.pestormix_apk.Utils;
+package com.example.albert.pestormix_apk.utils;
 
 /**
  * Created by Albert on 23/01/2016.
