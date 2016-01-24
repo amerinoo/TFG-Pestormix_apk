@@ -62,13 +62,13 @@ public class HomeFragment extends PestormixMasterFragment {
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("QR");
+                showToast(getString(R.string.qr_code));
             }
         });
         nfc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("NFC");
+                showToast(getString(R.string.nfc_tag));
             }
         });
 

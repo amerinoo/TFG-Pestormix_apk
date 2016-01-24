@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="glass_array">
+        <item>Glass 1</item>
+        <item>Glass 2</item>
+        <item>Glass 3</item>
+    </string-array>
+
+    <string-array name="cocktail_array">
+        <item>Cocktail 1</item>
+        <item>Cocktail 2</item>
+        <item>Cocktail 3</item>
+        <item>Cocktail 4</item>
+        <item>Cocktail 5</item>
+        <item>Cocktail 6</item>
+    </string-array>
+
+    <string-array name="settings_array">
+        <item>Configure the valves</item>
+        <item>Login</item>
+    </string-array>
+
+    <string-array name="questions_array">
+        <item>Question 1</item>
+        <item>Question 2</item>
+        <item>Question 3</item>
+        <item>Question 4</item>
+        <item>Question 5</item>
+    </string-array>
+</resources>
