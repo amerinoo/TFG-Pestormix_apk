@@ -1,5 +1,6 @@
 package com.example.albert.pestormix_apk.activities;
 
+import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,9 +13,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.application.PestormixMaster;
+import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.fragments.HomeFragment;
 
-public class MainActivity extends PestormixMaster implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
     private NavigationView drawer;
@@ -44,12 +46,16 @@ public class MainActivity extends PestormixMaster implements NavigationView.OnNa
 
     private void navigate(int id) {
 
+        Fragment fragment;
+        int resId = R.id.main_content;
         hideSearchIcon();
         closeNavigationDrawer();
         switch (id) {
             case R.id.navigation_cocktails:
                 showSearchIcon();
                 setToolbarTitleText("Cocktails");
+                fragment = HomeFragment.getInstance();
+                loadFragment(resId, fragment);
                 break;
             case R.id.navigation_createCocktail:
                 setToolbarTitleText("Create cocktail");
@@ -65,6 +71,7 @@ public class MainActivity extends PestormixMaster implements NavigationView.OnNa
                 break;
         }
     }
+
 
     private void closeNavigationDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);

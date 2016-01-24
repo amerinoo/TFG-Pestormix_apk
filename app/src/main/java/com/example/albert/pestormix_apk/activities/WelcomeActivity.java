@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.application.PestormixMaster;
+import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.utils.Constants;
 
-public class WelcomeActivity extends PestormixMaster {
+public class WelcomeActivity extends PestormixMasterActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
