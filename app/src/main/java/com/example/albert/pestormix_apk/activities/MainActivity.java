@@ -53,21 +53,21 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         switch (id) {
             case R.id.navigation_cocktails:
                 showSearchIcon();
-                setToolbarTitleText("Cocktails");
+                setToolbarTitleText(getText(R.string.title_cocktails));
                 fragment = HomeFragment.getInstance();
                 loadFragment(resId, fragment);
                 break;
             case R.id.navigation_createCocktail:
-                setToolbarTitleText("Create cocktail");
+                setToolbarTitleText(getText(R.string.title_create_cocktail));
                 break;
             case R.id.navigation_settings:
-                setToolbarTitleText("Settings");
+                setToolbarTitleText(getText(R.string.title_settings));
                 break;
             case R.id.navigation_help:
-                setToolbarTitleText("Help");
+                setToolbarTitleText(getText(R.string.title_help));
                 break;
             case R.id.navigation_aboutTheAuthor:
-                setToolbarTitleText("About the author");
+                setToolbarTitleText(getText(R.string.title_about_author));
                 break;
         }
     }

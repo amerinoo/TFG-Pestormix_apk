@@ -1,11 +1,14 @@
 package com.example.albert.pestormix_apk.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,8 +43,8 @@ public class HomeFragment extends PestormixMasterFragment {
 
     private void configView() {
         Spinner glasses = (Spinner) mainView.findViewById(R.id.glass_spinner);
-        TextView qr = (TextView) mainView.findViewById(R.id.qr);
-        TextView nfc = (TextView) mainView.findViewById(R.id.nfc);
+        ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr);
+        ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc);
         ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
 
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -74,6 +77,22 @@ public class HomeFragment extends PestormixMasterFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String[] stringArray = getResources().getStringArray(R.array.cocktail_array);
                 showToast(stringArray[position]);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(getString(R.string.confirmOrder))
+                        .setMessage(getString(R.string.youre_asking) + stringArray[position])
+                        .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                showToast(getString(R.string.accept));
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                showToast(getString(R.string.cancel));
+                            }
+                        }).show();
+
             }
         });
     }

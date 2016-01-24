@@ -4,23 +4,23 @@
         <item
             android:id="@+id/navigation_cocktails"
             android:icon="@android:drawable/ic_delete"
-            android:title="Cocktails" />
+            android:title="@string/title_cocktails" />
         <item
             android:id="@+id/navigation_createCocktail"
             android:icon="@android:drawable/ic_delete"
-            android:title="Create cocktail" />
+            android:title="@string/title_create_cocktail" />
         <item
             android:id="@+id/navigation_settings"
             android:icon="@android:drawable/ic_delete"
-            android:title="Settings" />
+            android:title="@string/title_settings" />
         <item
             android:id="@+id/navigation_help"
             android:icon="@android:drawable/ic_delete"
-            android:title="Help" />
+            android:title="@string/title_help" />
 
         <item
             android:id="@+id/navigation_aboutTheAuthor"
             android:icon="@android:drawable/ic_delete"
-            android:title="About the author" />
+            android:title="@string/title_about_author" />
     </group>
 </menu>
