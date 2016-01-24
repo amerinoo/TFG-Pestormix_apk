@@ -1,5 +1,6 @@
 package com.example.albert.pestormix_apk.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.activities.DetailHelpActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -40,8 +43,12 @@ public class HelpFragment extends PestormixMasterFragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String[] stringArray = getResources().getStringArray(R.array.questions_array);
-                showToast(stringArray[position]);
+                DetailHelpFragment fragment = (DetailHelpFragment) getFragmentManager().findFragmentById(R.id.detail_content);
+                if (fragment == null){
+                    Intent intent = new Intent(getActivity(), DetailHelpActivity.class);
+                    intent.putExtra(Constants.EXTRA_POSITION,position);
+                    startActivity(intent);
+                }
             }
         });
     }

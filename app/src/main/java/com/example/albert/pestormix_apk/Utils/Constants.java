@@ -10,4 +10,5 @@ public class Constants {
     //Preferences keys
     public static final String PREFERENCE_TUTORIAL_KEY = "tutorial";
 
+    public static final String EXTRA_POSITION = "extra_position";
 }

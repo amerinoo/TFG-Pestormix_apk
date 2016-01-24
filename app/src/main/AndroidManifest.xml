@@ -19,9 +19,9 @@
         <activity android:name=".activities.WelcomeActivity" />
         <activity
             android:name=".activities.MainActivity"
-            android:label=""
-            android:configChanges="orientation|screenSize">
-        </activity>
+            android:configChanges="orientation|screenSize"
+            android:label=""></activity>
+        <activity android:name=".activities.DetailHelpActivity"></activity>
     </application>
 
 </manifest>
