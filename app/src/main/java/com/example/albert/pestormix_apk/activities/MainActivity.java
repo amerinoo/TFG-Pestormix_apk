@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.fragments.AboutAuthorFragment;
+import com.example.albert.pestormix_apk.fragments.CreateCocktailFragment;
 import com.example.albert.pestormix_apk.fragments.HomeFragment;
 
 public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +61,8 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
                 break;
             case R.id.navigation_createCocktail:
                 setToolbarTitleText(getText(R.string.title_create_cocktail));
+                fragment = CreateCocktailFragment.getInstance();
+                loadFragment(resId, fragment);
                 break;
             case R.id.navigation_settings:
                 setToolbarTitleText(getText(R.string.title_settings));
@@ -68,6 +72,8 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
                 break;
             case R.id.navigation_aboutTheAuthor:
                 setToolbarTitleText(getText(R.string.title_about_author));
+                fragment = AboutAuthorFragment.getInstance();
+                loadFragment(resId, fragment);
                 break;
         }
     }

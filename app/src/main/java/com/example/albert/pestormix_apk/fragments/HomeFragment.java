@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -43,8 +43,8 @@ public class HomeFragment extends PestormixMasterFragment {
 
     private void configView() {
         Spinner glasses = (Spinner) mainView.findViewById(R.id.glass_spinner);
-        ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr);
-        ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc);
+        ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr_button);
+        ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
         ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
 
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

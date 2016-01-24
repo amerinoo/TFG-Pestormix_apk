@@ -9,6 +9,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="drawerArrowStyle">@style/MyDrawerArrowToggle</item>
         <item name="android:background">@color/colorBackground</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="MyDrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">

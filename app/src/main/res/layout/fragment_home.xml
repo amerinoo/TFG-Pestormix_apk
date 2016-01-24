@@ -33,7 +33,7 @@
                 android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/qr"
+                    android:id="@+id/qr_button"
                     android:layout_width="@dimen/home_circle"
                     android:layout_height="@dimen/home_circle"
                     android:background="@drawable/primary_color_oval_background"
@@ -48,7 +48,7 @@
                 android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/nfc"
+                    android:id="@+id/nfc_button"
                     android:layout_width="@dimen/home_circle"
                     android:layout_height="@dimen/home_circle"
                     android:background="@drawable/primary_color_oval_background"

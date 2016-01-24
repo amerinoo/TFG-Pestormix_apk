@@ -1,4 +1,4 @@
-package com.example.albert.pestormix_apk.fragments;
+package com.example.albert.pestormix_apk.application;
 
 import android.app.Fragment;
 
