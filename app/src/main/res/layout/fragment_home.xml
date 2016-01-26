@@ -71,8 +71,7 @@
     <ListView
         android:id="@+id/cocktails_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:entries="@array/cocktail_array">
+        android:layout_height="match_parent">
 
     </ListView>
 </LinearLayout>

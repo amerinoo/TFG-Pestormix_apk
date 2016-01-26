@@ -19,7 +19,7 @@
             android:layout_weight=".5"
             android:paddingLeft="@dimen/padding_20"
             android:text="Cocktail name"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@android:color/white" />
 
         <LinearLayout
             android:layout_width="0dp"

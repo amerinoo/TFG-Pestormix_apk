@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -14,10 +13,9 @@ import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ItemsAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.builders.CocktailBuilder;
-import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.utils.Constants;
-import com.example.albert.pestormix_apk.utils.Drinks;
+import com.example.albert.pestormix_apk.controllers.DrinkController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +39,8 @@ public class ManuallyActivity extends PestormixMasterActivity {
         ListView itemsList = (ListView) findViewById(R.id.items_list);
 
 
-        final List<Drink> drinks = Drinks.getDrinks();
-        final ItemsAdapter adapter = new ItemsAdapter(getApplicationContext(), new ArrayList<Drink>());
+        final List<Drink> drinks = DrinkController.getDrinks();
+        final ItemsAdapter adapter = new ItemsAdapter(getApplicationContext(), new ArrayList<Drink>(), true);
         adapter.setRemoveListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,12 +63,11 @@ public class ManuallyActivity extends PestormixMasterActivity {
             public void onClick(View v) {
                 if (drinks.size() == 0) showToast(R.string.no_more_drinks_available);
                 else {
-                    final ArrayAdapter<Drink> arrayAdapter = new ArrayAdapter<>(
+                    final ItemsAdapter itemsAdapter = new ItemsAdapter(
                             getPestormixApplication(),
-                            android.R.layout.select_dialog_singlechoice,
-                            drinks);
+                            drinks, false);
                     new AlertDialog.Builder(ManuallyActivity.this)
-                            .setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                            .setAdapter(itemsAdapter, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     adapter.addDrink(drinks.get(which));
@@ -98,16 +95,19 @@ public class ManuallyActivity extends PestormixMasterActivity {
                     for (int i = 0; i < adapter.getCount(); i++) {
                         cocktailBuilder.addDrink(adapter.getItem(i));
                     }
-                    goPutCocktailName(cocktailBuilder.build());
+                    goPutCocktailName(cocktailBuilder.getDrinks());
                 }
             }
         });
 
     }
 
-    private void goPutCocktailName(Cocktail cocktail) {
+    private void goPutCocktailName(List<Drink> list) {
+        String drinks = "";
+        for (Drink drink : list) drinks += drink.getName() + ",";
+        drinks = drinks.substring(0,drinks.length()-1); //Delete the last ","
         Intent intent = new Intent(this, GiveCocktailNameActivity.class);
-        intent.putExtra(Constants.EXTRA_COCKTAIL, cocktail);
+        intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, drinks);
         startActivity(intent);
     }
 

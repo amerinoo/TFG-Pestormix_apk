@@ -11,8 +11,13 @@ import android.widget.EditText;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.controllers.DataController;
+import com.example.albert.pestormix_apk.controllers.DrinkController;
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.utils.Constants;
+
+import io.realm.RealmList;
 
 public class GiveCocktailNameActivity extends PestormixMasterActivity {
 
@@ -31,7 +36,8 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         Button save = (Button) findViewById(R.id.save);
         Button cancel = (Button) findViewById(R.id.cancel);
 
-        final Cocktail cocktail = (Cocktail) getIntent().getSerializableExtra(Constants.EXTRA_COCKTAIL);
+        final Cocktail cocktail = new Cocktail();
+        cocktail.setDrinks(getDrinks());
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +52,7 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
                         .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(GiveCocktailNameActivity.this, MainActivity.class));
+                                goMain();
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -62,8 +68,28 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         });
     }
 
+    private void goMain() {
+        startActivity(new Intent(GiveCocktailNameActivity.this, MainActivity.class));
+    }
+
+    private RealmList<Drink> getDrinks() {
+        RealmList<Drink> drinks = new RealmList<>();
+        String drinksString = getIntent().getStringExtra(Constants.EXTRA_COCKTAIL_DRINKS);
+        for (String id : drinksString.split(",")) {
+            drinks.add(DrinkController.getDrinkById(id));
+        }
+        return drinks;
+    }
+
     private void saveCocktail(Cocktail cocktail) {
-        showToast(cocktail.toString());
+        if (cocktail.getName().equals("")) {
+            showToast(R.string.give_name_mandatory);
+        } else if (DataController.getCocktailByName(getRealm(), cocktail.getName()) != null) {
+            showToast(getString(R.string.cocktail_name_already_exist));
+        } else {
+            DataController.addCocktail(getRealm(), cocktail);
+            goMain();
+        }
     }
 
 }

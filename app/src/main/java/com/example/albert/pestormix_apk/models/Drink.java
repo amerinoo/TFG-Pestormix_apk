@@ -1,14 +1,17 @@
 package com.example.albert.pestormix_apk.models;
 
-import java.io.Serializable;
+import io.realm.RealmObject;
 
 /**
  * Created by Albert on 25/01/2016.
  */
-public class Drink implements Serializable {
-    String name;
-    String description;
-    boolean alcohol;
+public class Drink extends RealmObject {
+    private String name;
+    private String description;
+    private boolean alcohol;
+
+    public Drink() {
+    }
 
     public Drink(String name, String description) {
         this(name, description, false);
@@ -24,16 +27,23 @@ public class Drink implements Serializable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isAlcohol() {
         return alcohol;
     }
 
-    @Override
-    public String toString() {
-        return name;
+    public void setAlcohol(boolean alcohol) {
+        this.alcohol = alcohol;
     }
 }

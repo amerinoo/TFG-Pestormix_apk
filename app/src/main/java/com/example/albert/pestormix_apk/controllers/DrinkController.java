@@ -1,4 +1,4 @@
-package com.example.albert.pestormix_apk.utils;
+package com.example.albert.pestormix_apk.controllers;
 
 import com.example.albert.pestormix_apk.models.Drink;
 
@@ -10,14 +10,25 @@ import java.util.Map;
 /**
  * Created by Albert on 25/01/2016.
  */
-public abstract class Drinks {
+public abstract class DrinkController {
     private static Map<String, Drink> drinks = null;
 
     public static List<Drink> getDrinks() {
-        if (drinks == null) generateDrinks();
+        checkNull();
         List<Drink> list = new ArrayList<>();
         list.addAll(drinks.values());
         return list;
+    }
+
+    private static void checkNull() {
+        if (drinks == null) {
+            generateDrinks();
+        }
+    }
+
+    public static Drink getDrinkById(String id){
+        checkNull();
+        return drinks.get(id);
     }
 
     private static void generateDrinks() {

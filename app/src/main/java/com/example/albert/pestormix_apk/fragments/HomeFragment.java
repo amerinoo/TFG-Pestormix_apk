@@ -13,7 +13,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
+import com.example.albert.pestormix_apk.controllers.DataController;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -46,6 +48,8 @@ public class HomeFragment extends PestormixMasterFragment {
         ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr_button);
         ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
         ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
+        final CocktailAdapter adapter = new CocktailAdapter(getActivity(), DataController.getCocktails(getRealm()));
+        cocktails.setAdapter(adapter);
 
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -62,6 +66,8 @@ public class HomeFragment extends PestormixMasterFragment {
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DataController.removeAllCocktails(getRealm());
+                adapter.update(getRealm());
                 showToast(getString(R.string.qr_code));
             }
         });
@@ -96,5 +102,4 @@ public class HomeFragment extends PestormixMasterFragment {
             }
         });
     }
-
 }

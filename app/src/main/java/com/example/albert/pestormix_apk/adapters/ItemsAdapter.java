@@ -19,13 +19,15 @@ import java.util.List;
 public class ItemsAdapter extends BaseAdapter {
     private Context context;
     private List<Drink> drinks;
+    private Boolean showRemove;
     private View.OnClickListener removeListener;
 
 
-    public ItemsAdapter(Context context, List<Drink> drinks) {
+    public ItemsAdapter(Context context, List<Drink> drinks, Boolean showRemove) {
         super();
         this.context = context;
         this.drinks = drinks;
+        this.showRemove = showRemove;
     }
 
     @Override
@@ -58,8 +60,12 @@ public class ItemsAdapter extends BaseAdapter {
         }
 
         holder.name.setText(drink.getName());
-        holder.remove.setOnClickListener(removeListener);
-        holder.remove.setTag(position);
+        if (showRemove) {
+            holder.remove.setOnClickListener(removeListener);
+            holder.remove.setTag(position);
+        } else {
+            holder.remove.setVisibility(View.GONE);
+        }
 
         return convertView;
     }

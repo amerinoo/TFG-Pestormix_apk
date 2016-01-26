@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import io.realm.Realm;
+
 /**
  * Created by Albert on 23/01/2016.
  */
 public class PestormixMasterActivity extends AppCompatActivity {
+
+    private Realm realm;
 
     public PestormixApplication getPestormixApplication() {
         return (PestormixApplication) getApplication();
@@ -38,6 +42,7 @@ public class PestormixMasterActivity extends AppCompatActivity {
         }
         transaction.commit();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -46,5 +51,12 @@ public class PestormixMasterActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public Realm getRealm() {
+        if (realm == null) {
+            realm = Realm.getInstance(this);
+        }
+        return realm;
     }
 }

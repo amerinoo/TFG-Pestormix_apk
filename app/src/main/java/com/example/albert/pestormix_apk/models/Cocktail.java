@@ -1,23 +1,25 @@
 package com.example.albert.pestormix_apk.models;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Albert on 25/01/2016.
  */
-public class Cocktail implements Serializable {
-    String name;
-    String description;
-    boolean alcohol;
-    List<Drink> drinks;
+public class Cocktail extends RealmObject {
+    @PrimaryKey
+    private String name;
+    private String description;
+    private boolean alcohol;
+    private RealmList<Drink> drinks;
+
 
     public Cocktail() {
         name = "";
         description = "";
         alcohol = false;
-        drinks = new ArrayList<>();
+        drinks = new RealmList<>();
     }
 
     public String getName() {
@@ -36,16 +38,12 @@ public class Cocktail implements Serializable {
         this.description = description;
     }
 
-    public List<Drink> getDrinks() {
+    public RealmList<Drink> getDrinks() {
         return drinks;
     }
 
-    public void addDrink(Drink drink) {
-        drinks.add(drink);
-    }
-
-    public void removeDrink(Drink drink) {
-        drinks.remove(drink);
+    public void setDrinks(RealmList<Drink> drinks) {
+        this.drinks = drinks;
     }
 
     public void setAlcohol(boolean alcohol) {
@@ -54,15 +52,5 @@ public class Cocktail implements Serializable {
 
     public boolean isAlcohol() {
         return alcohol;
-    }
-
-    @Override
-    public String toString() {
-        return "Cocktail{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", alcohol=" + alcohol +
-                ", drinks=" + drinks +
-                '}';
     }
 }
