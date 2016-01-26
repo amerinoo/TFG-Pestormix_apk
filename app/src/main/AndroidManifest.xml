@@ -26,7 +26,10 @@
             android:label="" />
         <activity
             android:name=".activities.ManuallyActivity"
-            android:label=""></activity>
+            android:label="" />
+        <activity
+            android:name=".activities.GiveCocktailNameActivity"
+            android:label="" />
     </application>
 
 </manifest>

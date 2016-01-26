@@ -11,6 +11,7 @@
     <!-- Create Cocktail-->
     <dimen name="title">32sp</dimen>
     <dimen name="create_cocktail_button">180dp</dimen>
+    <dimen name="cocktail_name_edit_text">160dp</dimen>
 
     <!-- Padding -->
     <dimen name="activity_default_padding">20dp</dimen>

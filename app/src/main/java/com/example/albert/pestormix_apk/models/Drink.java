@@ -1,11 +1,11 @@
 package com.example.albert.pestormix_apk.models;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by Albert on 25/01/2016.
  */
-public class Drink {
+public class Drink implements Serializable {
     String name;
     String description;
     boolean alcohol;

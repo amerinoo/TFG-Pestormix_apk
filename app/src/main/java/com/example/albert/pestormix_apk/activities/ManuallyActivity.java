@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -107,18 +106,10 @@ public class ManuallyActivity extends PestormixMasterActivity {
     }
 
     private void goPutCocktailName(Cocktail cocktail) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, GiveCocktailNameActivity.class);
         intent.putExtra(Constants.EXTRA_COCKTAIL, cocktail);
-        //startActivity(intent);
+        startActivity(intent);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }

@@ -56,5 +56,13 @@ public class Cocktail implements Serializable {
         return alcohol;
     }
 
-
+    @Override
+    public String toString() {
+        return "Cocktail{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", alcohol=" + alcohol +
+                ", drinks=" + drinks +
+                '}';
+    }
 }
