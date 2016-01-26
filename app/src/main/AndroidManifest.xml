@@ -20,8 +20,13 @@
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation|screenSize"
+            android:label="" />
+        <activity
+            android:name=".activities.DetailHelpActivity"
+            android:label="" />
+        <activity
+            android:name=".activities.ManuallyActivity"
             android:label=""></activity>
-        <activity android:name=".activities.DetailHelpActivity"></activity>
     </application>
 
 </manifest>

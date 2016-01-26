@@ -1,5 +1,6 @@
 package com.example.albert.pestormix_apk.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 
 /**
@@ -42,7 +44,7 @@ public class CreateCocktailFragment extends PestormixMasterFragment {
         manually.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast(getString(R.string.manually));
+                goManually();
             }
         });
         qr.setOnClickListener(new View.OnClickListener() {
@@ -57,5 +59,10 @@ public class CreateCocktailFragment extends PestormixMasterFragment {
                 showToast(getString(R.string.nfc_tag));
             }
         });
+    }
+
+    private void goManually() {
+        Intent intent = new Intent(getActivity(), ManuallyActivity.class);
+        startActivity(intent);
     }
 }
