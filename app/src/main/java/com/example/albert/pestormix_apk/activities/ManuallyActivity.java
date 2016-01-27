@@ -39,7 +39,7 @@ public class ManuallyActivity extends PestormixMasterActivity {
         ListView itemsList = (ListView) findViewById(R.id.items_list);
 
 
-        final List<Drink> drinks = DrinkController.getDrinks();
+        final List<Drink> drinks = DrinkController.getDrinks(getRealm());
         final ItemsAdapter adapter = new ItemsAdapter(getApplicationContext(), new ArrayList<Drink>(), true);
         adapter.setRemoveListener(new View.OnClickListener() {
             @Override

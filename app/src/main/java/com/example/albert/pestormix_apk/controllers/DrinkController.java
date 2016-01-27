@@ -1,41 +1,34 @@
 package com.example.albert.pestormix_apk.controllers;
 
+import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import io.realm.Realm;
 
 /**
  * Created by Albert on 25/01/2016.
  */
 public abstract class DrinkController {
-    private static Map<String, Drink> drinks = null;
 
-    public static List<Drink> getDrinks() {
-        checkNull();
-        List<Drink> list = new ArrayList<>();
-        list.addAll(drinks.values());
-        return list;
+    public static List<Drink> getDrinks(Realm realm) {
+        return DataController.getDrinks(realm);
     }
 
-    private static void checkNull() {
-        if (drinks == null) {
-            generateDrinks();
-        }
+    public static Drink getDrinkByName(Realm realm, String name) {
+        return DataController.getDrinkByName(realm, name);
     }
 
-    public static Drink getDrinkById(String id){
-        checkNull();
-        return drinks.get(id);
-    }
 
-    private static void generateDrinks() {
-        drinks = new HashMap<>();
+    public static List<Drink> init() {
+        List<Drink> drinks = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            Drink drink = new Drink("Drink " + i, "");
-            drinks.put(drink.getName(), drink);
+            Drink drink = new Drink();
+            drink.setName("Drink " + i);
+            drinks.add(drink);
         }
+        return drinks;
     }
 }

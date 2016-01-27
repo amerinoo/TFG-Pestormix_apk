@@ -11,16 +11,9 @@ public class Drink extends RealmObject {
     private boolean alcohol;
 
     public Drink() {
-    }
-
-    public Drink(String name, String description) {
-        this(name, description, false);
-    }
-
-    public Drink(String name, String description, boolean alcohol) {
-        this.name = name;
-        this.description = description;
-        this.alcohol = alcohol;
+        this.name = "";
+        this.description = "";
+        this.alcohol = false;
     }
 
     public String getName() {

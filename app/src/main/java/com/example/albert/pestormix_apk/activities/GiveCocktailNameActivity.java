@@ -80,8 +80,8 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
     private RealmList<Drink> getDrinks() {
         RealmList<Drink> drinks = new RealmList<>();
         String drinksString = getIntent().getStringExtra(Constants.EXTRA_COCKTAIL_DRINKS);
-        for (String id : drinksString.split(",")) {
-            drinks.add(DrinkController.getDrinkById(id));
+        for (String name : drinksString.split(",")) {
+            drinks.add(DrinkController.getDrinkByName(getRealm(), name));
         }
         return drinks;
     }

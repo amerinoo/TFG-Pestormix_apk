@@ -9,6 +9,7 @@ public abstract class Constants {
 
     //Preferences keys
     public static final String PREFERENCE_TUTORIAL_KEY = "tutorial";
+    public static final String PREFERENCE_INIT_DATA_KEY = "init_data";
 
     public static final String EXTRA_POSITION = "extra_position";
     public static final String EXTRA_COCKTAIL_DRINKS = "extra_cocktail_drinks";

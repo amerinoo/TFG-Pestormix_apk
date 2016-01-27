@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.utils.Constants;
 
 public class SplashActivity extends PestormixMasterActivity {
@@ -29,6 +30,10 @@ public class SplashActivity extends PestormixMasterActivity {
 
     private void initApp() {
         if (getPestormixApplication().getBoolean(Constants.PREFERENCE_TUTORIAL_KEY, true)) {
+            if (getPestormixApplication().getBoolean(Constants.PREFERENCE_INIT_DATA_KEY, true)) {
+                getPestormixApplication().putBoolean(Constants.PREFERENCE_INIT_DATA_KEY, false);
+                DataController.init(getRealm());
+            }
             openTutorial();
         } else {
             openMain();
