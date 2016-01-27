@@ -17,20 +17,22 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
 
-    <!-- Create cocktails-->
+    <!-- Create cocktail-->
     <string name="how_will_create_cocktail">How will you create the cocktail?</string>
     <string name="manually">Manually</string>
     <string name="qr_code">QR code</string>
     <string name="nfc_tag">NFC tag</string>
+    <!-- Manually-->
     <string name="select_drink">Select a drink</string>
     <string name="obligate_add_drink">You have to add some drink</string>
     <string name="no_more_drinks_available">No more drinks available</string>
-    <string name="save">Save</string>
+    <!-- Give Cocktail Name-->
     <string name="give_name">Give it a name</string>
     <string name="cocktail_name">Cocktail name</string>
+    <string name="save">Save</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="the_cocktail_will_be_removed">The cocktail will be removed and you will have to re-start the creation</string>
-    <string name="cocktail_name_already_exist">A cocktail with this names already exist</string>
+    <string name="cocktail_name_already_exist">A cocktail with this name already exists</string>
     <string name="give_name_mandatory">You have to give a name for it</string>
 
     <!-- Fake data -->

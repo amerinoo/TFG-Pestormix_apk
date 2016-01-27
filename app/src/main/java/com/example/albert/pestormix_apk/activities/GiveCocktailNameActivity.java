@@ -69,7 +69,10 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
     }
 
     private void goMain() {
-        startActivity(new Intent(GiveCocktailNameActivity.this, MainActivity.class));
+        Intent intent = new Intent(GiveCocktailNameActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clean back stack
+        startActivity(intent);
+        finish();
     }
 
     private RealmList<Drink> getDrinks() {
