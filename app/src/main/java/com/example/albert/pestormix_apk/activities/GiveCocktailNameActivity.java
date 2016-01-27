@@ -33,6 +33,7 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
 
     private void configView() {
         final EditText name = (EditText) findViewById(R.id.name);
+        final EditText description = (EditText) findViewById(R.id.description);
         Button save = (Button) findViewById(R.id.save);
         Button cancel = (Button) findViewById(R.id.cancel);
 
@@ -42,6 +43,7 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
             @Override
             public void onClick(View v) {
                 cocktail.setName(name.getText().toString());
+                cocktail.setDescription(description.getText().toString());
                 saveCocktail(cocktail);
             }
         });
@@ -85,14 +87,18 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
     }
 
     private void saveCocktail(Cocktail cocktail) {
-        if (cocktail.getName().equals("")) {
+        if (!checkFields(cocktail)) {
             showToast(R.string.give_name_mandatory);
-        } else if (DataController.getCocktailByName(getRealm(), cocktail.getName()) != null) {
+        } else if (DataController.cocktailExist(getRealm(), cocktail.getName())) {
             showToast(getString(R.string.cocktail_name_already_exist));
         } else {
             DataController.addCocktail(getRealm(), cocktail);
             goMain();
         }
+    }
+
+    private boolean checkFields(Cocktail cocktail) {
+        return !cocktail.getName().equals("");
     }
 
 }

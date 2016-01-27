@@ -10,17 +10,21 @@ import com.example.albert.pestormix_apk.utils.Constants;
 
 public class SplashActivity extends PestormixMasterActivity {
 
+    private Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        new Handler().postDelayed(new Runnable() {
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 initApp();
             }
         }, 2000);
+
     }
 
     private void initApp() {
@@ -44,4 +48,9 @@ public class SplashActivity extends PestormixMasterActivity {
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        handler.removeCallbacksAndMessages(null);
+        super.onBackPressed();
+    }
 }

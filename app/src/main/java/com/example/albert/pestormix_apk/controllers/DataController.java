@@ -28,10 +28,6 @@ public abstract class DataController {
         return cocktails;
     }
 
-    public static Cocktail getCocktailByName(Realm realm, String name) {
-        return realm.where(Cocktail.class).equalTo("name", name).findFirst();
-    }
-
     public static void removeCocktailByName(Realm realm, String name) {
         realm.beginTransaction();
         realm.where(Cocktail.class).equalTo("name", name).findAll().clear();
@@ -43,5 +39,13 @@ public abstract class DataController {
         realm.beginTransaction();
         results.clear();
         realm.commitTransaction();
+    }
+
+    public static Cocktail getCocktailByName(Realm realm, String name) {
+        return realm.where(Cocktail.class).equalTo("name", name).findFirst();
+    }
+
+    public static boolean cocktailExist(Realm realm, String name) {
+        return realm.where(Cocktail.class).equalTo("name", name).findFirst() != null;
     }
 }
