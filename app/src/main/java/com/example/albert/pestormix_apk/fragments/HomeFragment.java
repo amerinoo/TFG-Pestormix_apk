@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
@@ -81,11 +82,10 @@ public class HomeFragment extends PestormixMasterFragment {
         cocktails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String[] stringArray = getResources().getStringArray(R.array.cocktail_array);
-                showToast(stringArray[position]);
+                String name = ((TextView) view.findViewById(R.id.name)).getText().toString();
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(getString(R.string.confirmOrder))
-                        .setMessage(getString(R.string.youre_asking) + stringArray[position])
+                        .setMessage(getString(R.string.youre_asking) + name)
                         .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
