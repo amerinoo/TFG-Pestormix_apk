@@ -11,13 +11,10 @@ import android.widget.EditText;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
-import com.example.albert.pestormix_apk.controllers.DrinkController;
 import com.example.albert.pestormix_apk.models.Cocktail;
-import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.utils.Constants;
-
-import io.realm.RealmList;
 
 public class GiveCocktailNameActivity extends PestormixMasterActivity {
 
@@ -38,12 +35,13 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         Button cancel = (Button) findViewById(R.id.cancel);
 
         final Cocktail cocktail = new Cocktail();
-        cocktail.setDrinks(getDrinks());
+        String drinksString = getIntent().getStringExtra(Constants.EXTRA_COCKTAIL_DRINKS);
+        CocktailController.setDrinksFromString(getRealm(), cocktail, drinksString);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cocktail.setName(name.getText().toString());
-                cocktail.setDescription(description.getText().toString());
+                CocktailController.setName(cocktail, name.getText().toString());
+                CocktailController.setDescription(cocktail, description.getText().toString());
                 saveCocktail(cocktail);
             }
         });
@@ -77,14 +75,6 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         finish();
     }
 
-    private RealmList<Drink> getDrinks() {
-        RealmList<Drink> drinks = new RealmList<>();
-        String drinksString = getIntent().getStringExtra(Constants.EXTRA_COCKTAIL_DRINKS);
-        for (String name : drinksString.split(",")) {
-            drinks.add(DrinkController.getDrinkByName(getRealm(), name));
-        }
-        return drinks;
-    }
 
     private void saveCocktail(Cocktail cocktail) {
         if (!checkFields(cocktail)) {

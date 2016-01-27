@@ -12,10 +12,11 @@ import android.widget.ListView;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ItemsAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.builders.CocktailBuilder;
+import com.example.albert.pestormix_apk.controllers.CocktailController;
+import com.example.albert.pestormix_apk.controllers.DrinkController;
+import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.utils.Constants;
-import com.example.albert.pestormix_apk.controllers.DrinkController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,21 +92,19 @@ public class ManuallyActivity extends PestormixMasterActivity {
                 if (adapter.getCount() == 0) {
                     showToast(R.string.obligate_add_drink);
                 } else {
-                    CocktailBuilder cocktailBuilder = new CocktailBuilder();
+                    Cocktail cocktail = new Cocktail();
                     for (int i = 0; i < adapter.getCount(); i++) {
-                        cocktailBuilder.addDrink(adapter.getItem(i));
+                        CocktailController.addDrink(cocktail, adapter.getItem(i));
                     }
-                    goPutCocktailName(cocktailBuilder.getDrinks());
+                    goPutCocktailName(cocktail);
                 }
             }
         });
 
     }
 
-    private void goPutCocktailName(List<Drink> list) {
-        String drinks = "";
-        for (Drink drink : list) drinks += drink.getName() + ",";
-        drinks = drinks.substring(0,drinks.length()-1); //Delete the last ","
+    private void goPutCocktailName(Cocktail cocktail) {
+        String drinks = CocktailController.getDrinksAsString(cocktail);
         Intent intent = new Intent(this, GiveCocktailNameActivity.class);
         intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, drinks);
         startActivity(intent);

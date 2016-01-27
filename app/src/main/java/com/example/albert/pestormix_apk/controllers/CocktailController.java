@@ -1,9 +1,13 @@
 package com.example.albert.pestormix_apk.controllers;
 
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.models.Drink;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmList;
 
 /**
  * Created by Albert on 27/01/2016.
@@ -17,5 +21,37 @@ public abstract class CocktailController {
             cocktails.add(cocktail);
         }
         return cocktails;
+    }
+
+    public static void setName(Cocktail cocktail, String name) {
+        cocktail.setName(name);
+    }
+
+    public static void setDescription(Cocktail cocktail, String description) {
+        cocktail.setDescription(description);
+    }
+
+    public static void addDrink(Cocktail cocktail, Drink drink) {
+        cocktail.getDrinks().add(drink);
+    }
+
+    public static String getDrinksAsString(Cocktail cocktail) {
+        String drinks = "";
+        for (Drink drink : cocktail.getDrinks()) drinks += drink.getName() + ",";
+        drinks = drinks.substring(0, drinks.length() - 1); //Delete the last ","
+        return drinks;
+    }
+
+    public static List<Drink> getDrinks(Cocktail cocktail) {
+        RealmList<Drink> results = cocktail.getDrinks();
+        List<Drink> drinks = new ArrayList<>();
+        for (Drink drink : results) drinks.add(drink);
+        return drinks;
+    }
+
+    public static void setDrinksFromString(Realm realm, Cocktail cocktail, String drinksString) {
+        for (String name : drinksString.split(",")) {
+            addDrink(cocktail, DrinkController.getDrinkByName(realm, name));
+        }
     }
 }
