@@ -11,11 +11,20 @@
     <!-- Tutorial -->
     <string name="tutorial_continue">Continue</string>
 
-    <!-- Orders -->
+    <!-- Cocktail -->
+    <string name="option_1">Details</string>
+    <string name="option_2">Edit</string>
+    <string name="option_3">Remove</string>
     <string name="confirmOrder">Confirm the order</string>
     <string name="youre_asking">"You're asking for: "</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
+    <string name="cocktail_removed">The cocktail will be removed permanetly</string>
+    <!-- Cocktail Details -->
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="drinks">Drinks</string>
+    <string name="missing_description">This cocktail doesn\'t have description</string>
 
     <!-- Create cocktail-->
     <string name="how_will_create_cocktail">How will you create the cocktail?</string>
@@ -33,11 +42,11 @@
     <string name="cocktail_description">Cocktail description (Optional)</string>
     <string name="save">Save</string>
     <string name="are_you_sure">Are you sure?</string>
-    <string name="the_cocktail_will_be_removed">The cocktail will be removed and you will have to re-start the creation</string>
+    <string name="cocktail_removed_restart_creation">The cocktail will be removed and you will have to re-start the creation</string>
+    <string name="cocktail_not_updated_restart_edition">The cocktail won\'t be edited and you will have to re-start the edition</string>
     <string name="cocktail_name_already_exist">A cocktail with this name already exists</string>
     <string name="give_name_mandatory">You have to give a name for it</string>
 
     <!-- Fake data -->
     <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a,</string>
-
 </resources>

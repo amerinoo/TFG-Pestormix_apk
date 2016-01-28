@@ -13,11 +13,13 @@ import io.realm.RealmList;
  * Created by Albert on 27/01/2016.
  */
 public abstract class CocktailController {
-    public static List<Cocktail> init() {
+    public static List<Cocktail> init(Realm realm) {
+        List<Drink> drinks = DrinkController.getDrinks(realm);
         List<Cocktail> cocktails = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             Cocktail cocktail = new Cocktail();
             cocktail.setName("Cocktail " + i);
+            addDrink(cocktail, drinks.get(i % drinks.size()));
             cocktails.add(cocktail);
         }
         return cocktails;
@@ -53,5 +55,13 @@ public abstract class CocktailController {
         for (String name : drinksString.split(",")) {
             addDrink(cocktail, DrinkController.getDrinkByName(realm, name));
         }
+    }
+
+    public static List<Drink> getDrinksFromString(Realm realm, String drinksString) {
+        List<Drink> drinks = new ArrayList<>();
+        for (String name : drinksString.split(",")) {
+            drinks.add(DrinkController.getDrinkByName(realm, name));
+        }
+        return drinks;
     }
 }

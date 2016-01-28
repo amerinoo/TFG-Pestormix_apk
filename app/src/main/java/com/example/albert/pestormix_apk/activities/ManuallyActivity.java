@@ -14,6 +14,7 @@ import com.example.albert.pestormix_apk.adapters.ItemsAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DrinkController;
+import com.example.albert.pestormix_apk.enums.CreateCocktailType;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.utils.Constants;
@@ -22,6 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManuallyActivity extends PestormixMasterActivity {
+
+    private ItemsAdapter adapter;
+    private String name = "";
+    private String description = "";
+    private List<Drink> drinksAdapter;
+    private CreateCocktailType createCocktailType = CreateCocktailType.NEW;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +48,10 @@ public class ManuallyActivity extends PestormixMasterActivity {
 
 
         final List<Drink> drinks = DrinkController.getDrinks(getRealm());
-        final ItemsAdapter adapter = new ItemsAdapter(getApplicationContext(), new ArrayList<Drink>(), true);
+        drinksAdapter = new ArrayList<>();
+        checkIntent();
+        removeEquals(drinks, drinksAdapter);
+        adapter = new ItemsAdapter(getApplicationContext(), drinksAdapter, true);
         adapter.setRemoveListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,17 +106,37 @@ public class ManuallyActivity extends PestormixMasterActivity {
                     for (int i = 0; i < adapter.getCount(); i++) {
                         CocktailController.addDrink(cocktail, adapter.getItem(i));
                     }
-                    goPutCocktailName(cocktail);
+                    goGiveCocktailName(cocktail);
                 }
             }
         });
 
     }
 
-    private void goPutCocktailName(Cocktail cocktail) {
+    private void removeEquals(List<Drink> drinks, List<Drink> drinksAdapter) {
+        for (Drink drink : drinksAdapter) {
+            drinks.remove(drink);
+        }
+    }
+
+    private void checkIntent() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            name = bundle.getString(Constants.EXTRA_COCKTAIL_NAME);
+            description = bundle.getString(Constants.EXTRA_COCKTAIL_DESCRIPTION);
+            String drinksString = bundle.getString(Constants.EXTRA_COCKTAIL_DRINKS);
+            drinksAdapter = CocktailController.getDrinksFromString(getRealm(), drinksString);
+            createCocktailType = CreateCocktailType.EDIT;
+        }
+    }
+
+    private void goGiveCocktailName(Cocktail cocktail) {
         String drinks = CocktailController.getDrinksAsString(cocktail);
         Intent intent = new Intent(this, GiveCocktailNameActivity.class);
+        intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, name);
+        intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, description);
         intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, drinks);
+        intent.putExtra(Constants.EXTRA_CREATE_COCKTAIL_TYPE, createCocktailType);
         startActivity(intent);
     }
 

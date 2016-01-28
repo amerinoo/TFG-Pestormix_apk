@@ -9,6 +9,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
  * Created by Albert on 26/01/2016.
@@ -20,14 +21,20 @@ public abstract class DataController {
      * Start General
      ******************/
     public static void init(Realm realm) {
-        generateCocktails(realm);
         generateDrinks(realm);
+        generateCocktails(realm);
     }
 
-    private static void addItem(Realm realm, RealmObject object) {
+    private static boolean addItem(Realm realm, RealmObject object) {
+        boolean correct = true;
         realm.beginTransaction();
-        realm.copyToRealm(object);
+        try {
+            realm.copyToRealm(object);
+        } catch (RealmPrimaryKeyConstraintException e) {
+            correct = false;
+        }
         realm.commitTransaction();
+        return correct;
     }
 
     private static void removeAllInstances(Realm realm) {
@@ -39,8 +46,8 @@ public abstract class DataController {
     /******************
      * Start Cocktail
      ******************/
-    public static void addCocktail(Realm realm, Cocktail cocktail) {
-        addItem(realm, cocktail);
+    public static boolean addCocktail(Realm realm, Cocktail cocktail) {
+        return addItem(realm, cocktail);
     }
 
     public static void removeCocktailByName(Realm realm, String name) {
@@ -65,29 +72,39 @@ public abstract class DataController {
         realm.commitTransaction();
     }
 
+    public static void updateCocktail(Realm realm, Cocktail cocktail, String oldName) {
+        removeCocktailByName(realm,oldName);
+        addItem(realm,cocktail);
+    }
+
     public static Cocktail getCocktailByName(Realm realm, String name) {
         return realm.where(Cocktail.class).equalTo("name", name).findFirst();
     }
 
-    public static boolean cocktailExist(Realm realm, String name) {
-        return realm.where(Cocktail.class).equalTo("name", name).findFirst() != null;
+    public static boolean cocktailExist(Realm realm, Cocktail cocktail) {
+        return !addItem(realm, cocktail);
     }
 
-    private static void generateCocktails(Realm realm) {
-        List<Cocktail> cocktails = CocktailController.init();
+    public static void generateCocktails(Realm realm) {
+        List<Cocktail> cocktails = CocktailController.init(realm);
+
         realm.beginTransaction();
-        for (Cocktail cocktail: cocktails) {
-            realm.copyToRealm(cocktail);
+        for (Cocktail cocktail : cocktails) {
+            try {
+                realm.copyToRealm(cocktail);
+            } catch (RealmPrimaryKeyConstraintException e) {
+            }
         }
         realm.commitTransaction();
+
     }
     /****************** End Cocktail ******************/
 
     /******************
      * Start Drink
      ******************/
-    public static void addDrink(Realm realm, Drink drink) {
-        addItem(realm, drink);
+    public static boolean addDrink(Realm realm, Drink drink) {
+        return addItem(realm, drink);
     }
 
 
@@ -117,13 +134,18 @@ public abstract class DataController {
         return realm.where(Drink.class).equalTo("name", name).findFirst();
     }
 
-    private static void generateDrinks(Realm realm) {
+    public static void generateDrinks(Realm realm) {
         List<Drink> drinks = DrinkController.init();
         realm.beginTransaction();
-        for (Drink drink: drinks) {
-            realm.copyToRealm(drink);
+        for (Drink drink : drinks) {
+            try {
+                realm.copyToRealm(drink);
+            } catch (RealmPrimaryKeyConstraintException e) {
+            }
         }
         realm.commitTransaction();
     }
-    /****************** End Drink ******************/
+/******************
+ * End Drink
+ ******************/
 }

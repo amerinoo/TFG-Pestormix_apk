@@ -3,8 +3,12 @@ package com.example.albert.pestormix_apk.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,9 +18,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
+import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
+import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -25,6 +33,8 @@ public class HomeFragment extends PestormixMasterFragment {
 
 
     private View mainView;
+    private String cocktailName;
+    private CocktailAdapter adapter;
 
     public static HomeFragment getInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -49,9 +59,9 @@ public class HomeFragment extends PestormixMasterFragment {
         ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr_button);
         ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
         ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
-        final CocktailAdapter adapter = new CocktailAdapter(getActivity(), DataController.getCocktails(getRealm()));
+        adapter = new CocktailAdapter(getActivity(), DataController.getCocktails(getRealm()));
         cocktails.setAdapter(adapter);
-
+        registerForContextMenu(cocktails);
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -75,6 +85,8 @@ public class HomeFragment extends PestormixMasterFragment {
         nfc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DataController.generateCocktails(getRealm());
+                adapter.update(getRealm());
                 showToast(getString(R.string.nfc_tag));
             }
         });
@@ -82,7 +94,7 @@ public class HomeFragment extends PestormixMasterFragment {
         cocktails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = ((TextView) view.findViewById(R.id.name)).getText().toString();
+                String name = getStringOfTextView((TextView) view.findViewById(R.id.name));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(getString(R.string.confirmOrder))
                         .setMessage(getString(R.string.youre_asking) + name)
@@ -101,5 +113,90 @@ public class HomeFragment extends PestormixMasterFragment {
 
             }
         });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        if (view.getId() == R.id.cocktails_list) {
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            CocktailAdapter adapter = (CocktailAdapter) ((ListView) view).getAdapter();
+            cocktailName = adapter.getItem(acmi.position).getName();
+            menu.setHeaderTitle(cocktailName);
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.menu_cocktail, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        String itemName = item.getTitle().toString();
+        switch (id) {
+            case R.id.option_1: //Details
+                showDetails(cocktailName);
+                break;
+            case R.id.option_2: //Edit
+                updateCocktail(cocktailName);
+                break;
+            case R.id.option_3: //Remove
+                removeCocktail(cocktailName);
+                break;
+        }
+        return true;
+    }
+
+    private void showDetails(String cocktailName) {
+        Cocktail cocktail = DataController.getCocktailByName(getRealm(), cocktailName);
+        final AlertDialog dialog;
+        View detailsView = LayoutInflater.from(getActivity()).inflate(R.layout.cocktail_details, null, false);
+        ((TextView) detailsView.findViewById(R.id.name)).setText(cocktail.getName());
+        if (cocktail.getDescription().equals("")) {
+            ((TextView) detailsView.findViewById(R.id.description)).setText(R.string.missing_description);
+        } else {
+            ((TextView) detailsView.findViewById(R.id.description)).setText(cocktail.getDescription());
+        }
+        ((TextView) detailsView.findViewById(R.id.drinks)).setText(CocktailController.getDrinksAsString(cocktail));
+        dialog = new AlertDialog.Builder(getActivity())
+                .setView(detailsView)
+                .create();
+        detailsView.findViewById(R.id.accept).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void updateCocktail(String cocktailName) {
+        Cocktail cocktail = DataController.getCocktailByName(getRealm(), cocktailName);
+        Intent intent = new Intent(getActivity(), ManuallyActivity.class);
+        intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, cocktail.getName());
+        intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, cocktail.getDescription());
+        intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, CocktailController.getDrinksAsString(cocktail));
+        startActivity(intent);
+    }
+
+    private void removeCocktail(final String cocktailName) {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.are_you_sure)
+                .setMessage(R.string.cocktail_removed)
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DataController.removeCocktailByName(getRealm(), cocktailName);
+                        adapter.update(getRealm());
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+    }
+
+    private String getStringOfTextView(TextView view) {
+        return view.getText().toString();
     }
 }

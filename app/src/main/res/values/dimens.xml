@@ -7,6 +7,7 @@
 
     <!-- Cocktails -->
     <dimen name="home_circle">25dp</dimen>
+    <dimen name="dialog_title">26sp</dimen>
 
     <!-- Create Cocktail-->
     <dimen name="title">32sp</dimen>
