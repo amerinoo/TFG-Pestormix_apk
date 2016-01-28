@@ -155,7 +155,7 @@ public class HomeFragment extends PestormixMasterFragment {
         } else {
             ((TextView) detailsView.findViewById(R.id.description)).setText(cocktail.getDescription());
         }
-        ((TextView) detailsView.findViewById(R.id.drinks)).setText(CocktailController.getDrinksAsString(cocktail));
+        ((TextView) detailsView.findViewById(R.id.drinks)).setText(CocktailController.getDrinksAsString(cocktail,getString(R.string.drinks_detail_separator)));
         dialog = new AlertDialog.Builder(getActivity())
                 .setView(detailsView)
                 .create();

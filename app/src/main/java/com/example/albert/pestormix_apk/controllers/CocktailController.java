@@ -38,9 +38,12 @@ public abstract class CocktailController {
     }
 
     public static String getDrinksAsString(Cocktail cocktail) {
+        return getDrinksAsString(cocktail,",");
+    }
+    public static String getDrinksAsString(Cocktail cocktail,String separator) {
         String drinks = "";
-        for (Drink drink : cocktail.getDrinks()) drinks += drink.getName() + ",";
-        drinks = drinks.substring(0, drinks.length() - 1); //Delete the last ","
+        for (Drink drink : cocktail.getDrinks()) drinks += drink.getName() + separator;
+        drinks = drinks.substring(0, drinks.length() - separator.length()); //Delete the last ","
         return drinks;
     }
 
