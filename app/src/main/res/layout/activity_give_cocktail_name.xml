@@ -21,52 +21,52 @@
             android:textSize="@dimen/toolbar_title" />
     </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:orientation="vertical">
+
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|top"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/padding_20"
+            android:text="@string/give_name"
+            android:textSize="@dimen/title" />
 
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="@dimen/cocktail_name_edit_text"
+            android:layout_height="wrap_content"
+            android:background="@drawable/primary_color_rectangle_background"
+            android:gravity="center"
+            android:hint="@string/cocktail_name"
+            android:inputType="textCapSentences"
+            android:maxLength="15"
+            android:padding="@dimen/padding_10"
+            android:singleLine="true" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/padding_20"
-                android:text="@string/give_name"
-                android:textSize="@dimen/title" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/padding_20"
+            android:text="@string/give_description"
+            android:textSize="@dimen/title" />
 
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="@dimen/cocktail_name_edit_text"
-                android:layout_height="wrap_content"
-                android:background="@drawable/primary_color_rectangle_background"
-                android:gravity="center"
-                android:hint="@string/cocktail_name"
-                android:inputType="textCapSentences"
-                android:maxLength="15"
-                android:padding="@dimen/padding_10"
-                android:singleLine="true" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/padding_20"
-                android:text="@string/give_description"
-                android:textSize="@dimen/title" />
-
-            <EditText
-                android:id="@+id/description"
-                android:layout_width="@dimen/cocktail_description_edit_text"
-                android:layout_height="wrap_content"
-                android:background="@drawable/primary_color_rectangle_background"
-                android:gravity="top"
-                android:hint="@string/cocktail_description"
-                android:inputType="textCapSentences|textMultiLine"
-                android:minHeight="@dimen/cocktail_description_edit_text_height"
-                android:padding="@dimen/padding_10" />
-        </LinearLayout>
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="@dimen/cocktail_description_edit_text"
+            android:layout_height="wrap_content"
+            android:background="@drawable/primary_color_rectangle_background"
+            android:gravity="top"
+            android:hint="@string/cocktail_description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minHeight="@dimen/cocktail_description_edit_text_height"
+            android:padding="@dimen/padding_10" />
+    </LinearLayout>
 
 
     <LinearLayout

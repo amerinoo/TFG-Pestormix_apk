@@ -3,15 +3,13 @@ package com.example.albert.pestormix_apk.activities;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.fragments.DetailHelpFragment;
 import com.example.albert.pestormix_apk.utils.Constants;
 
-public class DetailHelpActivity extends PestormixMasterActivity{
+public class DetailHelpActivity extends PestormixMasterActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

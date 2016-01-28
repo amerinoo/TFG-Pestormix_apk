@@ -1,6 +1,5 @@
 package com.example.albert.pestormix_apk.controllers;
 
-import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 
 import java.util.ArrayList;

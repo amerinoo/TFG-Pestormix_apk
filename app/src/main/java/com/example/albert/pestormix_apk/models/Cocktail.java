@@ -46,11 +46,11 @@ public class Cocktail extends RealmObject {
         this.drinks = drinks;
     }
 
-    public void setAlcohol(boolean alcohol) {
-        this.alcohol = alcohol;
-    }
-
     public boolean isAlcohol() {
         return alcohol;
+    }
+
+    public void setAlcohol(boolean alcohol) {
+        this.alcohol = alcohol;
     }
 }

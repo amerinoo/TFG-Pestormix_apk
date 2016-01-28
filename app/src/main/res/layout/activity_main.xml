@@ -24,18 +24,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="@dimen/toolbar_title"
                 android:background="@android:color/transparent"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/toolbar_title" />
 
             <ImageButton
                 android:id="@+id/search_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:tint="@color/colorText"
                 android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_search" />
+                android:src="@android:drawable/ic_menu_search"
+                android:tint="@color/colorText" />
         </android.support.v7.widget.Toolbar>
 
         <FrameLayout
@@ -49,9 +49,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemIconTint="@color/colorPrimary"
         app:itemBackground="@android:color/transparent"
-        app:menu="@menu/menu_drawer">
-    </android.support.design.widget.NavigationView>
+        app:itemIconTint="@color/colorPrimary"
+        app:menu="@menu/menu_drawer"></android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

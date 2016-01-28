@@ -44,9 +44,9 @@ public class HelpFragment extends PestormixMasterFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DetailHelpFragment fragment = (DetailHelpFragment) getFragmentManager().findFragmentById(R.id.detail_content);
-                if (fragment == null){
+                if (fragment == null) {
                     Intent intent = new Intent(getActivity(), DetailHelpActivity.class);
-                    intent.putExtra(Constants.EXTRA_POSITION,position);
+                    intent.putExtra(Constants.EXTRA_POSITION, position);
                     startActivity(intent);
                 }
             }

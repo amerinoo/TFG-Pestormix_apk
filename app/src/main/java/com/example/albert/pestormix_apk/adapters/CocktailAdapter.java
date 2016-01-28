@@ -61,12 +61,12 @@ public class CocktailAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private static class ViewHolder {
-        TextView name;
-    }
-
-    public void update(Realm realm){
+    public void update(Realm realm) {
         cocktails = DataController.getCocktails(realm);
         notifyDataSetChanged();
+    }
+
+    private static class ViewHolder {
+        TextView name;
     }
 }

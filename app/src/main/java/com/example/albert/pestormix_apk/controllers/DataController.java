@@ -73,8 +73,8 @@ public abstract class DataController {
     }
 
     public static void updateCocktail(Realm realm, Cocktail cocktail, String oldName) {
-        removeCocktailByName(realm,oldName);
-        addItem(realm,cocktail);
+        removeCocktailByName(realm, oldName);
+        addItem(realm, cocktail);
     }
 
     public static Cocktail getCocktailByName(Realm realm, String name) {
