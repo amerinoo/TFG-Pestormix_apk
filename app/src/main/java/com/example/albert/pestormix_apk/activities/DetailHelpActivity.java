@@ -15,11 +15,11 @@ public class DetailHelpActivity extends PestormixMasterActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_help);
-        int position = getIntent().getIntExtra(Constants.EXTRA_POSITION, 0);
+        int id = getIntent().getIntExtra(Constants.EXTRA_QUESTION_ID, 0);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Fragment fragment = DetailHelpFragment.getInstance(position);
+        Fragment fragment = DetailHelpFragment.getInstance(id);
         loadFragment(R.id.detail_content, fragment);
     }
 }

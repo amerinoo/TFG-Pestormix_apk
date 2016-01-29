@@ -177,7 +177,7 @@ public abstract class DataController {
     }
 
     public static List<Question> getQuestions(Realm realm) {
-        RealmResults<Question> results = realm.where(Question.class).findAll();
+        RealmResults<Question> results = realm.where(Question.class).findAllSorted("id");
         List<Question> questions = new ArrayList<>();
         for (Question question : results) {
             questions.add(question);

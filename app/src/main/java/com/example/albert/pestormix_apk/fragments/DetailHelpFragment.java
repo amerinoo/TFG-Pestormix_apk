@@ -9,17 +9,21 @@ import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
+import com.example.albert.pestormix_apk.controllers.QuestionController;
+import com.example.albert.pestormix_apk.models.Question;
 
 /**
  * Created by Albert on 25/01/2016.
  */
 public class DetailHelpFragment extends PestormixMasterFragment {
     private View mainView;
-    private int position;
+    private int id;
+    private TextView question;
+    private TextView answer;
 
-    public static DetailHelpFragment getInstance(int position) {
+    public static DetailHelpFragment getInstance(int id) {
         DetailHelpFragment fragment = new DetailHelpFragment();
-        fragment.position = position;
+        fragment.id = id;
         return fragment;
     }
 
@@ -37,10 +41,15 @@ public class DetailHelpFragment extends PestormixMasterFragment {
     }
 
     private void configView() {
-        TextView question = (TextView) mainView.findViewById(R.id.question);
-        TextView answer = (TextView) mainView.findViewById(R.id.answer);
+        question = (TextView) mainView.findViewById(R.id.question);
+        answer = (TextView) mainView.findViewById(R.id.answer);
 
-        question.setText(getResources().getStringArray(R.array.questions_array)[position]);
-        answer.setText(getResources().getStringArray(R.array.answers_array)[position]);
+        update(id);
+    }
+
+    public void update(int id) {
+        Question questionObject = QuestionController.getQuestionById(getRealm(),id);
+        question.setText(questionObject.getQuestion());
+        answer.setText(questionObject.getAnswer());
     }
 }
