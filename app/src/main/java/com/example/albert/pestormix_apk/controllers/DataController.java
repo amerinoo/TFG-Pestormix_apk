@@ -2,6 +2,7 @@ package com.example.albert.pestormix_apk.controllers;
 
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
+import com.example.albert.pestormix_apk.models.Question;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public abstract class DataController {
     public static void init(Realm realm) {
         generateDrinks(realm);
         generateCocktails(realm);
+        generateQuestions(realm);
     }
 
     private static boolean addItem(Realm realm, RealmObject object) {
@@ -46,6 +48,21 @@ public abstract class DataController {
     /******************
      * Start Cocktail
      ******************/
+
+    public static void generateCocktails(Realm realm) {
+        List<Cocktail> cocktails = CocktailController.init(realm);
+
+        realm.beginTransaction();
+        for (Cocktail cocktail : cocktails) {
+            try {
+                realm.copyToRealm(cocktail);
+            } catch (RealmPrimaryKeyConstraintException e) {
+            }
+        }
+        realm.commitTransaction();
+
+    }
+
     public static boolean addCocktail(Realm realm, Cocktail cocktail) {
         return addItem(realm, cocktail);
     }
@@ -95,42 +112,31 @@ public abstract class DataController {
         return names;
     }
 
-    public static void generateCocktails(Realm realm) {
-        List<Cocktail> cocktails = CocktailController.init(realm);
-
-        realm.beginTransaction();
-        for (Cocktail cocktail : cocktails) {
-            try {
-                realm.copyToRealm(cocktail);
-            } catch (RealmPrimaryKeyConstraintException e) {
-            }
-        }
-        realm.commitTransaction();
-
-    }
     /****************** End Cocktail ******************/
 
     /******************
      * Start Drink
      ******************/
+    public static void generateDrinks(Realm realm) {
+        List<Drink> drinks = DrinkController.init();
+        realm.beginTransaction();
+        for (Drink drink : drinks) {
+            try {
+                realm.copyToRealm(drink);
+            } catch (RealmPrimaryKeyConstraintException e) {
+            }
+        }
+        realm.commitTransaction();
+    }
+
     public static boolean addDrink(Realm realm, Drink drink) {
         return addItem(realm, drink);
     }
-
 
     public static void removeDrinkByName(Realm realm, String name) {
         realm.beginTransaction();
         realm.where(Drink.class).equalTo("name", name).findAll().clear();
         realm.commitTransaction();
-    }
-
-    public static List<Drink> getDrinks(Realm realm) {
-        RealmResults<Drink> results = realm.where(Drink.class).findAll();
-        List<Drink> drinks = new ArrayList<>();
-        for (Drink drink : results) {
-            drinks.add(drink);
-        }
-        return drinks;
     }
 
     public static void removeAllDrinks(Realm realm) {
@@ -144,18 +150,53 @@ public abstract class DataController {
         return realm.where(Drink.class).equalTo("name", name).findFirst();
     }
 
-    public static void generateDrinks(Realm realm) {
-        List<Drink> drinks = DrinkController.init();
+    public static List<Drink> getDrinks(Realm realm) {
+        RealmResults<Drink> results = realm.where(Drink.class).findAll();
+        List<Drink> drinks = new ArrayList<>();
+        for (Drink drink : results) {
+            drinks.add(drink);
+        }
+        return drinks;
+    }
+/******************* End Drink ******************/
+
+    /******************
+     * Start Question
+     ******************/
+    private static void generateQuestions(Realm realm) {
+        List<Question> questions = QuestionController.init();
+
         realm.beginTransaction();
-        for (Drink drink : drinks) {
+        for (Question question : questions) {
             try {
-                realm.copyToRealm(drink);
+                realm.copyToRealm(question);
             } catch (RealmPrimaryKeyConstraintException e) {
             }
         }
         realm.commitTransaction();
     }
-/******************
- * End Drink
- ******************/
+
+    public static List<Question> getQuestions(Realm realm) {
+        RealmResults<Question> results = realm.where(Question.class).findAll();
+        List<Question> questions = new ArrayList<>();
+        for (Question question : results) {
+            questions.add(question);
+        }
+        return questions;
+    }
+
+    public static List<String> getQuestionsStrings(Realm realm) {
+        RealmResults<Question> results = realm.where(Question.class).findAll();
+        List<String> list = new ArrayList<>();
+        for (Question question : results) {
+            list.add(question.getQuestion());
+        }
+        return list;
+    }
+
+    public static Question getQuestionById(Realm realm, int id) {
+        return realm.where(Question.class).equalTo("id", id).findFirst();
+    }
+/******************* End Question ******************/
+
 }

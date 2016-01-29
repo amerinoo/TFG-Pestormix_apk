@@ -12,15 +12,6 @@ import io.realm.Realm;
  */
 public abstract class DrinkController {
 
-    public static List<Drink> getDrinks(Realm realm) {
-        return DataController.getDrinks(realm);
-    }
-
-    public static Drink getDrinkByName(Realm realm, String name) {
-        return DataController.getDrinkByName(realm, name);
-    }
-
-
     public static List<Drink> init() {
         List<Drink> drinks = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
@@ -29,5 +20,14 @@ public abstract class DrinkController {
             drinks.add(drink);
         }
         return drinks;
+    }
+
+    public static List<Drink> getDrinks(Realm realm) {
+        return DataController.getDrinks(realm);
+    }
+
+
+    public static Drink getDrinkByName(Realm realm, String name) {
+        return DataController.getDrinkByName(realm, name);
     }
 }
