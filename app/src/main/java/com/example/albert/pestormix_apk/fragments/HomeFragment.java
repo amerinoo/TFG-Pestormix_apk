@@ -26,7 +26,6 @@ import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
-import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.Constants;
 
@@ -70,7 +69,7 @@ public class HomeFragment extends PestormixMasterFragment {
         final ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
 
         AppCompatAutoCompleteTextView searchText = (AppCompatAutoCompleteTextView) searchView.findViewById(R.id.search_text);
-        cocktailsName = DataController.getCocktailsNames(getRealm());
+        cocktailsName = CocktailController.getCocktailsNames(getRealm());
         stringArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, cocktailsName);
         searchText.setAdapter(stringArrayAdapter);
         searchText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +82,7 @@ public class HomeFragment extends PestormixMasterFragment {
             }
         });
 
-        adapter = new CocktailAdapter(getActivity(), DataController.getCocktails(getRealm()));
+        adapter = new CocktailAdapter(getActivity(), CocktailController.getCocktails(getRealm()));
         cocktails.setAdapter(adapter);
         registerForContextMenu(cocktails);
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -101,7 +100,7 @@ public class HomeFragment extends PestormixMasterFragment {
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataController.removeAllCocktails(getRealm());
+                CocktailController.removeAllCocktails(getRealm());
                 adapter.update(getRealm());
                 showToast(getString(R.string.qr_code));
             }
@@ -109,7 +108,7 @@ public class HomeFragment extends PestormixMasterFragment {
         nfc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataController.generateCocktails(getRealm());
+                CocktailController.generateCocktails(getRealm());
                 adapter.update(getRealm());
                 showToast(getString(R.string.nfc_tag));
             }
@@ -174,7 +173,7 @@ public class HomeFragment extends PestormixMasterFragment {
     }
 
     private void showDetails(String cocktailName) {
-        Cocktail cocktail = DataController.getCocktailByName(getRealm(), cocktailName);
+        Cocktail cocktail = CocktailController.getCocktailByName(getRealm(), cocktailName);
         final AlertDialog dialog;
         View detailsView = LayoutInflater.from(getActivity()).inflate(R.layout.cocktail_details, null, false);
         ((TextView) detailsView.findViewById(R.id.name)).setText(cocktail.getName());
@@ -197,7 +196,7 @@ public class HomeFragment extends PestormixMasterFragment {
     }
 
     private void updateCocktail(String cocktailName) {
-        Cocktail cocktail = DataController.getCocktailByName(getRealm(), cocktailName);
+        Cocktail cocktail = CocktailController.getCocktailByName(getRealm(), cocktailName);
         Intent intent = new Intent(getActivity(), ManuallyActivity.class);
         intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, cocktail.getName());
         intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, cocktail.getDescription());
@@ -212,7 +211,7 @@ public class HomeFragment extends PestormixMasterFragment {
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DataController.removeCocktailByName(getRealm(), cocktailName);
+                        CocktailController.removeCocktailByName(getRealm(), cocktailName);
                         adapter.update(getRealm());
                         cocktailsName.remove(cocktailName);
                         stringArrayAdapter.clear();

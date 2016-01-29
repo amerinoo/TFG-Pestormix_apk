@@ -25,6 +25,10 @@ public abstract class CocktailController {
         return cocktails;
     }
 
+    public static void generateCocktails(Realm realm) {
+        DataController.generateCocktails(realm);
+    }
+
     public static void setName(Cocktail cocktail, String name) {
         cocktail.setName(name);
     }
@@ -38,9 +42,10 @@ public abstract class CocktailController {
     }
 
     public static String getDrinksAsString(Cocktail cocktail) {
-        return getDrinksAsString(cocktail,",");
+        return getDrinksAsString(cocktail, ",");
     }
-    public static String getDrinksAsString(Cocktail cocktail,String separator) {
+
+    public static String getDrinksAsString(Cocktail cocktail, String separator) {
         String drinks = "";
         for (Drink drink : cocktail.getDrinks()) drinks += drink.getName() + separator;
         drinks = drinks.substring(0, drinks.length() - separator.length()); //Delete the last ","
@@ -54,17 +59,49 @@ public abstract class CocktailController {
         return drinks;
     }
 
-    public static void setDrinksFromString(Realm realm, Cocktail cocktail, String drinksString) {
-        for (String name : drinksString.split(",")) {
-            addDrink(cocktail, DrinkController.getDrinkByName(realm, name));
-        }
-    }
-
     public static List<Drink> getDrinksFromString(Realm realm, String drinksString) {
         List<Drink> drinks = new ArrayList<>();
         for (String name : drinksString.split(",")) {
             drinks.add(DrinkController.getDrinkByName(realm, name));
         }
         return drinks;
+    }
+
+    public static void setDrinksFromString(Realm realm, Cocktail cocktail, String drinksString) {
+        for (String name : drinksString.split(",")) {
+            addDrink(cocktail, DrinkController.getDrinkByName(realm, name));
+        }
+    }
+
+    public static void addCocktailToDB(Realm realm, Cocktail cocktail) {
+        DataController.addCocktail(realm, cocktail);
+    }
+
+    public static Cocktail getCocktailByName(Realm realm, String cocktailName) {
+        return DataController.getCocktailByName(realm, cocktailName);
+    }
+
+    public static List<String> getCocktailsNames(Realm realm) {
+        return DataController.getCocktailsNames(realm);
+    }
+
+    public static List<Cocktail> getCocktails(Realm realm) {
+        return DataController.getCocktails(realm);
+    }
+
+    public static boolean cocktailExist(Realm realm, Cocktail cocktail) {
+        return DataController.cocktailExist(realm, cocktail);
+    }
+
+    public static void updateCocktail(Realm realm, Cocktail cocktail, String oldName) {
+        DataController.updateCocktail(realm, cocktail, oldName);
+    }
+
+    public static void removeCocktailByName(Realm realm, String cocktailName) {
+        DataController.removeCocktailByName(realm, cocktailName);
+    }
+
+    public static void removeAllCocktails(Realm realm) {
+        DataController.removeAllCocktails(realm);
     }
 }

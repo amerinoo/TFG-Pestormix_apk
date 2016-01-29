@@ -12,7 +12,6 @@ import android.widget.EditText;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
-import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.enums.CreateCocktailType;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.Constants;
@@ -97,10 +96,10 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         if (!checkFields(cocktail)) {
             showToast(R.string.give_name_mandatory);
         } else {
-            if (DataController.cocktailExist(getRealm(), cocktail)) {
+            if (CocktailController.cocktailExist(getRealm(), cocktail)) {
                 showToast(getString(R.string.cocktail_name_already_exist));
             } else {
-                DataController.addCocktail(getRealm(), cocktail);
+                CocktailController.addCocktailToDB(getRealm(), cocktail);
                 goMain();
             }
         }
@@ -110,10 +109,10 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         if (!checkFields(cocktail)) {
             showToast(R.string.give_name_mandatory);
         } else {
-            if (!extraName.equals(cocktail.getName()) && DataController.cocktailExist(getRealm(), cocktail)) {
+            if (!extraName.equals(cocktail.getName()) && CocktailController.cocktailExist(getRealm(), cocktail)) {
                 showToast(getString(R.string.cocktail_name_already_exist));
             } else {
-                DataController.updateCocktail(getRealm(), cocktail, extraName);
+                CocktailController.updateCocktail(getRealm(), cocktail, extraName);
                 goMain();
             }
         }

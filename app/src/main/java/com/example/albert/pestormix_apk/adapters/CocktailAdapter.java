@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.controllers.DataController;
+import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.models.Cocktail;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class CocktailAdapter extends BaseAdapter {
     }
 
     public void update(Realm realm) {
-        cocktails = DataController.getCocktails(realm);
+        cocktails = CocktailController.getCocktails(realm);
         notifyDataSetChanged();
     }
 
