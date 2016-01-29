@@ -85,6 +85,16 @@ public abstract class DataController {
         return !addItem(realm, cocktail);
     }
 
+
+    public static List<String> getCocktailsNames(Realm realm) {
+        RealmResults<Cocktail> results = realm.where(Cocktail.class).findAll();
+        List<String> names = new ArrayList<>();
+        for (Cocktail cocktail : results) {
+            names.add(cocktail.getName());
+        }
+        return names;
+    }
+
     public static void generateCocktails(Realm realm) {
         List<Cocktail> cocktails = CocktailController.init(realm);
 

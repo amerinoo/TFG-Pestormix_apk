@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize">
 
             <TextView
@@ -33,10 +33,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginRight="@dimen/padding_10"
                 android:background="@android:color/transparent"
                 android:src="@android:drawable/ic_menu_search"
                 android:tint="@color/colorText" />
         </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="10">
+
+            <android.support.v7.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/search_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="8"
+                android:completionThreshold="1"
+                android:imeOptions="actionSearch"
+                android:singleLine="true" />
+
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/main_content"
@@ -51,6 +75,6 @@
         android:layout_gravity="start"
         app:itemBackground="@android:color/transparent"
         app:itemIconTint="@color/colorPrimary"
-        app:menu="@menu/menu_drawer"></android.support.design.widget.NavigationView>
+        app:menu="@menu/menu_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

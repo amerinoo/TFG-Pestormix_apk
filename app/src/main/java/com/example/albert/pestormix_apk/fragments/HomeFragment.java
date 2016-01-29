@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -12,12 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.activities.MainActivity;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
@@ -25,6 +29,8 @@ import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.Constants;
+
+import java.util.List;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -35,6 +41,8 @@ public class HomeFragment extends PestormixMasterFragment {
     private View mainView;
     private String cocktailName;
     private CocktailAdapter adapter;
+    private List<String> cocktailsName;
+    private ArrayAdapter<String> stringArrayAdapter;
 
     public static HomeFragment getInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -58,7 +66,21 @@ public class HomeFragment extends PestormixMasterFragment {
         Spinner glasses = (Spinner) mainView.findViewById(R.id.glass_spinner);
         ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr_button);
         ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
-        ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
+        LinearLayout searchView = ((MainActivity) getActivity()).getSearchView();
+        final ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
+
+        AppCompatAutoCompleteTextView searchText = (AppCompatAutoCompleteTextView) searchView.findViewById(R.id.search_text);
+        cocktailsName = DataController.getCocktailsNames(getRealm());
+        stringArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, cocktailsName);
+        searchText.setAdapter(stringArrayAdapter);
+        searchText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String name = getStringOfTextView((TextView) view.findViewById(android.R.id.text1));
+                showConfirmOrder(name);
+            }
+        });
+
         adapter = new CocktailAdapter(getActivity(), DataController.getCocktails(getRealm()));
         cocktails.setAdapter(adapter);
         registerForContextMenu(cocktails);
@@ -95,24 +117,28 @@ public class HomeFragment extends PestormixMasterFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = getStringOfTextView((TextView) view.findViewById(R.id.name));
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getString(R.string.confirmOrder))
-                        .setMessage(getString(R.string.youre_asking) + name)
-                        .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                showToast(getString(R.string.accept));
-                            }
-                        })
-                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                showToast(getString(R.string.cancel));
-                            }
-                        }).show();
+                showConfirmOrder(name);
 
             }
         });
+    }
+
+    private void showConfirmOrder(String name) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(getString(R.string.confirmOrder))
+                .setMessage(getString(R.string.youre_asking) + name)
+                .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showToast(getString(R.string.accept));
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showToast(getString(R.string.cancel));
+                    }
+                }).show();
     }
 
     @Override
@@ -155,7 +181,7 @@ public class HomeFragment extends PestormixMasterFragment {
         } else {
             ((TextView) detailsView.findViewById(R.id.description)).setText(cocktail.getDescription());
         }
-        ((TextView) detailsView.findViewById(R.id.drinks)).setText(CocktailController.getDrinksAsString(cocktail,getString(R.string.drinks_detail_separator)));
+        ((TextView) detailsView.findViewById(R.id.drinks)).setText(CocktailController.getDrinksAsString(cocktail, getString(R.string.drinks_detail_separator)));
         dialog = new AlertDialog.Builder(getActivity())
                 .setView(detailsView)
                 .create();
@@ -186,6 +212,9 @@ public class HomeFragment extends PestormixMasterFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         DataController.removeCocktailByName(getRealm(), cocktailName);
                         adapter.update(getRealm());
+                        cocktailsName.remove(cocktailName);
+                        stringArrayAdapter.clear();
+                        stringArrayAdapter.addAll(cocktailsName);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
