@@ -77,6 +77,8 @@ public class HomeFragment extends PestormixMasterFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = getStringOfTextView((TextView) view.findViewById(android.R.id.text1));
+                hideKeyboard();
+                closeSearchView();
                 showConfirmOrder(name);
             }
         });
