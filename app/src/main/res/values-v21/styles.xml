@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+                <!-- Customize your theme here. -->
+                <item name="colorPrimary">@color/colorPrimary</item>
+                <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+                <item name="colorAccent">@color/colorAccent</item>
+                <item name="android:textColor">@color/colorPrimary</item>
+                <item name="drawerArrowStyle">@style/MyDrawerArrowToggle</item>
+                <item name="android:background">@color/colorBackground</item>
+                <item name="android:textSize">17sp</item>
+                <item name="android:navigationBarColor">?android:attr/colorPrimary</item>
+        </style>
+</resources>
