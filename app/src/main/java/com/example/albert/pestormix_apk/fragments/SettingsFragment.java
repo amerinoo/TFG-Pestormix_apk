@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.albert.pestormix_apk.R;
@@ -36,7 +37,9 @@ public class SettingsFragment extends PestormixMasterFragment {
     }
 
     private void configView() {
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.row_single_text_view, getResources().getStringArray(R.array.settings_array));
         ListView list = (ListView) mainView.findViewById(R.id.settings_list);
+        list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

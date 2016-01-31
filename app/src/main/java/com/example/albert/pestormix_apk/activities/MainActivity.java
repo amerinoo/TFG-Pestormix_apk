@@ -8,10 +8,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
@@ -30,8 +28,6 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
     private ActionBarDrawerToggle drawerToggle;
 
     private TextView toolbarTitle;
-    private ImageButton searchIcon;
-    private LinearLayout searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +35,9 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        Menu menu = toolbar.getMenu();
+        getMenuInflater().inflate(R.menu.menu_search_view, menu);
         setSupportActionBar(toolbar);
-        searchIcon = (ImageButton) findViewById(R.id.search_icon);
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchIcon.setSelected(!searchIcon.isSelected());
-                if (searchIcon.isSelected()) openSearchView();
-                else closeSearchView();
-            }
-        });
-        searchView = (LinearLayout) findViewById(R.id.search_view);
         drawer = (NavigationView) findViewById(R.id.main_drawer);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0);
@@ -66,12 +54,9 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
 
         Fragment fragment;
         int resId = R.id.main_content;
-        hideSearchIcon();
         closeNavigationDrawer();
-        closeSearchView();
         switch (id) {
             case R.id.navigation_cocktails:
-                showSearchIcon();
                 setToolbarTitleText(getText(R.string.title_cocktails));
                 fragment = HomeFragment.getInstance();
                 loadFragment(resId, fragment);
@@ -112,31 +97,6 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         this.toolbarTitle.setText(text);
     }
 
-    private boolean isSearchOpen() {
-        return searchIcon.isSelected();
-    }
-
-    public void showSearchIcon() {
-        searchIcon.setVisibility(View.VISIBLE);
-    }
-
-    public void hideSearchIcon() {
-        searchIcon.setVisibility(View.GONE);
-    }
-
-    public void openSearchView() {
-        searchView.setVisibility(View.VISIBLE);
-    }
-
-    public void closeSearchView() {
-        searchView.setVisibility(View.GONE);
-        searchIcon.setSelected(false);
-    }
-
-    public LinearLayout getSearchView() {
-        return searchView;
-    }
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         navigate(item.getItemId());
@@ -153,8 +113,6 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
     public void onBackPressed() {
         if (isDrawerOpen()) {
             closeNavigationDrawer();
-        } else if (isSearchOpen()) {
-            closeSearchView();
         } else {
             super.onBackPressed();
         }

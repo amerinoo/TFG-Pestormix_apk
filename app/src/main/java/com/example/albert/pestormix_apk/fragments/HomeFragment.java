@@ -4,10 +4,13 @@ package com.example.albert.pestormix_apk.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.support.v7.widget.SearchView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,13 +18,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.activities.MainActivity;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
@@ -49,6 +50,12 @@ public class HomeFragment extends PestormixMasterFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, null, false);
         return view;
@@ -65,26 +72,14 @@ public class HomeFragment extends PestormixMasterFragment {
         Spinner glasses = (Spinner) mainView.findViewById(R.id.glass_spinner);
         ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr_button);
         ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
-        LinearLayout searchView = ((MainActivity) getActivity()).getSearchView();
         final ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
-
-        AppCompatAutoCompleteTextView searchText = (AppCompatAutoCompleteTextView) searchView.findViewById(R.id.search_text);
-        cocktailsName = CocktailController.getCocktailsNames(getRealm());
-        stringArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, cocktailsName);
-        searchText.setAdapter(stringArrayAdapter);
-        searchText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = getStringOfTextView((TextView) view.findViewById(android.R.id.text1));
-                hideKeyboard();
-                closeSearchView();
-                showConfirmOrder(name);
-            }
-        });
 
         adapter = new CocktailAdapter(getActivity(), CocktailController.getCocktails(getRealm()));
         cocktails.setAdapter(adapter);
         registerForContextMenu(cocktails);
+
+        ArrayAdapter glassesAdapter = new ArrayAdapter(getActivity(), R.layout.row_single_text_view, getResources().getStringArray(R.array.glass_array));
+        glasses.setAdapter(glassesAdapter);
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -228,5 +223,31 @@ public class HomeFragment extends PestormixMasterFragment {
 
     private String getStringOfTextView(TextView view) {
         return view.getText().toString();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search_view, menu);
+        configureSearchView(menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void configureSearchView(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.search_view);
+        menuItem.getIcon().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        SearchView.SearchAutoComplete searchText = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        cocktailsName = CocktailController.getCocktailsNames(getRealm());
+        stringArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.row_single_text_view, cocktailsName);
+        searchText.setThreshold(1);
+        searchText.setAdapter(stringArrayAdapter);
+        searchText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String name = getStringOfTextView((TextView) view.findViewById(android.R.id.text1));
+                hideKeyboard();
+                showConfirmOrder(name);
+            }
+        });
     }
 }

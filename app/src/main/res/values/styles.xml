@@ -6,13 +6,28 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="drawerArrowStyle">@style/MyDrawerArrowToggle</item>
         <item name="android:background">@color/colorBackground</item>
         <item name="android:textSize">17sp</item>
+        <item name="drawerArrowStyle">@style/MyDrawerArrowToggle</item>
+        <item name="android:textViewStyle">@style/TextView</item>
+        <item name="android:buttonStyle">@style/buttonPestormix</item>
+    </style>
+
+    <style name="TextView">
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Toolbar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">?attr/colorPrimary</item>
     </style>
 
     <style name="MyDrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/colorBackground</item>
     </style>
+
+    <style name="buttonPestormix" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+
 </resources>

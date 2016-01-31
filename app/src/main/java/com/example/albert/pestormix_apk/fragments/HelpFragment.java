@@ -61,7 +61,7 @@ public class HelpFragment extends PestormixMasterFragment {
         });
 
         List<String> items = QuestionController.getQuestionsStrings(getRealm());
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.row_single_text_view, items);
         list.setAdapter(adapter);
     }
 }

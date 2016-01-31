@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize">
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/Toolbar">
 
             <TextView
                 android:id="@+id/toolbar_title"
@@ -28,39 +29,7 @@
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/toolbar_title" />
 
-            <ImageButton
-                android:id="@+id/search_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/padding_10"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_search"
-                android:tint="@color/colorText" />
         </android.support.v7.widget.Toolbar>
-
-        <LinearLayout
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="center_horizontal"
-            android:minHeight="?attr/actionBarSize"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            android:weightSum="10">
-
-            <android.support.v7.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/search_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="8"
-                android:completionThreshold="1"
-                android:imeOptions="actionSearch"
-                android:singleLine="true" />
-
-        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/main_content"

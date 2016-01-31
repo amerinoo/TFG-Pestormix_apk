@@ -31,8 +31,4 @@ public class PestormixMasterFragment extends Fragment {
         inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
     }
-
-    public void closeSearchView(){
-        ((MainActivity)getActivity()).closeSearchView();
-    }
 }
