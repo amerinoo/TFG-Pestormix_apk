@@ -1,5 +1,6 @@
 package com.example.albert.pestormix_apk.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.activities.ConfigValvesActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 
 /**
@@ -43,9 +45,19 @@ public class SettingsFragment extends PestormixMasterFragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String[] stringArray = getResources().getStringArray(R.array.settings_array);
-                showToast(stringArray[position]);
+                switch (position) {
+                    case 0:
+                        goConfigValves();
+                        break;
+                    case 1:
+                        break;
+                }
             }
         });
+    }
+
+    private void goConfigValves() {
+        Intent intent = new Intent(getActivity(), ConfigValvesActivity.class);
+        startActivity(intent);
     }
 }

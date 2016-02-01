@@ -30,6 +30,9 @@
         <activity
             android:name=".activities.GiveCocktailNameActivity"
             android:label="" />
+        <activity
+            android:name=".activities.ConfigValvesActivity"
+            android:label="" />
     </application>
 
 </manifest>

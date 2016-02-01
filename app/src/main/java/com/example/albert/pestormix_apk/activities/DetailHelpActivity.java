@@ -9,6 +9,7 @@ import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.fragments.DetailHelpFragment;
 import com.example.albert.pestormix_apk.utils.Constants;
 
+
 public class DetailHelpActivity extends PestormixMasterActivity {
 
     @Override

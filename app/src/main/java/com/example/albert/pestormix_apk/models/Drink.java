@@ -1,5 +1,7 @@
 package com.example.albert.pestormix_apk.models;
 
+import com.example.albert.pestormix_apk.R;
+
 import io.realm.RealmObject;
 
 /**
@@ -9,11 +11,13 @@ public class Drink extends RealmObject {
     private String name;
     private String description;
     private boolean alcohol;
+    private int image;
 
     public Drink() {
         this.name = "";
         this.description = "";
         this.alcohol = false;
+        this.image = R.drawable.agua;
     }
 
     public String getName() {
@@ -38,5 +42,13 @@ public class Drink extends RealmObject {
 
     public void setAlcohol(boolean alcohol) {
         this.alcohol = alcohol;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }

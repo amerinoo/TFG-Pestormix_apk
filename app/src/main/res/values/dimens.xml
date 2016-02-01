@@ -16,6 +16,9 @@
     <dimen name="cocktail_description_edit_text">300dp</dimen>
     <dimen name="cocktail_description_edit_text_height">150dp</dimen>
 
+    <!-- Configure Valves -->
+    <dimen name="icon">30dp</dimen>
+
     <!-- Padding -->
     <dimen name="activity_default_padding">20dp</dimen>
     <dimen name="padding_10">10dp</dimen>
