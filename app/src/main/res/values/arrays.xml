@@ -8,7 +8,6 @@
 
     <string-array name="settings_array">
         <item>Configure the valves</item>
-        <item>Login</item>
+        <item>@string/login</item>
     </string-array>
-
 </resources>

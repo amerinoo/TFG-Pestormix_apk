@@ -12,24 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:theme="@style/Toolbar">
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/toolbar_title" />
-
-        </android.support.v7.widget.Toolbar>
+        <include layout="@layout/toolbar" />
 
         <FrameLayout
             android:id="@+id/main_content"

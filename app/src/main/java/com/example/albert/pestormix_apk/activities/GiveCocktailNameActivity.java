@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
@@ -26,6 +27,7 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_give_cocktail_name);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(getString(R.string.title_create_cocktail));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         configView();

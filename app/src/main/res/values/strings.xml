@@ -11,6 +11,7 @@
     <!-- Tutorial -->
     <string name="tutorial_continue">Continue</string>
 
+
     <!-- Cocktail -->
     <string name="option_1">Details</string>
     <string name="option_2">Edit</string>
@@ -20,11 +21,13 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="cocktail_removed">The cocktail will be removed permanetly</string>
+    <string name="search">Search</string>
     <!-- Cocktail Details -->
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="drinks">Drinks</string>
     <string name="missing_description">This cocktail doesn\'t have description</string>
+    <string name="drinks_detail_separator">\u0020 - \u0020</string>
 
     <!-- Create cocktail-->
     <string name="how_will_create_cocktail">How will you create the cocktail?</string>
@@ -47,7 +50,15 @@
     <string name="cocktail_name_already_exist">A cocktail with this name already exists</string>
     <string name="give_name_mandatory">You have to give a name for it</string>
 
+    <!-- Settings -->
+    <string name="configure_valves">Valves</string>
+    <string name="V1">V1</string>
+    <string name="V2">V2</string>
+    <string name="V3">V3</string>
+    <string name="V4">V4</string>
+    <string name="login">Login</string>
+
     <!-- Fake data -->
     <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a,</string>
-    <string name="drinks_detail_separator">\u0020 - \u0020</string>
+
 </resources>

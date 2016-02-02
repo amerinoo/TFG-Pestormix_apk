@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ItemsAdapter;
@@ -35,6 +36,7 @@ public class ManuallyActivity extends PestormixMasterActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manually);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(getString(R.string.title_create_cocktail));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         configView();

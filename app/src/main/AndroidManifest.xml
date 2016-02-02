@@ -33,6 +33,7 @@
         <activity
             android:name=".activities.ConfigValvesActivity"
             android:label="" />
+        <activity android:name=".activities.AllReadyActivity"></activity>
     </application>
 
 </manifest>
