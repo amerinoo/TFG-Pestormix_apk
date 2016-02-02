@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 public class AllReadyActivity extends PestormixMasterActivity {
 
@@ -19,7 +20,7 @@ public class AllReadyActivity extends PestormixMasterActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //getPestormixApplication().putBoolean(Constants.PREFERENCE_TUTORIAL_KEY, false);
+                getPestormixApplication().putBoolean(Constants.PREFERENCE_TUTORIAL_KEY, false);
                 Intent intent = new Intent(AllReadyActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
