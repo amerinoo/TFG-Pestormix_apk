@@ -3,6 +3,7 @@ package com.example.albert.pestormix_apk.controllers;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Question;
+import com.example.albert.pestormix_apk.models.Valve;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public abstract class DataController {
         generateDrinks(realm);
         generateCocktails(realm);
         generateQuestions(realm);
+        generateValves(realm);
     }
 
     private static boolean addItem(Realm realm, RealmObject object) {
@@ -198,5 +200,35 @@ public abstract class DataController {
         return realm.where(Question.class).equalTo("id", id).findFirst();
     }
 /******************* End Question ******************/
+
+    /******************
+     * Start Valve
+     ******************/
+    private static void generateValves(Realm realm) {
+        List<Valve> valves = ValveController.init();
+
+        realm.beginTransaction();
+        for (Valve valve : valves) {
+            try {
+                realm.copyToRealm(valve);
+            } catch (RealmPrimaryKeyConstraintException e) {
+            }
+        }
+        realm.commitTransaction();
+    }
+
+    public static List<Valve> getValves(Realm realm) {
+        RealmResults<Valve> results = realm.where(Valve.class).findAllSorted("id");
+        List<Valve> valves = new ArrayList<>();
+        for (Valve valve : results) {
+            valves.add(valve);
+        }
+        return valves;
+    }
+
+    public static Valve getValveById(Realm realm, int id) {
+        return realm.where(Valve.class).equalTo("id", id).findFirst();
+    }
+/******************* End Valve ******************/
 
 }
