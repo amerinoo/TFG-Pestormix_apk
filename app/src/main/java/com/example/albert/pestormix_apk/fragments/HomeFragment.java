@@ -27,6 +27,7 @@ import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
+import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.Constants;
 
@@ -95,7 +96,7 @@ public class HomeFragment extends PestormixMasterFragment {
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CocktailController.removeAllCocktails(getRealm());
+                DataController.init(getRealm());
                 adapter.update(getRealm());
                 showToast(getString(R.string.qr_code));
             }
@@ -103,8 +104,6 @@ public class HomeFragment extends PestormixMasterFragment {
         nfc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CocktailController.generateCocktails(getRealm());
-                adapter.update(getRealm());
                 showToast(getString(R.string.nfc_tag));
             }
         });

@@ -1,5 +1,7 @@
 package com.example.albert.pestormix_apk.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -14,9 +16,12 @@ import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ScreenSlidePagerAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.controllers.DrinkController;
+import com.example.albert.pestormix_apk.controllers.ValveController;
 import com.example.albert.pestormix_apk.models.Drink;
+import com.example.albert.pestormix_apk.models.Valve;
 import com.example.albert.pestormix_apk.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,14 +31,14 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private TextView v1;
-    private TextView v2;
-    private TextView v3;
-    private TextView v4;
+    private List<TextView> valveTabs;
 
-    private View lastSelected;
+    private int lastSelected = -1;
 
     private boolean isTutorial;
+    private List<Valve> valves;
+
+    private boolean isSaved = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,43 +49,46 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         if (!isTutorial)
             ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(getString(R.string.configure_valves));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!isTutorial);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         configView();
     }
 
     private void configView() {
+        valves = ValveController.getValves(getRealm());
+        valveTabs = new ArrayList<>();
         mPager = (ViewPager) findViewById(R.id.pager);
-        v1 = (TextView) findViewById(R.id.v1);
-        v2 = (TextView) findViewById(R.id.v2);
-        v3 = (TextView) findViewById(R.id.v3);
-        v4 = (TextView) findViewById(R.id.v4);
+        valveTabs.add((TextView) findViewById(R.id.v1));
+        valveTabs.add((TextView) findViewById(R.id.v2));
+        valveTabs.add((TextView) findViewById(R.id.v3));
+        valveTabs.add((TextView) findViewById(R.id.v4));
 
-        v1.setTag(-1);
-        v2.setTag(-1);
-        v3.setTag(-1);
-        v4.setTag(-1);
-
-        changeSelected(v1);
-
-        v1.setOnClickListener(this);
-        v2.setOnClickListener(this);
-        v3.setOnClickListener(this);
-        v4.setOnClickListener(this);
+        for (int i = 0; i < valveTabs.size(); i++) {
+            valveTabs.get(i).setTag(valves.get(i).getDrinkPosition());
+            valveTabs.get(i).setOnClickListener(this);
+        }
 
         List<Drink> drinks = DrinkController.getDrinks(getRealm());
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager(), drinks);
         mPager.setAdapter(mPagerAdapter);
+        onClick(valveTabs.get(0));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.v1:
-            case R.id.v2:
-            case R.id.v3:
-            case R.id.v4:
-                changeSelected(v);
+                changeSelected(v, 0);
                 break;
+            case R.id.v2:
+                changeSelected(v, 1);
+                break;
+            case R.id.v3:
+                changeSelected(v, 2);
+                break;
+            case R.id.v4:
+                changeSelected(v, 3);
+                break;
+
         }
     }
 
@@ -90,20 +98,20 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         finish();
     }
 
-    private void changeSelected(View v) {
-        if (lastSelected != null) {
-            lastSelected.setSelected(false);
-            lastSelected.setTag(mPager.getCurrentItem());
+    private void changeSelected(View v, int position) {
+        if (lastSelected != -1) {
+            int lastItem = (int) valveTabs.get(lastSelected).getTag();
+            valveTabs.get(lastSelected).setSelected(false);
+            if (lastItem != mPager.getCurrentItem()) {
+                valveTabs.get(lastSelected).setTag(mPager.getCurrentItem());
+                setIsSaved(false);
+            }
         }
         v.setSelected(true);
         int currentItem = (int) v.getTag();
-        if (currentItem == -1) {
-            mPager.setCurrentItem(0);
-        } else {
-            mPager.setCurrentItem(currentItem);
+        mPager.setCurrentItem(currentItem);
+        lastSelected = position;
 
-        }
-        lastSelected = v;
     }
 
     @Override
@@ -119,9 +127,64 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         int id = item.getItemId();
         switch (id) {
             case R.id.continue_button:
+                save();
                 goNext();
                 break;
+            case R.id.save:
+                save();
+                break;
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void save() {
+        onClick(valveTabs.get(lastSelected));
+        Drink drink;
+        for (int i = 0; i < valveTabs.size(); i++) {
+            drink = DrinkController.getDrinkByName(getRealm(), getDrinkName(i));
+            int position = (Integer) valveTabs.get(i).getTag();
+            ValveController.updateValve(getRealm(), valves.get(i), drink, position);
+        }
+        setIsSaved(true);
+        showToast(R.string.save_completed);
+    }
+
+    private String getDrinkName(int position) {
+        return (String) mPagerAdapter.getPageTitle((Integer) valveTabs.get(position).getTag());
+    }
+
+    private void cancel() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.exit_without_saving)
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ConfigValvesActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isSaved()) {
+            super.onBackPressed();
+        } else {
+            cancel();
+        }
+    }
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setIsSaved(boolean isSaved) {
+        this.isSaved = isSaved;
     }
 }

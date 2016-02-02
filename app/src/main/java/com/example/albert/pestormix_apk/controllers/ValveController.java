@@ -1,5 +1,6 @@
 package com.example.albert.pestormix_apk.controllers;
 
+import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Valve;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class ValveController {
         for (int i = 0; i < 4; i++) {
             Valve valve = new Valve();
             valve.setId(i);
+            valve.setDrinkPosition(0);
             valves.add(valve);
         }
         return valves;
@@ -25,7 +27,7 @@ public class ValveController {
         return DataController.getValves(realm);
     }
 
-    public static Valve getValveById(Realm realm, int id) {
-        return DataController.getValveById(realm, id);
+    public static void updateValve(Realm realm, Valve valve, Drink drink, int position) {
+        DataController.updateValve(realm, valve, drink, position);
     }
 }

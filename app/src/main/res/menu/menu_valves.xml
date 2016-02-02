@@ -13,11 +13,6 @@
     <group
         android:id="@+id/config_valves_group">
         <item
-            android:id="@+id/cancel"
-            android:icon="@android:drawable/ic_menu_close_clear_cancel"
-            android:title="@string/cancel"
-            app:showAsAction="ifRoom" />
-        <item
             android:id="@+id/save"
             android:icon="@android:drawable/ic_menu_save"
             android:title="@string/save"

@@ -23,6 +23,7 @@ public abstract class DataController {
      * Start General
      ******************/
     public static void init(Realm realm) {
+        removeAllInstances(realm);
         generateDrinks(realm);
         generateCocktails(realm);
         generateQuestions(realm);
@@ -44,6 +45,8 @@ public abstract class DataController {
     private static void removeAllInstances(Realm realm) {
         removeAllCocktails(realm);
         removeAllDrinks(realm);
+        removeAllQuestions(realm);
+        removeAllValves(realm);
     }
     /******************* End General     ******************/
 
@@ -199,6 +202,13 @@ public abstract class DataController {
     public static Question getQuestionById(Realm realm, int id) {
         return realm.where(Question.class).equalTo("id", id).findFirst();
     }
+
+    public static void removeAllQuestions(Realm realm) {
+        RealmResults<Question> results = realm.where(Question.class).findAll();
+        realm.beginTransaction();
+        results.clear();
+        realm.commitTransaction();
+    }
 /******************* End Question ******************/
 
     /******************
@@ -229,6 +239,22 @@ public abstract class DataController {
     public static Valve getValveById(Realm realm, int id) {
         return realm.where(Valve.class).equalTo("id", id).findFirst();
     }
+
+    public static void removeAllValves(Realm realm) {
+        RealmResults<Valve> results = realm.where(Valve.class).findAll();
+        realm.beginTransaction();
+        results.clear();
+        realm.commitTransaction();
+    }
+
+    public static void updateValve(Realm realm, Valve valve, Drink drink, int position) {
+        realm.beginTransaction();
+        valve.setDrink(drink);
+        valve.setDrinkPosition(position);
+        realm.copyToRealmOrUpdate(valve);
+        realm.commitTransaction();
+    }
+
 /******************* End Valve ******************/
 
 }
