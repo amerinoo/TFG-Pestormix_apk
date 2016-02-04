@@ -15,11 +15,11 @@ public abstract class DrinkController {
 
     public static List<Drink> init() {
         List<Drink> drinks = new ArrayList<>();
-        drinks.add(getDrink("Water", "", false, R.drawable.agua));
-        drinks.add(getDrink("Coca Cola", "", false, R.drawable.cocacola));
-        drinks.add(getDrink("Lemonade", "", false, R.drawable.limonada));
-        drinks.add(getDrink("Orangeade", "", false, R.drawable.naranjada));
-        drinks.add(getDrink("Ron Barcelo", "", true, R.drawable.ron_barcelo));
+        drinks.add(getDrink("Water", "Water description", false, R.drawable.agua));
+        drinks.add(getDrink("Coca Cola", "Coca Cola description", false, R.drawable.cocacola));
+        drinks.add(getDrink("Lemonade", "Lemonade description", false, R.drawable.limonada));
+        drinks.add(getDrink("Orangeade", "Orangeade description", false, R.drawable.naranjada));
+        drinks.add(getDrink("Ron Barceló", "Ron Barceló description", true, R.drawable.ron_barcelo));
         return drinks;
     }
 

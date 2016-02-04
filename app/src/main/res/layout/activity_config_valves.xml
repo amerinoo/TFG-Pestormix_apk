@@ -15,8 +15,7 @@
     <LinearLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.15"
+        android:layout_height="?attr/actionBarSize"
         android:background="@drawable/white_rectangle_background"
         android:minHeight="?attr/actionBarSize"
         android:orientation="horizontal">

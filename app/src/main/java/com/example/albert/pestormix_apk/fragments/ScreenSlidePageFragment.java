@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
@@ -40,16 +41,14 @@ public class ScreenSlidePageFragment extends PestormixMasterFragment implements 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.activity_valves, container, false);
-        return rootView;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_valves, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((TextView) view.findViewById(R.id.name)).setText(drink.getName());
         CardFrontFragment cardFrontFragment = CardFrontFragment.newInstance(drink.getImage());
         cardFrontFragment.setListener(this);
         if (savedInstanceState == null) {
@@ -71,35 +70,14 @@ public class ScreenSlidePageFragment extends PestormixMasterFragment implements 
         }
         CardBackFragment cardBackFragment = CardBackFragment.newInstance(drink.getDescription());
         cardBackFragment.setListener(this);
-        // Flip to the back.
-
         mShowingBack = true;
-
-        // Create and commit a new fragment transaction that adds the fragment for the back of
-        // the card, uses custom animations, and is part of the fragment manager's back stack.
-
         getChildFragmentManager()
                 .beginTransaction()
-
-                        // Replace the default fragment animations with animator resources representing
-                        // rotations when switching to the back of the card, as well as animator
-                        // resources representing rotations when flipping back to the front (e.g. when
-                        // the system Back button is pressed).
-
                 .setCustomAnimations(
                         R.animator.card_flip_right_in, R.animator.card_flip_right_out
                         , R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-
-                        // Replace any fragments currently in the container view with a fragment
-                        // representing the next page (indicated by the just-incremented currentPage
-                        // variable).
                 .replace(R.id.container, cardBackFragment)
-
-                        // Add this transaction to the back stack, allowing users to press Back
-                        // to get to the front of the card.
                 .addToBackStack(null)
-
-                        // Commit the transaction.
                 .commit();
     }
 

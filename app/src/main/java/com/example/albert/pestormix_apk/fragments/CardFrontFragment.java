@@ -15,7 +15,6 @@ import android.widget.ImageView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.listeners.OnInformationClickListener;
-import com.example.albert.pestormix_apk.utils.Constants;
 
 public class CardFrontFragment extends Fragment {
     OnInformationClickListener mListener;
@@ -24,21 +23,12 @@ public class CardFrontFragment extends Fragment {
 
     public static CardFrontFragment newInstance(int image) {
         CardFrontFragment cardFrontFragment = new CardFrontFragment();
-        Bundle args = new Bundle();
-        args.putInt(Constants.EXTRA_DRINK_IMAGE, image);
-        cardFrontFragment.setArguments(args);
+        cardFrontFragment.image = image;
         return cardFrontFragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        image = getArguments().getInt(Constants.EXTRA_DRINK_IMAGE);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_card_front, container, false);
     }
 

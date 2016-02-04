@@ -14,11 +14,9 @@
         android:src="@android:drawable/ic_dialog_info" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/image"
-        android:textColor="#fff"
-        android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

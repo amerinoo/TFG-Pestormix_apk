@@ -10,12 +10,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.listeners.OnInformationClickListener;
-import com.example.albert.pestormix_apk.utils.Constants;
 
 /**
  * A fragment representing the back of the card.
@@ -26,16 +24,8 @@ public class CardBackFragment extends Fragment {
 
     public static CardBackFragment newInstance(String description) {
         CardBackFragment cardBackFragment = new CardBackFragment();
-        Bundle args = new Bundle();
-        args.putString(Constants.EXTRA_DRINK_DESCRIPTION, description);
-        cardBackFragment.setArguments(args);
+        cardBackFragment.description = description;
         return cardBackFragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        description = getArguments().getString(Constants.EXTRA_DRINK_DESCRIPTION);
     }
 
     @Override
@@ -49,7 +39,7 @@ public class CardBackFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ((TextView) view.findViewById(R.id.description)).setText(description);
-        ((ImageButton) view.findViewById(R.id.imageButton)).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.imageButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onInformationClick();
