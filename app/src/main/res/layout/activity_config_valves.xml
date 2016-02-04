@@ -22,6 +22,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/v1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -30,15 +31,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/v1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="@string/V1" />
 
             <TextView
                 android:id="@+id/v1_drink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="patata" />
         </LinearLayout>
 
@@ -46,7 +48,9 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/white" />
+
         <LinearLayout
+            android:id="@+id/v2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -55,15 +59,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/v2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="@string/V2" />
 
             <TextView
                 android:id="@+id/v2_drink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="[patata]" />
         </LinearLayout>
 
@@ -71,7 +76,9 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/white" />
+
         <LinearLayout
+            android:id="@+id/v3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -80,15 +87,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/v3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="@string/V3" />
 
             <TextView
                 android:id="@+id/v3_drink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="(patata)" />
         </LinearLayout>
 
@@ -98,6 +106,7 @@
             android:background="@color/white" />
 
         <LinearLayout
+            android:id="@+id/v4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -106,15 +115,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/v4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="@string/V4" />
 
             <TextView
                 android:id="@+id/v4_drink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="{patata}" />
         </LinearLayout>
     </LinearLayout>

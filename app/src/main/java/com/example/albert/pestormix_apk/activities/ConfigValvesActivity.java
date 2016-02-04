@@ -31,7 +31,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private List<TextView> valveTabs;
+    private List<View> valveTabs;
 
     private int lastSelected = -1;
 
@@ -57,10 +57,10 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         valves = ValveController.getValves(getRealm());
         valveTabs = new ArrayList<>();
         mPager = (ViewPager) findViewById(R.id.pager);
-        valveTabs.add((TextView) findViewById(R.id.v1));
-        valveTabs.add((TextView) findViewById(R.id.v2));
-        valveTabs.add((TextView) findViewById(R.id.v3));
-        valveTabs.add((TextView) findViewById(R.id.v4));
+        valveTabs.add(findViewById(R.id.v1));
+        valveTabs.add(findViewById(R.id.v2));
+        valveTabs.add(findViewById(R.id.v3));
+        valveTabs.add(findViewById(R.id.v4));
 
         for (int i = 0; i < valveTabs.size(); i++) {
             valveTabs.get(i).setTag(valves.get(i).getDrinkPosition());
