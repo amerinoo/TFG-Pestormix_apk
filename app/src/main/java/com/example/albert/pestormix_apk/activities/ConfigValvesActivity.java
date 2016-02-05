@@ -32,6 +32,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
     private List<View> valveTabs;
+    private List<TextView> valveTabsName;
 
     private int lastSelected = -1;
 
@@ -56,20 +57,29 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
     private void configView() {
         valves = ValveController.getValves(getRealm());
         valveTabs = new ArrayList<>();
+        valveTabsName = new ArrayList<>();
+
         mPager = (ViewPager) findViewById(R.id.pager);
+        List<Drink> drinks = DrinkController.getDrinks(getRealm());
+        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager(), drinks);
+        mPager.setAdapter(mPagerAdapter);
+
         valveTabs.add(findViewById(R.id.v1));
         valveTabs.add(findViewById(R.id.v2));
         valveTabs.add(findViewById(R.id.v3));
         valveTabs.add(findViewById(R.id.v4));
 
+        valveTabsName.add((TextView) findViewById(R.id.v1_drink));
+        valveTabsName.add((TextView) findViewById(R.id.v2_drink));
+        valveTabsName.add((TextView) findViewById(R.id.v3_drink));
+        valveTabsName.add((TextView) findViewById(R.id.v4_drink));
+
         for (int i = 0; i < valveTabs.size(); i++) {
             valveTabs.get(i).setTag(valves.get(i).getDrinkPosition());
             valveTabs.get(i).setOnClickListener(this);
+            valveTabsName.get(i).setText(getDrinkName(valves.get(i).getDrinkPosition()));
         }
 
-        List<Drink> drinks = DrinkController.getDrinks(getRealm());
-        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager(), drinks);
-        mPager.setAdapter(mPagerAdapter);
         onClick(valveTabs.get(0));
     }
 
@@ -101,15 +111,20 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
     private void changeSelected(View v, int position) {
         if (lastSelected != -1) {
             int lastItem = (int) valveTabs.get(lastSelected).getTag();
+            int lastCurrentItem = mPager.getCurrentItem();
             valveTabs.get(lastSelected).setSelected(false);
-            if (lastItem != mPager.getCurrentItem()) {
-                valveTabs.get(lastSelected).setTag(mPager.getCurrentItem());
+            valveTabsName.get(lastSelected).setTextColor(getResources().getColor(R.color.white));
+            if (lastItem != lastCurrentItem) {
+                valveTabs.get(lastSelected).setTag(lastCurrentItem);
+                valveTabsName.get(lastSelected).setText(getDrinkName(lastCurrentItem));
                 setIsSaved(false);
             }
         }
         v.setSelected(true);
         int currentItem = (int) v.getTag();
         mPager.setCurrentItem(currentItem);
+        valveTabsName.get(position).setText(getDrinkName(currentItem));
+        valveTabsName.get(position).setTextColor(getResources().getColor(R.color.black));
         lastSelected = position;
 
     }
@@ -142,7 +157,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         onClick(valveTabs.get(lastSelected));
         Drink drink;
         for (int i = 0; i < valveTabs.size(); i++) {
-            drink = DrinkController.getDrinkByName(getRealm(), getDrinkName(i));
+            drink = DrinkController.getDrinkByName(getRealm(), getDrinkName((Integer) valveTabs.get(i).getTag()));
             int position = (Integer) valveTabs.get(i).getTag();
             ValveController.updateValve(getRealm(), valves.get(i), drink, position);
         }
@@ -151,7 +166,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
     }
 
     private String getDrinkName(int position) {
-        return (String) mPagerAdapter.getPageTitle((Integer) valveTabs.get(position).getTag());
+        return (String) mPagerAdapter.getPageTitle(position);
     }
 
     private void cancel() {

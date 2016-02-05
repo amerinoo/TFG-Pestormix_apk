@@ -63,7 +63,6 @@ public class ScreenSlidePageFragment extends PestormixMasterFragment implements 
     private void flipCard() {
 
         if (mShowingBack) {
-            Log.e("FlipCard", "Entro");
             getChildFragmentManager().popBackStack();
             mShowingBack = false;
             return;
