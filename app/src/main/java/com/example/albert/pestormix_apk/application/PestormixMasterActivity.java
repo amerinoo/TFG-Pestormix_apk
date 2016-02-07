@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.albert.pestormix_apk.R;
 import io.realm.Realm;
 
 /**
@@ -58,5 +59,9 @@ public class PestormixMasterActivity extends AppCompatActivity {
             realm = Realm.getInstance(this);
         }
         return realm;
+    }
+
+    public void startActivityAnimation() {
+        overridePendingTransition(R.anim.nothing, R.anim.slide_out);
     }
 }

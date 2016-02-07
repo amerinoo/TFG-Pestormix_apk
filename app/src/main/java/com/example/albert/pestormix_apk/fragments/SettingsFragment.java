@@ -59,5 +59,6 @@ public class SettingsFragment extends PestormixMasterFragment {
     private void goConfigValves() {
         Intent intent = new Intent(getActivity(), ConfigValvesActivity.class);
         startActivity(intent);
+        startActivityAnimation();
     }
 }

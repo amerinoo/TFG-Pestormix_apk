@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.MainActivity;
 
 import io.realm.Realm;
@@ -30,5 +31,8 @@ public class PestormixMasterFragment extends Fragment {
 
         inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+    public void startActivityAnimation(){
+        getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
     }
 }

@@ -54,6 +54,7 @@ public class HelpFragment extends PestormixMasterFragment {
                     Intent intent = new Intent(getActivity(), DetailHelpActivity.class);
                     intent.putExtra(Constants.EXTRA_QUESTION_ID, question.getId());
                     startActivity(intent);
+                    startActivityAnimation();
                 } else {
                     fragment.update(question.getId());
                 }

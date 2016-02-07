@@ -25,4 +25,10 @@ public class DetailHelpActivity extends PestormixMasterActivity {
         Fragment fragment = DetailHelpFragment.getInstance(id);
         loadFragment(R.id.detail_content, fragment);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivityAnimation();
+    }
 }
