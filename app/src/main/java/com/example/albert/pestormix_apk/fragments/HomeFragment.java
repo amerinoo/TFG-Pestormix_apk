@@ -28,6 +28,7 @@ import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
+import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.Constants;
 
@@ -41,6 +42,7 @@ public class HomeFragment extends PestormixMasterFragment {
 
     private View mainView;
     private String cocktailName;
+    private String glassName;
     private CocktailAdapter adapter;
     private List<String> cocktailsName;
     private ArrayAdapter<String> stringArrayAdapter;
@@ -85,7 +87,9 @@ public class HomeFragment extends PestormixMasterFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] stringArray = getResources().getStringArray(R.array.glass_array);
-                showToast(stringArray[position]);
+                String name = stringArray[position];
+                showToast(name);
+                glassName = name;
             }
 
             @Override
@@ -118,7 +122,7 @@ public class HomeFragment extends PestormixMasterFragment {
         });
     }
 
-    private void showConfirmOrder(String name) {
+    private void showConfirmOrder(final String name) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.confirmOrder))
                 .setMessage(getString(R.string.youre_asking) + name)
@@ -126,6 +130,7 @@ public class HomeFragment extends PestormixMasterFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showToast(getString(R.string.accept));
+                        NetworkController.send(getRealm(),name,glassName);
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -151,7 +156,6 @@ public class HomeFragment extends PestormixMasterFragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int id = item.getItemId();
-        String itemName = item.getTitle().toString();
         switch (id) {
             case R.id.option_1: //Details
                 showDetails(cocktailName);
