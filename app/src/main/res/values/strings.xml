@@ -18,6 +18,7 @@
     <string name="option_3">Remove</string>
     <string name="confirmOrder">Confirm the order</string>
     <string name="youre_asking">"You're asking for: "</string>
+    <string name="quit">Are you sure you want to quit?</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="cocktail_removed">The cocktail will be removed permanetly</string>

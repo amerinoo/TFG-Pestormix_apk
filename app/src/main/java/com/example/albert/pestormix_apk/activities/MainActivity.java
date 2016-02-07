@@ -1,6 +1,8 @@
 package com.example.albert.pestormix_apk.activities;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -114,7 +116,24 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         if (isDrawerOpen()) {
             closeNavigationDrawer();
         } else {
-            super.onBackPressed();
+            exit();
         }
+    }
+
+    private void exit() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.quit)
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
     }
 }
