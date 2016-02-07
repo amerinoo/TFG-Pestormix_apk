@@ -2,6 +2,7 @@ package com.example.albert.pestormix_apk.controllers;
 
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
+import com.example.albert.pestormix_apk.models.Glass;
 import com.example.albert.pestormix_apk.models.Question;
 import com.example.albert.pestormix_apk.models.Valve;
 
@@ -28,6 +29,7 @@ public abstract class DataController {
         generateCocktails(realm);
         generateQuestions(realm);
         generateValves(realm);
+        generateGlasses(realm);
     }
 
     private static boolean addItem(Realm realm, RealmObject object) {
@@ -47,6 +49,7 @@ public abstract class DataController {
         removeAllDrinks(realm);
         removeAllQuestions(realm);
         removeAllValves(realm);
+        removeAllGlasses(realm);
     }
     /******************* End General     ******************/
 
@@ -255,6 +258,41 @@ public abstract class DataController {
         realm.commitTransaction();
     }
 
-/******************* End Valve ******************/
+    /*******************
+     * End Valve
+     ******************/
 
+    /*******************
+     * Start Glass
+     ******************/
+    public static void generateGlasses(Realm realm) {
+        List<Glass> glasses = GlassController.init();
+        realm.beginTransaction();
+        for (Glass glass : glasses) {
+            try {
+                realm.copyToRealm(glass);
+            } catch (RealmPrimaryKeyConstraintException e) {
+            }
+        }
+        realm.commitTransaction();
+    }
+
+    public static List<String> getGlassesNames(Realm realm) {
+        RealmResults<Glass> results = realm.where(Glass.class).findAll();
+        List<String> names = new ArrayList<>();
+        for (Glass glass : results) {
+            names.add(glass.getName());
+        }
+        return names;
+    }
+
+    public static void removeAllGlasses(Realm realm) {
+        RealmResults<Glass> results = realm.where(Glass.class).findAll();
+        realm.beginTransaction();
+        results.clear();
+        realm.commitTransaction();
+    }
+    /*******************
+     * End Glass
+     ******************/
 }

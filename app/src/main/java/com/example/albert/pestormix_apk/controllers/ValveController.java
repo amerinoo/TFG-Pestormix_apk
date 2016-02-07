@@ -11,13 +11,13 @@ import io.realm.Realm;
 /**
  * Created by Albert on 02/02/2016.
  */
-public class ValveController {
+public abstract class ValveController {
     public static List<Valve> init() {
         List<Valve> valves = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             Valve valve = new Valve();
             valve.setId(i);
-            valve.setDrinkPosition(0);
+            valve.setDrinkPosition(i);
             valves.add(valve);
         }
         return valves;

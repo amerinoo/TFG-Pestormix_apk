@@ -80,14 +80,13 @@ public class HomeFragment extends PestormixMasterFragment {
         adapter = new CocktailAdapter(getActivity(), CocktailController.getCocktails(getRealm()));
         cocktails.setAdapter(adapter);
         registerForContextMenu(cocktails);
-
-        ArrayAdapter glassesAdapter = new ArrayAdapter(getActivity(), R.layout.row_single_text_view, getResources().getStringArray(R.array.glass_array));
+        final List<String> glassesNames = DataController.getGlassesNames(getRealm());
+        ArrayAdapter glassesAdapter = new ArrayAdapter(getActivity(), R.layout.row_single_text_view, glassesNames);
         glasses.setAdapter(glassesAdapter);
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String[] stringArray = getResources().getStringArray(R.array.glass_array);
-                String name = stringArray[position];
+                String name = glassesNames.get(position);
                 showToast(name);
                 glassName = name;
             }
@@ -130,7 +129,7 @@ public class HomeFragment extends PestormixMasterFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showToast(getString(R.string.accept));
-                        NetworkController.send(getRealm(),name,glassName);
+                        NetworkController.send(getRealm(), name, glassName);
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
