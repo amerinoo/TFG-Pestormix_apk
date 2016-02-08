@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
+import com.example.albert.pestormix_apk.controllers.NfcController;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -37,6 +38,7 @@ public class CreateCocktailFragment extends PestormixMasterFragment {
     }
 
     private void configView() {
+        final NfcController nfcController = NfcController.getInstance(getActivity());
         Button manually = (Button) mainView.findViewById(R.id.manually_button);
         Button qr = (Button) mainView.findViewById(R.id.qr_button);
         Button nfc = (Button) mainView.findViewById(R.id.nfc_button);
@@ -56,9 +58,16 @@ public class CreateCocktailFragment extends PestormixMasterFragment {
         nfc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast(getString(R.string.nfc_tag));
+                if (nfcController.isEnabled()) {
+                    showToast(getString(R.string.nfc_tag));
+                } else {
+                    showToast(getString(R.string.nfc_disabled));
+                }
             }
         });
+        if (!nfcController.hasAdapter()) {
+            disableView(nfc);
+        }
     }
 
     private void goManually() {

@@ -8,9 +8,11 @@
     <string name="title_help">Help</string>
     <string name="title_about_author">About the author</string>
 
+    <!-- General -->
+    <string name="nfc_disabled">NFC is disabled</string>
+
     <!-- Tutorial -->
     <string name="tutorial_continue">Continue</string>
-
 
     <!-- Cocktail -->
     <string name="option_1">Details</string>

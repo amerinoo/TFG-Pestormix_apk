@@ -2,6 +2,7 @@ package com.example.albert.pestormix_apk.application;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.albert.pestormix_apk.R;
@@ -25,14 +26,19 @@ public class PestormixMasterFragment extends Fragment {
         ((PestormixMasterActivity) getActivity()).showToast(resId);
     }
 
-    public void hideKeyboard(){
+    public void hideKeyboard() {
         InputMethodManager inputManager = (InputMethodManager)
                 getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
     }
-    public void startActivityAnimation(){
+
+    public void startActivityAnimation() {
         getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+    }
+
+    public void disableView(View view) {
+        ((PestormixMasterActivity) getActivity()).disableView(view);
     }
 }

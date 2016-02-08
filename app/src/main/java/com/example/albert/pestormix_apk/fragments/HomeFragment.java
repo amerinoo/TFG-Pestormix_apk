@@ -30,6 +30,7 @@ import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.controllers.NfcController;
 import com.example.albert.pestormix_apk.utils.Constants;
 
 import java.util.List;
@@ -76,6 +77,7 @@ public class HomeFragment extends PestormixMasterFragment {
         ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr_button);
         ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
         final ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
+        final NfcController nfcController = NfcController.getInstance(getActivity());
 
         adapter = new CocktailAdapter(getActivity(), CocktailController.getCocktails(getRealm()));
         cocktails.setAdapter(adapter);
@@ -107,10 +109,16 @@ public class HomeFragment extends PestormixMasterFragment {
         nfc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast(getString(R.string.nfc_tag));
+                if (nfcController.isEnabled()) {
+                    showToast(getString(R.string.nfc_tag));
+                } else {
+                    showToast(getString(R.string.nfc_disabled));
+                }
             }
         });
-
+        if (!nfcController.hasAdapter()) {
+            disableView(nfc);
+        }
         cocktails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
