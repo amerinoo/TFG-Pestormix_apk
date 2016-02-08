@@ -8,9 +8,8 @@ import com.example.albert.pestormix_apk.models.Valve;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.util.List;
 
 import io.realm.Realm;
@@ -50,16 +49,14 @@ public abstract class NetworkController {
     static class SendMessageTask extends AsyncTask<String, Void, Void> {
 
         protected Void doInBackground(String... jsonMessage) {
-            String ip = "192.168.1.8";
-            int port = 1110;
+            final String ip = "192.168.1.8";
+            final int port = 1110;
             try {
-                DatagramSocket socket = new DatagramSocket();
-                InetAddress addr = InetAddress.getByName(ip);
-                int sizeMsg;
-                sizeMsg = jsonMessage[0].length();
-                DatagramPacket dp = new DatagramPacket(jsonMessage[0].getBytes(), sizeMsg, addr, port);
-                System.out.println(sizeMsg);
-                socket.send(dp);
+                Socket socket = new Socket(ip, port);
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF(jsonMessage[0]);
+                out.flush();
+                out.close();
                 socket.close();
             } catch (Exception e) {
                 System.out.println(e);
