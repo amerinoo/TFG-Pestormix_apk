@@ -55,19 +55,7 @@ public class CreateCocktailFragment extends PestormixMasterFragment {
                 showToast(getString(R.string.qr_code));
             }
         });
-        nfc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (nfcController.isEnabled()) {
-                    showToast(getString(R.string.nfc_tag));
-                } else {
-                    showToast(getString(R.string.nfc_disabled));
-                }
-            }
-        });
-        if (!nfcController.hasAdapter()) {
-            disableView(nfc);
-        }
+        nfcController.initNfcView(nfc);
     }
 
     private void goManually() {

@@ -2,11 +2,9 @@ package com.example.albert.pestormix_apk.application;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.activities.MainActivity;
 
 import io.realm.Realm;
 
@@ -36,9 +34,5 @@ public class PestormixMasterFragment extends Fragment {
 
     public void startActivityAnimation() {
         getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
-    }
-
-    public void disableView(View view) {
-        ((PestormixMasterActivity) getActivity()).disableView(view);
     }
 }
