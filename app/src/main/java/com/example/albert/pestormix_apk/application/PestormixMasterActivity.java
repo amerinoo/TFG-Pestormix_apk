@@ -3,12 +3,12 @@ package com.example.albert.pestormix_apk.application;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.nfc.NfcAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.albert.pestormix_apk.R;
+
 import io.realm.Realm;
 
 /**
@@ -17,7 +17,6 @@ import io.realm.Realm;
 public class PestormixMasterActivity extends AppCompatActivity {
 
     private Realm realm;
-    private NfcAdapter nfcAdapter;
 
     public PestormixApplication getPestormixApplication() {
         return (PestormixApplication) getApplication();

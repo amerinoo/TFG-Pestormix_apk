@@ -1,8 +1,15 @@
 package com.example.albert.pestormix_apk.controllers;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.nfc.NfcAdapter;
+import android.os.Build;
+import android.provider.Settings;
 import android.view.View;
+
+import com.example.albert.pestormix_apk.R;
 
 /**
  * Created by Albert on 08/02/2016.
@@ -47,6 +54,7 @@ public class NfcController {
             public void onClick(View v) {
                 if (nfcController.isEnabled()) {
                 } else {
+                    enableNfc();
                 }
             }
         };
@@ -62,5 +70,30 @@ public class NfcController {
     private void disableView(View view) {
         view.setEnabled(false);
         view.setAlpha(0.5f);
+    }
+
+    private void enableNfc() {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.information)
+                .setMessage(R.string.activate_nfc)
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            Intent intent = new Intent(Settings.ACTION_NFC_SETTINGS);
+                            context.startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                            context.startActivity(intent);
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
+
     }
 }

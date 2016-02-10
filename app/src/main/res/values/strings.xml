@@ -9,6 +9,8 @@
     <string name="title_about_author">About the author</string>
 
     <!-- General -->
+    <string name="information">Information</string>
+    <string name="activate_nfc">Do you want to activate the NFC?</string>
     <string name="nfc_disabled">NFC is disabled</string>
 
     <!-- Tutorial -->

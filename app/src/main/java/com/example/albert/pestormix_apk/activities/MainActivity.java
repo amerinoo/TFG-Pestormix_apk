@@ -122,6 +122,7 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
 
     private void exit() {
         new AlertDialog.Builder(this)
+                .setTitle(R.string.information)
                 .setMessage(R.string.quit)
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                     @Override
