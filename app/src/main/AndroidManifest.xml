@@ -3,6 +3,7 @@
     package="com.example.albert.pestormix_apk">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <application
         android:name=".application.PestormixApplication"
