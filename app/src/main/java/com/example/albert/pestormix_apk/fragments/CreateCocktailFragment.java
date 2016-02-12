@@ -1,6 +1,7 @@
 package com.example.albert.pestormix_apk.fragments;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,16 +13,17 @@ import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.controllers.NfcController;
+import com.example.albert.pestormix_apk.controllers.NfcReader;
+import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 
 /**
  * Created by Albert on 24/01/2016.
  */
-public class CreateCocktailFragment extends PestormixMasterFragment {
+public class CreateCocktailFragment extends PestormixMasterFragment implements OnNfcDataReceived {
     private View mainView;
 
     public static CreateCocktailFragment getInstance() {
-        CreateCocktailFragment fragment = new CreateCocktailFragment();
-        return fragment;
+        return new CreateCocktailFragment();
     }
 
     @Nullable
@@ -61,5 +63,11 @@ public class CreateCocktailFragment extends PestormixMasterFragment {
     private void goManually() {
         Intent intent = new Intent(getActivity(), ManuallyActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void processNfcData(Tag mytag) {
+        String read = NfcReader.read(mytag);
+        showToast(read);
     }
 }

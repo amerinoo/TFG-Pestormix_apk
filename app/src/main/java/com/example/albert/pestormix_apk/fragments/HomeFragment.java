@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.ContextMenu;
@@ -30,6 +31,8 @@ import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.controllers.NfcController;
+import com.example.albert.pestormix_apk.controllers.NfcReader;
+import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.Constants;
 
@@ -38,7 +41,7 @@ import java.util.List;
 /**
  * Created by Albert on 24/01/2016.
  */
-public class HomeFragment extends PestormixMasterFragment {
+public class HomeFragment extends PestormixMasterFragment implements OnNfcDataReceived {
 
 
     private View mainView;
@@ -49,8 +52,7 @@ public class HomeFragment extends PestormixMasterFragment {
     private ArrayAdapter<String> stringArrayAdapter;
 
     public static HomeFragment getInstance() {
-        HomeFragment fragment = new HomeFragment();
-        return fragment;
+        return new HomeFragment();
     }
 
     @Override
@@ -61,8 +63,7 @@ public class HomeFragment extends PestormixMasterFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, null, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
@@ -248,4 +249,11 @@ public class HomeFragment extends PestormixMasterFragment {
             }
         });
     }
+
+    @Override
+    public void processNfcData(Tag mytag) {
+        String read = NfcReader.read(mytag);
+        showToast(read);
+    }
+
 }
