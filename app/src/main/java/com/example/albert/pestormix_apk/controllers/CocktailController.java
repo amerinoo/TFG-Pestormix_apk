@@ -45,6 +45,15 @@ public abstract class CocktailController {
         return getDrinksAsString(cocktail, ",");
     }
 
+    public static Cocktail getCocktailFromString(Realm realm, String data) {
+        String[] split = data.split(",", 3);
+        Cocktail cocktail = new Cocktail();
+        cocktail.setName(split[0]);
+        cocktail.setDescription(split[1]);
+        setDrinksFromString(realm, cocktail, split[2]);
+        return cocktail;
+    }
+
     public static String getDrinksAsString(Cocktail cocktail, String separator) {
         String drinks = "";
         for (Drink drink : cocktail.getDrinks()) drinks += drink.getName() + separator;

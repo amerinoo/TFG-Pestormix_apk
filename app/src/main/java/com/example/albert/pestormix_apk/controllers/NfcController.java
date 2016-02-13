@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Build;
 import android.provider.Settings;
 import android.view.View;
@@ -18,11 +19,13 @@ public class NfcController {
     private static NfcController nfcController;
     private NfcAdapter adapter;
     private Context context;
+    private static AlertDialog dialog;
 
     public static NfcController getInstance(Context context) {
         if (nfcController == null) {
             nfcController = new NfcController(context);
         }
+        nfcController.context = context;
         return nfcController;
     }
 
@@ -51,14 +54,30 @@ public class NfcController {
     private void setOnClickListener(View v) {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 if (nfcController.isEnabled()) {
+                    v.setActivated(true);
+                    dialog = new AlertDialog.Builder(context)
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    v.setActivated(false);
+                                }
+                            })
+                            .show();
                 } else {
                     enableNfc();
                 }
             }
         };
         v.setOnClickListener(listener);
+    }
+
+    public static void dismissDialog(View v) {
+        if (dialog != null) {
+            dialog.dismiss();
+            v.setActivated(false);
+        }
     }
 
     private void checkIfNeedDisable(View v) {
@@ -95,5 +114,14 @@ public class NfcController {
                     }
                 }).show();
 
+    }
+
+    public String read(Tag mytag, View nfc) {
+        String read = "";
+        if (nfc.isActivated()) {
+            read = NfcReader.read(mytag);
+            NfcController.dismissDialog(nfc);
+        }
+        return read;
     }
 }

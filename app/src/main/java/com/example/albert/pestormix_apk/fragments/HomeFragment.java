@@ -3,7 +3,6 @@ package com.example.albert.pestormix_apk.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.nfc.Tag;
@@ -24,17 +23,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.controllers.NfcController;
-import com.example.albert.pestormix_apk.controllers.NfcReader;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
-import com.example.albert.pestormix_apk.utils.Constants;
 
 import java.util.List;
 
@@ -50,6 +46,8 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     private CocktailAdapter adapter;
     private List<String> cocktailsName;
     private ArrayAdapter<String> stringArrayAdapter;
+    private ImageButton nfc;
+    private NfcController nfcController;
 
     public static HomeFragment getInstance() {
         return new HomeFragment();
@@ -76,9 +74,9 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     private void configView() {
         Spinner glasses = (Spinner) mainView.findViewById(R.id.glass_spinner);
         ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr_button);
-        ImageButton nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
+        nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
         final ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
-        final NfcController nfcController = NfcController.getInstance(getActivity());
+        nfcController = NfcController.getInstance(getActivity());
 
         adapter = new CocktailAdapter(getActivity(), CocktailController.getCocktails(getRealm()));
         cocktails.setAdapter(adapter);
@@ -112,21 +110,21 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = getStringOfTextView((TextView) view.findViewById(R.id.name));
-                showConfirmOrder(name);
+                showConfirmOrder(name, false);
 
             }
         });
     }
 
-    private void showConfirmOrder(final String name) {
+    private void showConfirmOrder(final String cocktailName, final boolean remove) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.confirmOrder))
-                .setMessage(getString(R.string.youre_asking) + name)
+                .setMessage(getString(R.string.youre_asking) + cocktailName)
                 .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showToast(getString(R.string.accept));
-                        NetworkController.send(getRealm(), name, glassName);
+                        NetworkController.send(getRealm(), cocktailName, glassName, remove);
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -157,7 +155,8 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                 showDetails(cocktailName);
                 break;
             case R.id.option_2: //Edit
-                updateCocktail(cocktailName);
+                Cocktail cocktail = CocktailController.getCocktailByName(getRealm(), cocktailName);
+                updateCocktail(cocktail);
                 break;
             case R.id.option_3: //Remove
                 removeCocktail(cocktailName);
@@ -187,15 +186,6 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
             }
         });
         dialog.show();
-    }
-
-    private void updateCocktail(String cocktailName) {
-        Cocktail cocktail = CocktailController.getCocktailByName(getRealm(), cocktailName);
-        Intent intent = new Intent(getActivity(), ManuallyActivity.class);
-        intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, cocktail.getName());
-        intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, cocktail.getDescription());
-        intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, CocktailController.getDrinksAsString(cocktail));
-        startActivity(intent);
     }
 
     private void removeCocktail(final String cocktailName) {
@@ -239,21 +229,31 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         cocktailsName = CocktailController.getCocktailsNames(getRealm());
         stringArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.row_single_text_view, cocktailsName);
         searchText.setThreshold(1);
+        searchText.setHint(getString(R.string.cocktail_name));
         searchText.setAdapter(stringArrayAdapter);
         searchText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = getStringOfTextView((TextView) view.findViewById(android.R.id.text1));
                 hideKeyboard();
-                showConfirmOrder(name);
+                showConfirmOrder(name, false);
             }
         });
     }
 
     @Override
     public void processNfcData(Tag mytag) {
-        String read = NfcReader.read(mytag);
-        showToast(read);
+        String data = nfcController.read(mytag, nfc);
+        showToast(data);
+        if (!data.equals("")) {
+            Cocktail cocktail = CocktailController.getCocktailFromString(getRealm(), data);
+            if (CocktailController.cocktailExist(getRealm(), cocktail)) {
+                showToast(getString(R.string.cocktail_name_already_exist));
+            } else {
+                CocktailController.addCocktailToDB(getRealm(), cocktail);
+                showConfirmOrder(cocktail.getName(), true);
+            }
+        }
     }
 
 }

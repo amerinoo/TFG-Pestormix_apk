@@ -18,10 +18,11 @@ import io.realm.Realm;
  * Created by Albert on 07/02/2016.
  */
 public abstract class NetworkController {
-    public static void send(Realm realm, String cocktailName, String glassName) {
+    public static void send(Realm realm, String cocktailName, String glassName, boolean remove) {
         Cocktail cocktail = CocktailController.getCocktailByName(realm, cocktailName);
         String cocktailDrinks = CocktailController.getDrinksAsString(cocktail);
         String jsonMessage = getJsonAsString(realm, cocktailDrinks, glassName);
+        if (remove) CocktailController.removeCocktailByName(realm, cocktail.getName());
         System.out.println(jsonMessage);
         new SendMessageTask().execute(jsonMessage);
     }

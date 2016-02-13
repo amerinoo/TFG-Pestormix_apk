@@ -12,15 +12,18 @@ import android.widget.Button;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
+import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.NfcController;
-import com.example.albert.pestormix_apk.controllers.NfcReader;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
+import com.example.albert.pestormix_apk.models.Cocktail;
 
 /**
  * Created by Albert on 24/01/2016.
  */
 public class CreateCocktailFragment extends PestormixMasterFragment implements OnNfcDataReceived {
     private View mainView;
+    private Button nfc;
+    private NfcController nfcController;
 
     public static CreateCocktailFragment getInstance() {
         return new CreateCocktailFragment();
@@ -40,10 +43,10 @@ public class CreateCocktailFragment extends PestormixMasterFragment implements O
     }
 
     private void configView() {
-        final NfcController nfcController = NfcController.getInstance(getActivity());
+        nfcController = NfcController.getInstance(getActivity());
         Button manually = (Button) mainView.findViewById(R.id.manually_button);
         Button qr = (Button) mainView.findViewById(R.id.qr_button);
-        Button nfc = (Button) mainView.findViewById(R.id.nfc_button);
+        nfc = (Button) mainView.findViewById(R.id.nfc_button);
 
         manually.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +70,15 @@ public class CreateCocktailFragment extends PestormixMasterFragment implements O
 
     @Override
     public void processNfcData(Tag mytag) {
-        String read = NfcReader.read(mytag);
-        showToast(read);
+        String data = nfcController.read(mytag, nfc);
+        showToast(data);
+        if (!data.equals("")) {
+            Cocktail cocktail = CocktailController.getCocktailFromString(getRealm(), data);
+            if (CocktailController.cocktailExist(getRealm(), cocktail)) {
+                showToast(getString(R.string.cocktail_name_already_exist));
+            } else {
+                updateCocktail(cocktail);
+            }
+        }
     }
 }

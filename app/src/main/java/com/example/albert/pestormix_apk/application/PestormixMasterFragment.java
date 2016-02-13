@@ -2,9 +2,14 @@ package com.example.albert.pestormix_apk.application;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.activities.ManuallyActivity;
+import com.example.albert.pestormix_apk.controllers.CocktailController;
+import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 import io.realm.Realm;
 
@@ -34,5 +39,13 @@ public class PestormixMasterFragment extends Fragment {
 
     public void startActivityAnimation() {
         getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+    }
+
+    public void updateCocktail(Cocktail cocktail) {
+        Intent intent = new Intent(getActivity(), ManuallyActivity.class);
+        intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, cocktail.getName());
+        intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, cocktail.getDescription());
+        intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, CocktailController.getDrinksAsString(cocktail));
+        startActivity(intent);
     }
 }
