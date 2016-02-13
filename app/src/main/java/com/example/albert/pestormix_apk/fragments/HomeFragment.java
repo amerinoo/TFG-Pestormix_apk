@@ -3,6 +3,7 @@ package com.example.albert.pestormix_apk.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.nfc.Tag;
@@ -23,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.activities.ScanQrActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
@@ -100,9 +102,8 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataController.init(getRealm());
-                adapter.update(getRealm());
                 showToast(getString(R.string.qr_code));
+                startActivity(new Intent(getActivity(), ScanQrActivity.class));
             }
         });
         nfcController.initNfcView(nfc);
