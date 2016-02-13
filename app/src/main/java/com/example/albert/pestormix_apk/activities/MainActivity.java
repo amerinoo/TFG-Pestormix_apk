@@ -39,7 +39,6 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
     private ActionBarDrawerToggle drawerToggle;
     private TextView toolbarTitle;
     private NfcAdapter nfcAdapter;
-    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,6 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         drawer.getMenu().findItem(firtsScreen).setChecked(true);
 
         nfcAdapter = NfcController.getInstance(this).getAdapter();
-        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
     }
@@ -187,28 +185,31 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
     }
 
     public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        if (adapter != null) {
+            final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+            final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
 
-        IntentFilter[] filters = new IntentFilter[1];
-        String[][] techList = new String[][]{};
+            IntentFilter[] filters = new IntentFilter[1];
+            String[][] techList = new String[][]{};
 
-        // Notice that this is the same filter as in our manifest.
-        filters[0] = new IntentFilter();
-        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
-        try {
-            filters[0].addDataType("text/plain");
-        } catch (IntentFilter.MalformedMimeTypeException e) {
-            throw new RuntimeException("Check your mime type.");
+            // Notice that this is the same filter as in our manifest.
+            filters[0] = new IntentFilter();
+            filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+            filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+            try {
+                filters[0].addDataType("text/plain");
+            } catch (IntentFilter.MalformedMimeTypeException e) {
+                throw new RuntimeException("Check your mime type.");
+            }
+
+            adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
         }
-
-        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
     }
 
     public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        adapter.disableForegroundDispatch(activity);
+        if (adapter != null)
+            adapter.disableForegroundDispatch(activity);
     }
 }
