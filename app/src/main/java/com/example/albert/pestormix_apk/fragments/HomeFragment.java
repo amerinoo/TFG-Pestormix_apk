@@ -87,7 +87,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         cocktails.setAdapter(adapter);
         registerForContextMenu(cocktails);
         final List<String> glassesNames = DataController.getGlassesNames(getRealm());
-        ArrayAdapter glassesAdapter = new ArrayAdapter(getActivity(), R.layout.row_single_text_view, glassesNames);
+        ArrayAdapter glassesAdapter = new ArrayAdapter<>(getActivity(), R.layout.row_single_text_view, glassesNames);
         glasses.setAdapter(glassesAdapter);
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

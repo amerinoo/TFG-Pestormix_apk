@@ -6,13 +6,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.CheckBox;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ConfigValvesActivity;
+import com.example.albert.pestormix_apk.activities.MainActivity;
+import com.example.albert.pestormix_apk.application.PestormixApplication;
+import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -39,26 +41,41 @@ public class SettingsFragment extends PestormixMasterFragment {
     }
 
     private void configView() {
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.row_single_text_view, getResources().getStringArray(R.array.settings_array));
-        ListView list = (ListView) mainView.findViewById(R.id.settings_list);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mainView.findViewById(R.id.config_valves).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        goConfigValves();
-                        break;
-                    case 1:
-                        break;
-                }
+            public void onClick(View v) {
+                goConfigValves();
             }
         });
+        mainView.findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast(R.string.login);
+            }
+        });
+        final CheckBox checkBox = (CheckBox) mainView.findViewById(R.id.muse_activate);
+        checkBox.setChecked(getPestormixApplication().getBoolean(Constants.PREFERENCE_MUSE_ACTIVATED, false));
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean visible = checkBox.isChecked();
+                getPestormixApplication().putBoolean(Constants.PREFERENCE_MUSE_ACTIVATED, visible);
+                museVisible(visible);
+            }
+        });
+    }
+
+    private PestormixApplication getPestormixApplication() {
+        return ((PestormixMasterActivity) getActivity()).getPestormixApplication();
     }
 
     private void goConfigValves() {
         Intent intent = new Intent(getActivity(), ConfigValvesActivity.class);
         startActivity(intent);
         startActivityAnimation();
+    }
+
+    private void museVisible(boolean visible) {
+        ((MainActivity) getActivity()).getDrawer().getMenu().findItem(R.id.navigation_muse).setVisible(visible);
     }
 }

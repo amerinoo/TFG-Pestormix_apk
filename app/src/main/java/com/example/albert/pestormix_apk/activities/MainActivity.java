@@ -27,11 +27,11 @@ import com.example.albert.pestormix_apk.fragments.AboutAuthorFragment;
 import com.example.albert.pestormix_apk.fragments.CreateCocktailFragment;
 import com.example.albert.pestormix_apk.fragments.HelpFragment;
 import com.example.albert.pestormix_apk.fragments.HomeFragment;
+import com.example.albert.pestormix_apk.fragments.MuseFragment;
 import com.example.albert.pestormix_apk.fragments.SettingsFragment;
 
 public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Toolbar toolbar;
     private NavigationView drawer;
     private DrawerLayout drawerLayout;
     Fragment fragment;
@@ -45,7 +45,7 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         super.onCreate(savedInstanceState);
         changeOrientationIfIsPhone();
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         Menu menu = toolbar.getMenu();
         getMenuInflater().inflate(R.menu.menu_search_view, menu);
@@ -80,6 +80,11 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
                 fragment = CreateCocktailFragment.getInstance();
                 loadFragment(resId, fragment);
                 break;
+            case R.id.navigation_muse:
+                setToolbarTitleText(getText(R.string.title_muse));
+                fragment = MuseFragment.getInstance();
+                loadFragment(resId, fragment);
+                break;
             case R.id.navigation_settings:
                 setToolbarTitleText(getText(R.string.title_settings));
                 fragment = SettingsFragment.getInstance();
@@ -98,6 +103,9 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         }
     }
 
+    public NavigationView getDrawer() {
+        return drawer;
+    }
 
     private void closeNavigationDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -212,10 +220,5 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
     public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
         if (adapter != null)
             adapter.disableForegroundDispatch(activity);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }

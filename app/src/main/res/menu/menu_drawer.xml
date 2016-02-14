@@ -10,6 +10,10 @@
             android:icon="@android:drawable/ic_delete"
             android:title="@string/title_create_cocktail" />
         <item
+            android:id="@+id/navigation_muse"
+            android:icon="@android:drawable/ic_delete"
+            android:title="@string/title_muse" />
+        <item
             android:id="@+id/navigation_settings"
             android:icon="@android:drawable/ic_delete"
             android:title="@string/title_settings" />
