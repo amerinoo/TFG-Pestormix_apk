@@ -25,6 +25,7 @@ public class ScanQrActivity extends PestormixMasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeOrientationIfIsPhone();
         setContentView(R.layout.activity_scan_qr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

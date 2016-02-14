@@ -3,6 +3,7 @@ package com.example.albert.pestormix_apk.application;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -64,5 +65,12 @@ public class PestormixMasterActivity extends AppCompatActivity {
 
     public void startActivityAnimation() {
         overridePendingTransition(R.anim.nothing, R.anim.slide_out);
+    }
+
+    public void changeOrientationIfIsPhone(){
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if (!isTablet){
+            setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 }

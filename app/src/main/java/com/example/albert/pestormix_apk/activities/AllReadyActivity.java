@@ -15,6 +15,7 @@ public class AllReadyActivity extends PestormixMasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeOrientationIfIsPhone();
         setContentView(R.layout.activity_all_ready);
         handler = new Handler();
         handler.postDelayed(new Runnable() {

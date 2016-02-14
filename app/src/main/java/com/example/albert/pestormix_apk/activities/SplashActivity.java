@@ -16,6 +16,7 @@ public class SplashActivity extends PestormixMasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeOrientationIfIsPhone();
         setContentView(R.layout.activity_splash);
 
         handler = new Handler();

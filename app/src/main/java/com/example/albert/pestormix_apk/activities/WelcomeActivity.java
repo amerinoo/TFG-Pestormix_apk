@@ -13,6 +13,7 @@ public class WelcomeActivity extends PestormixMasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeOrientationIfIsPhone();
         setContentView(R.layout.activity_welcome);
         findViewById(R.id.continue_button).setOnClickListener(new View.OnClickListener() {
             @Override

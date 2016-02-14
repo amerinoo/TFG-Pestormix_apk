@@ -16,6 +16,7 @@ public class DetailHelpActivity extends PestormixMasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeOrientationIfIsPhone();
         setContentView(R.layout.activity_detail_help);
         int id = getIntent().getIntExtra(Constants.EXTRA_QUESTION_ID, 0);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

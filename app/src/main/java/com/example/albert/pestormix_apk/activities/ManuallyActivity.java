@@ -34,6 +34,7 @@ public class ManuallyActivity extends PestormixMasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeOrientationIfIsPhone();
         setContentView(R.layout.activity_manually);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(getString(R.string.title_create_cocktail));

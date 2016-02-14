@@ -25,6 +25,7 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeOrientationIfIsPhone();
         setContentView(R.layout.activity_give_cocktail_name);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(getString(R.string.title_create_cocktail));

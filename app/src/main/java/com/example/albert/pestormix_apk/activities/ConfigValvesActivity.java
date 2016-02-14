@@ -44,6 +44,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeOrientationIfIsPhone();
         setContentView(R.layout.activity_config_valves);
         isTutorial = getIntent().getBooleanExtra(Constants.EXTRA_IS_TUTORIAL, false);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
