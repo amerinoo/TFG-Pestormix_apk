@@ -32,16 +32,10 @@ public abstract class DataController {
         generateGlasses(realm);
     }
 
-    private static boolean addItem(Realm realm, RealmObject object) {
-        boolean correct = true;
+    private static void addItem(Realm realm, RealmObject object) {
         realm.beginTransaction();
-        try {
-            realm.copyToRealm(object);
-        } catch (RealmPrimaryKeyConstraintException e) {
-            correct = false;
-        }
+        realm.copyToRealm(object);
         realm.commitTransaction();
-        return correct;
     }
 
     private static void removeAllInstances(Realm realm) {
@@ -71,8 +65,8 @@ public abstract class DataController {
 
     }
 
-    public static boolean addCocktail(Realm realm, Cocktail cocktail) {
-        return addItem(realm, cocktail);
+    public static void addCocktail(Realm realm, Cocktail cocktail) {
+        addItem(realm, cocktail);
     }
 
     public static void removeCocktailByName(Realm realm, String name) {
@@ -107,7 +101,8 @@ public abstract class DataController {
     }
 
     public static boolean cocktailExist(Realm realm, Cocktail cocktail) {
-        return !addItem(realm, cocktail);
+        RealmResults<Cocktail> results = realm.where(Cocktail.class).equalTo("name", cocktail.getName()).findAll();
+        return results.size() > 0;
     }
 
 
@@ -137,8 +132,8 @@ public abstract class DataController {
         realm.commitTransaction();
     }
 
-    public static boolean addDrink(Realm realm, Drink drink) {
-        return addItem(realm, drink);
+    public static void addDrink(Realm realm, Drink drink) {
+        addItem(realm, drink);
     }
 
     public static void removeDrinkByName(Realm realm, String name) {

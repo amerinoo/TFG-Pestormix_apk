@@ -48,4 +48,8 @@ public class PestormixMasterFragment extends Fragment {
         intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, CocktailController.getDrinksAsString(cocktail));
         startActivity(intent);
     }
+
+    public PestormixMasterActivity getMasterActivity() {
+        return (PestormixMasterActivity) getActivity();
+    }
 }

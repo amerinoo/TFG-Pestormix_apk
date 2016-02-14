@@ -1,5 +1,7 @@
 package com.example.albert.pestormix_apk.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
@@ -9,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.utils.Constants;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -21,6 +24,7 @@ public class ScanQrActivity extends PestormixMasterActivity {
     private SurfaceView cameraView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class ScanQrActivity extends PestormixMasterActivity {
         setContentView(R.layout.activity_scan_qr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        activity = this;
         cameraView = new SurfaceView(this);
         ((LinearLayout) findViewById(R.id.window)).addView(cameraView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         barcodeDetector =
@@ -50,7 +55,11 @@ public class ScanQrActivity extends PestormixMasterActivity {
                 if (barcodes.size() != 0) {
                     cameraView.post(new Runnable() {
                         public void run() {
-                            showToast(barcodes.valueAt(0).displayValue);
+                            String cocktail = barcodes.valueAt(0).displayValue;
+                            Intent intent = new Intent();
+                            intent.putExtra(Constants.EXTRA_COCKTAIL, cocktail);
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
                         }
                     });
                 }

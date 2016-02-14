@@ -1,5 +1,6 @@
 package com.example.albert.pestormix_apk.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -11,11 +12,14 @@ import android.widget.Button;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
+import com.example.albert.pestormix_apk.activities.ScanQrActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.NfcController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -57,7 +61,8 @@ public class CreateCocktailFragment extends PestormixMasterFragment implements O
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast(getString(R.string.qr_code));
+                Intent intent = new Intent(getActivity(), ScanQrActivity.class);
+                startActivityForResult(intent, ActivityRequestCodes.CODE_QR);
             }
         });
         nfcController.initNfcView(nfc);
@@ -71,13 +76,23 @@ public class CreateCocktailFragment extends PestormixMasterFragment implements O
     @Override
     public void processNfcData(Tag mytag) {
         String data = nfcController.read(mytag, nfc);
-        showToast(data);
-        if (!data.equals("")) {
-            Cocktail cocktail = CocktailController.getCocktailFromString(getRealm(), data);
-            if (CocktailController.cocktailExist(getRealm(), cocktail)) {
-                showToast(getString(R.string.cocktail_name_already_exist));
-            } else {
-                updateCocktail(cocktail);
+        processData(data);
+    }
+
+    private void processData(String data) {
+        Cocktail cocktail = CocktailController.processData(getMasterActivity(), data);
+        if (cocktail != null) {
+            updateCocktail(cocktail);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ActivityRequestCodes.CODE_QR) {
+            if (resultCode == Activity.RESULT_OK) {
+                String extra = data.getStringExtra(Constants.EXTRA_COCKTAIL);
+                processData(extra);
             }
         }
     }

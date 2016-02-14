@@ -1,5 +1,8 @@
 package com.example.albert.pestormix_apk.controllers;
 
+import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.exceptions.CocktailFormatException;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 
@@ -45,12 +48,33 @@ public abstract class CocktailController {
         return getDrinksAsString(cocktail, ",");
     }
 
-    public static Cocktail getCocktailFromString(Realm realm, String data) {
-        String[] split = data.split(",", 3);
+    public static Cocktail processData(PestormixMasterActivity activity, String data) {
+        if (data != null && !data.equals("")) {
+            Cocktail cocktail;
+            try {
+                cocktail = CocktailController.getCocktailFromString(activity.getRealm(), data);
+            } catch (CocktailFormatException e) {
+                activity.showToast(activity.getString(R.string.cocktail_format_error));
+                return null;
+            }
+            if (CocktailController.cocktailExist(activity.getRealm(), cocktail)) {
+                activity.showToast(activity.getString(R.string.cocktail_name_already_exist));
+            } else {
+                return cocktail;
+            }
+        }
+        return null;
+    }
+
+    public static Cocktail getCocktailFromString(Realm realm, String data) throws CocktailFormatException {
+        String[] split = data.split(",", 4);
+        if (split.length < 4 || !split[0].equals("Pestormix")) {
+            throw new CocktailFormatException();
+        }
         Cocktail cocktail = new Cocktail();
-        cocktail.setName(split[0]);
-        cocktail.setDescription(split[1]);
-        setDrinksFromString(realm, cocktail, split[2]);
+        cocktail.setName(split[1]);
+        cocktail.setDescription(split[2]);
+        setDrinksFromString(realm, cocktail, split[3]);
         return cocktail;
     }
 

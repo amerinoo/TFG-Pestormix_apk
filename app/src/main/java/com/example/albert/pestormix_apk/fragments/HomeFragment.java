@@ -1,6 +1,7 @@
 package com.example.albert.pestormix_apk.fragments;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +34,8 @@ import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.controllers.NfcController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 import java.util.List;
 
@@ -96,14 +99,13 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast(getString(R.string.qr_code));
-                startActivity(new Intent(getActivity(), ScanQrActivity.class));
+                Intent intent = new Intent(getActivity(), ScanQrActivity.class);
+                startActivityForResult(intent, ActivityRequestCodes.CODE_QR);
             }
         });
         nfcController.initNfcView(nfc);
@@ -112,7 +114,6 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = getStringOfTextView((TextView) view.findViewById(R.id.name));
                 showConfirmOrder(name, false);
-
             }
         });
     }
@@ -124,7 +125,6 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                 .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        showToast(getString(R.string.accept));
                         NetworkController.send(getRealm(), cocktailName, glassName, remove);
                     }
                 })
@@ -133,7 +133,6 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                     public void onClick(DialogInterface dialog, int which) {
                         if (remove)
                             CocktailController.removeCocktailByName(getRealm(), cocktailName);
-                        showToast(getString(R.string.cancel));
                     }
                 }).show();
     }
@@ -247,16 +246,25 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     @Override
     public void processNfcData(Tag mytag) {
         String data = nfcController.read(mytag, nfc);
-        showToast(data);
-        if (!data.equals("")) {
-            Cocktail cocktail = CocktailController.getCocktailFromString(getRealm(), data);
-            if (CocktailController.cocktailExist(getRealm(), cocktail)) {
-                showToast(getString(R.string.cocktail_name_already_exist));
-            } else {
-                CocktailController.addCocktailToDB(getRealm(), cocktail);
-                showConfirmOrder(cocktail.getName(), true);
-            }
+        processData(data);
+    }
+
+    private void processData(String data) {
+        Cocktail cocktail = CocktailController.processData(getMasterActivity(), data);
+        if (cocktail != null) {
+            CocktailController.addCocktailToDB(getRealm(), cocktail);
+            showConfirmOrder(cocktail.getName(), true);
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ActivityRequestCodes.CODE_QR) {
+            if (resultCode == Activity.RESULT_OK) {
+                String extra = data.getStringExtra(Constants.EXTRA_COCKTAIL);
+                processData(extra);
+            }
+        }
+    }
 }

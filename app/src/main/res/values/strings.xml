@@ -54,6 +54,7 @@
     <string name="cocktail_not_updated_restart_edition">The cocktail won\'t be edited and you will have to re-start the edition</string>
     <string name="cocktail_name_already_exist">A cocktail with this name already exists</string>
     <string name="give_name_mandatory">You have to give a name for it</string>
+    <string name="cocktail_format_error">Cocktail\'s format is invalid</string>
 
     <!-- Settings -->
     <string name="configure_valves">Valves</string>
