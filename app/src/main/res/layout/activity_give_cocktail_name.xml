@@ -45,14 +45,13 @@
                 android:text="@string/give_description"
                 android:textSize="@dimen/title" />
 
-            <EditText
+            <com.example.albert.pestormix_apk.customviews.EditTextWithDone
                 android:id="@+id/description"
                 android:layout_width="@dimen/cocktail_description_edit_text"
                 android:layout_height="wrap_content"
                 android:background="@drawable/primary_color_rectangle_background"
                 android:gravity="top"
                 android:hint="@string/cocktail_description"
-                android:inputType="textCapSentences|textMultiLine"
                 android:minHeight="@dimen/cocktail_description_edit_text_height"
                 android:padding="@dimen/padding_10" />
         </LinearLayout>
