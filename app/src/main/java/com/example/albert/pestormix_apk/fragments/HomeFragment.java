@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -19,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,7 +49,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     private CocktailAdapter adapter;
     private List<String> cocktailsName;
     private ArrayAdapter<String> stringArrayAdapter;
-    private ImageButton nfc;
+    private ImageView nfc;
     private NfcController nfcController;
 
     public static HomeFragment getInstance() {
@@ -78,8 +76,8 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
 
     private void configView() {
         Spinner glasses = (Spinner) mainView.findViewById(R.id.glass_spinner);
-        ImageButton qr = (ImageButton) mainView.findViewById(R.id.qr_button);
-        nfc = (ImageButton) mainView.findViewById(R.id.nfc_button);
+        ImageView qr = (ImageView) mainView.findViewById(R.id.qr_button);
+        nfc = (ImageView) mainView.findViewById(R.id.nfc_button);
         final ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
         nfcController = NfcController.getInstance(getActivity());
 
@@ -225,11 +223,15 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
 
     private void configureSearchView(Menu menu) {
         MenuItem menuItem = menu.findItem(R.id.search_view);
-        menuItem.getIcon().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
         SearchView searchView = (SearchView) menuItem.getActionView();
+
+        ImageView search_close_btn = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        search_close_btn.setImageResource(R.drawable.icon_close);
+
         SearchView.SearchAutoComplete searchText = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         cocktailsName = CocktailController.getCocktailsNames(getRealm());
         stringArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.row_single_text_view, cocktailsName);
+        searchText.setTextColor(getResources().getColor(R.color.colorBackground));
         searchText.setThreshold(1);
         searchText.setHint(getString(R.string.cocktail_name));
         searchText.setAdapter(stringArrayAdapter);

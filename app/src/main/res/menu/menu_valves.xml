@@ -6,7 +6,7 @@
         android:visible="false">
         <item
             android:id="@+id/continue_button"
-            android:icon="@android:drawable/ic_media_next"
+            android:icon="@drawable/icon_continue"
             android:title="@string/tutorial_continue"
             app:showAsAction="ifRoom" />
     </group>
@@ -14,7 +14,7 @@
         android:id="@+id/config_valves_group">
         <item
             android:id="@+id/save"
-            android:icon="@android:drawable/ic_menu_save"
+            android:icon="@drawable/icon_save"
             android:title="@string/save"
             app:showAsAction="ifRoom" />
 

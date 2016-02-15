@@ -29,6 +29,7 @@ import com.example.albert.pestormix_apk.fragments.HelpFragment;
 import com.example.albert.pestormix_apk.fragments.HomeFragment;
 import com.example.albert.pestormix_apk.fragments.MuseFragment;
 import com.example.albert.pestormix_apk.fragments.SettingsFragment;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,6 +61,8 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         int firtsScreen = R.id.navigation_cocktails;
         navigate(firtsScreen);
         drawer.getMenu().findItem(firtsScreen).setChecked(true);
+
+        museVisible(getPestormixApplication().getBoolean(Constants.PREFERENCE_MUSE_ACTIVATED, false));
 
         nfcAdapter = NfcController.getInstance(this).getAdapter();
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
@@ -103,8 +106,8 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         }
     }
 
-    public NavigationView getDrawer() {
-        return drawer;
+    public void museVisible(boolean visible) {
+        drawer.getMenu().findItem(R.id.navigation_muse).setVisible(visible);
     }
 
     private void closeNavigationDrawer() {

@@ -15,8 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.6">
-        </Spinner>
+            android:layout_weight="0.6"></Spinner>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -32,14 +31,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/qr_button"
                     android:layout_width="@dimen/home_circle"
                     android:layout_height="@dimen/home_circle"
-                    android:background="@drawable/primary_color_oval_background"
-                    android:gravity="center"
-                    android:scaleType="centerInside"
-                    android:src="@android:drawable/ic_delete" />
+                    android:background="@drawable/primary_color_square_selector"
+                    android:src="@drawable/icon_qr" />
             </LinearLayout>
 
             <LinearLayout
@@ -47,14 +44,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/nfc_button"
                     android:layout_width="@dimen/home_circle"
                     android:layout_height="@dimen/home_circle"
-                    android:background="@drawable/primary_color_oval_background"
-                    android:gravity="center"
-                    android:scaleType="centerInside"
-                    android:src="@android:drawable/ic_delete" />
+                    android:background="@drawable/primary_color_square_selector"
+                    android:src="@drawable/icon_nfc" />
             </LinearLayout>
 
 

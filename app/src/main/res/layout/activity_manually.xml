@@ -22,7 +22,9 @@
             <ImageButton
                 android:id="@+id/cocktail_detail"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/primary_color_square_selector"
+                android:src="@drawable/icon_detail_cocktail" />
         </LinearLayout>
 
         <LinearLayout
@@ -34,7 +36,9 @@
             <ImageButton
                 android:id="@+id/add_item"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/primary_color_square_selector"
+                android:src="@drawable/icon_add" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,7 +50,9 @@
             <ImageButton
                 android:id="@+id/next"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/primary_color_square_selector"
+                android:src="@drawable/icon_continue" />
         </LinearLayout>
 
     </LinearLayout>

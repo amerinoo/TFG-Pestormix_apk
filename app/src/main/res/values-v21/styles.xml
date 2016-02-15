@@ -12,5 +12,6 @@
         <item name="android:textViewStyle">@style/TextView</item>
         <item name="android:buttonStyle">@style/buttonPestormix</item>
         <item name="android:navigationBarColor">?android:attr/colorPrimary</item>
+        <item name="android:homeAsUpIndicator">@drawable/icon_arrow_back</item>
     </style>
 </resources>

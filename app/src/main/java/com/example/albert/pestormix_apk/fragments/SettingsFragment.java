@@ -76,6 +76,6 @@ public class SettingsFragment extends PestormixMasterFragment {
     }
 
     private void museVisible(boolean visible) {
-        ((MainActivity) getActivity()).getDrawer().getMenu().findItem(R.id.navigation_muse).setVisible(visible);
+        ((MainActivity) getActivity()).museVisible(visible);
     }
 }

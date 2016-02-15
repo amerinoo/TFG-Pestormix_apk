@@ -3,28 +3,28 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_cocktails"
-            android:icon="@android:drawable/ic_delete"
+            android:icon="@drawable/icon_home"
             android:title="@string/title_cocktails" />
         <item
             android:id="@+id/navigation_createCocktail"
-            android:icon="@android:drawable/ic_delete"
+            android:icon="@drawable/icon_create_cocktail"
             android:title="@string/title_create_cocktail" />
         <item
             android:id="@+id/navigation_muse"
-            android:icon="@android:drawable/ic_delete"
+            android:icon="@drawable/icon_muse"
             android:title="@string/title_muse" />
         <item
             android:id="@+id/navigation_settings"
-            android:icon="@android:drawable/ic_delete"
+            android:icon="@drawable/icon_settings"
             android:title="@string/title_settings" />
         <item
             android:id="@+id/navigation_help"
-            android:icon="@android:drawable/ic_delete"
+            android:icon="@drawable/icon_help"
             android:title="@string/title_help" />
 
         <item
             android:id="@+id/navigation_aboutTheAuthor"
-            android:icon="@android:drawable/ic_delete"
+            android:icon="@drawable/icon_user"
             android:title="@string/title_about_author" />
     </group>
 </menu>

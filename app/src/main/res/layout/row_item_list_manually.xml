@@ -32,9 +32,9 @@
                 android:id="@+id/remove"
                 android:layout_width="@dimen/home_circle"
                 android:layout_height="@dimen/home_circle"
-                android:background="@drawable/primary_color_oval_background"
-                android:scaleType="center"
-                android:src="@drawable/red_line" />
+                android:background="@drawable/primary_color_square_selector"
+                android:src="@drawable/icon_remove"
+                android:tint="@android:color/holo_red_dark" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
