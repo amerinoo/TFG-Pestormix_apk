@@ -123,7 +123,11 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                 .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        NetworkController.send(getRealm(), cocktailName, glassName, remove);
+                        Boolean sended = NetworkController.send(getRealm(), cocktailName, glassName, remove);
+                        if (sended) {
+                            showToast(cocktailName + getString(R.string.send_ok));
+                        }
+                        showToast(getString(R.string.send_error) + cocktailName);
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
