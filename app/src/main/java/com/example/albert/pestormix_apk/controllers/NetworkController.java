@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Valve;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,8 +61,8 @@ public abstract class NetworkController {
     static class SendMessageTask extends AsyncTask<String, Void, Boolean> {
 
         protected Boolean doInBackground(String... jsonMessage) {
-            final String ip = "192.168.1.8";
-            final int port = 1110;
+            final String ip = Constants.NETWORK_RASPBERRY_IP;
+            final int port = Integer.valueOf(Constants.NETWORK_RASPBERRY_PORT);
             Socket socket = null;
             Boolean sended = true;
             try {

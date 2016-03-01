@@ -5,12 +5,17 @@ package com.example.albert.pestormix_apk.utils;
  */
 public abstract class Constants {
 
-    public static final String PREFERENCES_KEY = "pestormixapp";
+
 
     //Preferences keys
+    public static final String PREFERENCES_KEY = "pestormixapp";
     public static final String PREFERENCE_TUTORIAL_KEY = "tutorial";
     public static final String PREFERENCE_INIT_DATA_KEY = "init_data";
     public static final String PREFERENCE_MUSE_ACTIVATED = "muse_activated";
+
+    //Network
+    public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";
+    public static final String NETWORK_RASPBERRY_PORT = "1110";
 
     public static final String EXTRA_IS_TUTORIAL = "extra_is_tutorial";
 

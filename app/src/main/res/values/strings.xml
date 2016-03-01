@@ -13,7 +13,7 @@
     <string name="information">Information</string>
     <string name="activate_nfc">Do you want to activate the NFC?</string>
     <string name="nfc_disabled">NFC is disabled</string>
-    <string name="send_ok">has been sent successfully</string>
+    <string name="send_ok">\u0020has been sent successfully</string>
     <string name="send_error">"Failed to send "</string>
 
     <!-- Tutorial -->

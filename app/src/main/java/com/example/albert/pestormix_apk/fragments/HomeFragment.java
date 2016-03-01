@@ -126,8 +126,9 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                         Boolean sended = NetworkController.send(getRealm(), cocktailName, glassName, remove);
                         if (sended) {
                             showToast(cocktailName + getString(R.string.send_ok));
+                        } else {
+                            showToast(getString(R.string.send_error) + cocktailName);
                         }
-                        showToast(getString(R.string.send_error) + cocktailName);
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
