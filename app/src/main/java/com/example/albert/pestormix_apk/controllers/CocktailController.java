@@ -17,16 +17,25 @@ import io.realm.RealmList;
  */
 public abstract class CocktailController {
     public static List<Cocktail> init(Realm realm) {
-        List<Drink> drinks = DrinkController.getDrinks(realm);
         List<Cocktail> cocktails = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            Cocktail cocktail = new Cocktail();
-            cocktail.setName("Cocktail " + i);
-            addDrink(cocktail, drinks.get(i % drinks.size()));
-            cocktails.add(cocktail);
-        }
+        generateCocktail(realm, cocktails,"Water","Water");
+        generateCocktail(realm, cocktails,"Coca Cola","Coca Cola");
+        generateCocktail(realm, cocktails,"Lemonade","Lemonade");
+        generateCocktail(realm, cocktails,"Orangeade","Orangeade");
+        generateCocktail(realm, cocktails,"Cuba libre","Coca Cola,Ron");
         return cocktails;
     }
+
+    private static void generateCocktail(Realm realm, List<Cocktail> cocktails,String name,String drinks) {
+        Cocktail cocktail = new Cocktail();
+        cocktail.setName(name);
+        List<Drink> drinksFromString = getDrinksFromString(realm, drinks);
+        for (Drink drink: drinksFromString) {
+            addDrink(cocktail, drink);
+        }
+        cocktails.add(cocktail);
+    }
+
 
     public static void generateCocktails(Realm realm) {
         DataController.generateCocktails(realm);

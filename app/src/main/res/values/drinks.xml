@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Drinks' names-->
+
+    //Drinks' names
+    <string name="drink_water">Water</string>
+    <string name="drink_coca_cola">Coca Cola</string>
+    <string name="drink_lemonade">Lemonade</string>
+    <string name="drink_orangeade">Orangeade</string>
+    <string name="drink_rum">Rum</string>
+
+    //Cocktails' names
+    <string name="cocktail_water">Water</string>
+    <string name="cocktail_coca_cola">Coca cola</string>
+    <string name="cocktail_lemonade">Lemonade</string>
+    <string name="cocktail_orangeade">Orangeade</string>
+    <string name="cocktail_cuba_libre">Cuba libre</string>
+    <!-- Cocktails's names-->
+</resources>

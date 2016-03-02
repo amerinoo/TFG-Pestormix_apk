@@ -19,7 +19,7 @@ public abstract class DrinkController {
         drinks.add(getDrink("Coca Cola", "Coca Cola description", false, R.drawable.cocacola));
         drinks.add(getDrink("Lemonade", "Lemonade description", false, R.drawable.limonada));
         drinks.add(getDrink("Orangeade", "Orangeade description", false, R.drawable.naranjada));
-        drinks.add(getDrink("Ron Barceló", "Ron Barceló description", true, R.drawable.ron_barcelo));
+        drinks.add(getDrink("Ron", "Ron", true, R.drawable.ron_barcelo));
         return drinks;
     }
 
