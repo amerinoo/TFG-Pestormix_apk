@@ -1,6 +1,7 @@
 package com.example.albert.pestormix_apk.controllers;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.application.MasterController;
 import com.example.albert.pestormix_apk.models.Drink;
 
 import java.util.ArrayList;
@@ -11,15 +12,20 @@ import io.realm.Realm;
 /**
  * Created by Albert on 25/01/2016.
  */
-public abstract class DrinkController {
+public abstract class DrinkController extends MasterController {
 
     public static List<Drink> init() {
         List<Drink> drinks = new ArrayList<>();
-        drinks.add(getDrink("Water", "Water description", false, R.drawable.agua));
-        drinks.add(getDrink("Coca Cola", "Coca Cola description", false, R.drawable.cocacola));
-        drinks.add(getDrink("Lemonade", "Lemonade description", false, R.drawable.limonada));
-        drinks.add(getDrink("Orangeade", "Orangeade description", false, R.drawable.naranjada));
-        drinks.add(getDrink("Ron", "Ron", true, R.drawable.ron_barcelo));
+        drinks.add(getDrink(getStringResource(R.string.drink_water),
+                getStringResource(R.string.drink_water_description), false, R.drawable.agua));
+        drinks.add(getDrink(getStringResource(R.string.drink_coca_cola),
+                getStringResource(R.string.drink_coca_cola_description), false, R.drawable.cocacola));
+        drinks.add(getDrink(getStringResource(R.string.drink_lemonade),
+                getStringResource(R.string.drink_lemonade_description), false, R.drawable.limonada));
+        drinks.add(getDrink(getStringResource(R.string.drink_orangeade),
+                getStringResource(R.string.drink_orangeade_description), false, R.drawable.naranjada));
+        drinks.add(getDrink(getStringResource(R.string.drink_ron),
+                getStringResource(R.string.drink_ron_description), true, R.drawable.ron_barcelo));
         return drinks;
     }
 

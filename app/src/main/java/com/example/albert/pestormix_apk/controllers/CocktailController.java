@@ -1,6 +1,7 @@
 package com.example.albert.pestormix_apk.controllers;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.application.MasterController;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.exceptions.CocktailFormatException;
 import com.example.albert.pestormix_apk.models.Cocktail;
@@ -15,22 +16,27 @@ import io.realm.RealmList;
 /**
  * Created by Albert on 27/01/2016.
  */
-public abstract class CocktailController {
+public abstract class CocktailController extends MasterController {
     public static List<Cocktail> init(Realm realm) {
         List<Cocktail> cocktails = new ArrayList<>();
-        generateCocktail(realm, cocktails,"Water","Water");
-        generateCocktail(realm, cocktails,"Coca Cola","Coca Cola");
-        generateCocktail(realm, cocktails,"Lemonade","Lemonade");
-        generateCocktail(realm, cocktails,"Orangeade","Orangeade");
-        generateCocktail(realm, cocktails,"Cuba libre","Coca Cola,Ron");
+        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_water),
+                getStringResource(R.string.cocktail_water));
+        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_coca_cola),
+                getStringResource(R.string.drink_coca_cola));
+        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_lemonade),
+                getStringResource(R.string.drink_lemonade));
+        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_orangeade),
+                getStringResource(R.string.drink_orangeade));
+        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_cuba_libre),
+                getStringResource(R.string.drink_coca_cola) + getStringResource(R.string.drink_ron));
         return cocktails;
     }
 
-    private static void generateCocktail(Realm realm, List<Cocktail> cocktails,String name,String drinks) {
+    private static void generateCocktail(Realm realm, List<Cocktail> cocktails, String name, String drinks) {
         Cocktail cocktail = new Cocktail();
         cocktail.setName(name);
         List<Drink> drinksFromString = getDrinksFromString(realm, drinks);
-        for (Drink drink: drinksFromString) {
+        for (Drink drink : drinksFromString) {
             addDrink(cocktail, drink);
         }
         cocktails.add(cocktail);
