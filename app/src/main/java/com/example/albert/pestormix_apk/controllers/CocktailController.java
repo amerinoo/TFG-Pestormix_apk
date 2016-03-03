@@ -20,21 +20,26 @@ public abstract class CocktailController extends MasterController {
     public static List<Cocktail> init(Realm realm) {
         List<Cocktail> cocktails = new ArrayList<>();
         generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_water),
-                getStringResource(R.string.cocktail_water));
+                getStringResource(R.string.cocktail_water_description), getStringResource(R.string.cocktail_water));
         generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_coca_cola),
+                getStringResource(R.string.cocktail_coca_cola_description),
                 getStringResource(R.string.drink_coca_cola));
         generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_lemonade),
+                getStringResource(R.string.cocktail_lemonade_description),
                 getStringResource(R.string.drink_lemonade));
         generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_orangeade),
+                getStringResource(R.string.cocktail_orangeade_description),
                 getStringResource(R.string.drink_orangeade));
         generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_cuba_libre),
-                getStringResource(R.string.drink_coca_cola) + getStringResource(R.string.drink_ron));
+                getStringResource(R.string.cocktail_cuba_libre_description),
+                getStringResource(R.string.drink_coca_cola) + "," + getStringResource(R.string.drink_ron));
         return cocktails;
     }
 
-    private static void generateCocktail(Realm realm, List<Cocktail> cocktails, String name, String drinks) {
+    private static void generateCocktail(Realm realm, List<Cocktail> cocktails, String name, String description, String drinks) {
         Cocktail cocktail = new Cocktail();
         cocktail.setName(name);
+        cocktail.setDescription(description);
         List<Drink> drinksFromString = getDrinksFromString(realm, drinks);
         for (Drink drink : drinksFromString) {
             addDrink(cocktail, drink);

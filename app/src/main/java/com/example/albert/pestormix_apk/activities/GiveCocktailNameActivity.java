@@ -63,7 +63,7 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
             @Override
             public void onClick(View v) {
                 int message;
-                if (createCocktailType == createCocktailType.NEW)
+                if (createCocktailType == CreateCocktailType.NEW)
                     message = R.string.cocktail_removed_restart_creation;
                 else
                     message = R.string.cocktail_not_updated_restart_edition;
