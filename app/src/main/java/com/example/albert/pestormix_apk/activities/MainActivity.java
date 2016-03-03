@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.controllers.NfcController;
+import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.fragments.AboutAuthorFragment;
 import com.example.albert.pestormix_apk.fragments.CreateCocktailFragment;
 import com.example.albert.pestormix_apk.fragments.HelpFragment;

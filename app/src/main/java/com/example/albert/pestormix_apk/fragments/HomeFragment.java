@@ -29,7 +29,7 @@ import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.controllers.NetworkController;
-import com.example.albert.pestormix_apk.controllers.NfcController;
+import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;

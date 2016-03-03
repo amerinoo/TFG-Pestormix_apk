@@ -1,4 +1,4 @@
-package com.example.albert.pestormix_apk.controllers;
+package com.example.albert.pestormix_apk.nfc;
 
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;

@@ -1,4 +1,4 @@
-package com.example.albert.pestormix_apk.controllers;
+package com.example.albert.pestormix_apk.nfc;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,9 +17,14 @@ import com.example.albert.pestormix_apk.R;
  */
 public class NfcController {
     private static NfcController nfcController;
+    private static AlertDialog dialog;
     private NfcAdapter adapter;
     private Context context;
-    private static AlertDialog dialog;
+
+    private NfcController(Context context) {
+        this.context = context;
+        this.adapter = NfcAdapter.getDefaultAdapter(context);
+    }
 
     public static NfcController getInstance(Context context) {
         if (nfcController == null) {
@@ -29,9 +34,11 @@ public class NfcController {
         return nfcController;
     }
 
-    private NfcController(Context context) {
-        this.context = context;
-        this.adapter = NfcAdapter.getDefaultAdapter(context);
+    public static void dismissDialog(View v) {
+        if (dialog != null) {
+            dialog.dismiss();
+            v.setActivated(false);
+        }
     }
 
     public NfcAdapter getAdapter() {
@@ -71,13 +78,6 @@ public class NfcController {
             }
         };
         v.setOnClickListener(listener);
-    }
-
-    public static void dismissDialog(View v) {
-        if (dialog != null) {
-            dialog.dismiss();
-            v.setActivated(false);
-        }
     }
 
     private void checkIfNeedDisable(View v) {
