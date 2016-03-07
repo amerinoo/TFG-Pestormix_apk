@@ -49,7 +49,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         isTutorial = getIntent().getBooleanExtra(Constants.EXTRA_IS_TUTORIAL, false);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (!isTutorial)
-            ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(getString(R.string.configure_valves));
+            ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(getString(R.string.title_valves));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         configView();

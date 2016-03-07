@@ -11,7 +11,6 @@ public abstract class Constants {
     public static final String PREFERENCES_KEY = "pestormixapp";
     public static final String PREFERENCE_TUTORIAL_KEY = "tutorial";
     public static final String PREFERENCE_INIT_DATA_KEY = "init_data";
-    public static final String PREFERENCE_MUSE_ACTIVATED = "muse_activated";
 
     //Network
     public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";

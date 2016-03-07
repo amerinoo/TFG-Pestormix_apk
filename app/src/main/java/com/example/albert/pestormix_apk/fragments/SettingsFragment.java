@@ -2,71 +2,61 @@ package com.example.albert.pestormix_apk.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ConfigValvesActivity;
 import com.example.albert.pestormix_apk.activities.MainActivity;
-import com.example.albert.pestormix_apk.application.PestormixApplication;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
-import com.example.albert.pestormix_apk.utils.Constants;
 
 /**
  * Created by Albert on 24/01/2016.
  */
-public class SettingsFragment extends PestormixMasterFragment {
-    private View mainView;
+public class SettingsFragment extends PreferenceFragment {
 
     public static SettingsFragment getInstance() {
-        SettingsFragment fragment = new SettingsFragment();
-        return fragment;
+        return new SettingsFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.settings);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mainView = view;
         configView();
     }
 
     private void configView() {
-        mainView.findViewById(R.id.config_valves).setOnClickListener(new View.OnClickListener() {
+        findPreference("valves").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onPreferenceClick(Preference preference) {
                 goConfigValves();
+                return true;
             }
         });
-        mainView.findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
+        findPreference("login").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public void onClick(View v) {
-                showToast(R.string.login);
+            public boolean onPreferenceClick(Preference preference) {
+                showToast(R.string.login_google);
+                return true;
             }
         });
-        final CheckBox checkBox = (CheckBox) mainView.findViewById(R.id.muse_activate);
-        checkBox.setChecked(getPestormixApplication().getBoolean(Constants.PREFERENCE_MUSE_ACTIVATED, false));
-        checkBox.setOnClickListener(new View.OnClickListener() {
+        findPreference("muse_activated").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public void onClick(View v) {
-                boolean visible = checkBox.isChecked();
-                getPestormixApplication().putBoolean(Constants.PREFERENCE_MUSE_ACTIVATED, visible);
+            public boolean onPreferenceClick(Preference preference) {
+                CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;
+                boolean visible = checkBoxPreference.isChecked();
                 museVisible(visible);
+                return false;
             }
         });
-    }
-
-    private PestormixApplication getPestormixApplication() {
-        return ((PestormixMasterActivity) getActivity()).getPestormixApplication();
     }
 
     private void goConfigValves() {
@@ -75,7 +65,15 @@ public class SettingsFragment extends PestormixMasterFragment {
         startActivityAnimation();
     }
 
+    public void startActivityAnimation() {
+        getActivity().overridePendingTransition(R.anim.slide_in, R.anim.nothing);
+    }
+
     private void museVisible(boolean visible) {
         ((MainActivity) getActivity()).museVisible(visible);
+    }
+
+    public void showToast(int resId) {
+        ((PestormixMasterActivity) getActivity()).showToast(resId);
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.example.albert.pestormix_apk.customviews.MyPreference
+        android:key="valves"
+        android:title="@string/configure_valves" />
+    <com.example.albert.pestormix_apk.customviews.MyPreference
+        android:key="login"
+        android:title="@string/login_google" />
+    <com.example.albert.pestormix_apk.customviews.MyCheckBoxPreference
+        android:defaultValue="false"
+        android:key="@string/PREFERENCE_MUSE"
+        android:title="@string/muse" />
+</PreferenceScreen>

@@ -22,14 +22,13 @@ import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.fragments.AboutAuthorFragment;
 import com.example.albert.pestormix_apk.fragments.CreateCocktailFragment;
 import com.example.albert.pestormix_apk.fragments.HelpFragment;
 import com.example.albert.pestormix_apk.fragments.HomeFragment;
 import com.example.albert.pestormix_apk.fragments.MuseFragment;
 import com.example.albert.pestormix_apk.fragments.SettingsFragment;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormix_apk.nfc.NfcController;
 
 public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -62,7 +61,7 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         navigate(firtsScreen);
         drawer.getMenu().findItem(firtsScreen).setChecked(true);
 
-        museVisible(getPestormixApplication().getBoolean(Constants.PREFERENCE_MUSE_ACTIVATED, false));
+        museVisible(getPestormixApplication().getBoolean(getString(R.string.PREFERENCE_MUSE), false));
 
         nfcAdapter = NfcController.getInstance(this).getAdapter();
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
