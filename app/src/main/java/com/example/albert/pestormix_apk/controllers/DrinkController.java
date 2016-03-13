@@ -42,8 +42,15 @@ public abstract class DrinkController extends MasterController {
         return DataController.getDrinks(realm);
     }
 
-
     public static Drink getDrinkByName(Realm realm, String name) {
         return DataController.getDrinkByName(realm, name);
+    }
+
+    public static List<Drink> getDrinksFromString(Realm realm, String drinksString) {
+        List<Drink> drinks = new ArrayList<>();
+        for (String name : drinksString.split(",")) {
+            drinks.add(getDrinkByName(realm, name));
+        }
+        return drinks;
     }
 }

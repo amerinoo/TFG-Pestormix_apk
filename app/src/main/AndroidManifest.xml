@@ -16,6 +16,7 @@
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,6 +39,9 @@
         <activity android:name=".activities.AllReadyActivity" />
         <activity
             android:name=".activities.ScanQrActivity"
+            android:label="" />
+        <activity
+            android:name=".activities.DetailCocktailActivity"
             android:label="" />
     </application>
 

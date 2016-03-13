@@ -48,7 +48,7 @@ public class SettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
-        findPreference("muse_activated").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        findPreference(getString(R.string.PREFERENCE_MUSE)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;

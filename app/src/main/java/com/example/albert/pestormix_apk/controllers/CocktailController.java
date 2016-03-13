@@ -40,7 +40,7 @@ public abstract class CocktailController extends MasterController {
         Cocktail cocktail = new Cocktail();
         cocktail.setName(name);
         cocktail.setDescription(description);
-        List<Drink> drinksFromString = getDrinksFromString(realm, drinks);
+        List<Drink> drinksFromString = DrinkController.getDrinksFromString(realm, drinks);
         for (Drink drink : drinksFromString) {
             addDrink(cocktail, drink);
         }
@@ -109,14 +109,6 @@ public abstract class CocktailController extends MasterController {
         RealmList<Drink> results = cocktail.getDrinks();
         List<Drink> drinks = new ArrayList<>();
         for (Drink drink : results) drinks.add(drink);
-        return drinks;
-    }
-
-    public static List<Drink> getDrinksFromString(Realm realm, String drinksString) {
-        List<Drink> drinks = new ArrayList<>();
-        for (String name : drinksString.split(",")) {
-            drinks.add(DrinkController.getDrinkByName(realm, name));
-        }
         return drinks;
     }
 
