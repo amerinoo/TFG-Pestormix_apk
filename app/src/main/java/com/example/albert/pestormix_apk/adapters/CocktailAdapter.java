@@ -55,8 +55,9 @@ public class CocktailAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        convertView.findViewById(R.id.remove).setVisibility(View.GONE);
+        convertView.findViewById(R.id.linear_remove).setVisibility(View.GONE);
         holder.name.setText(cocktail.getName());
+        holder.name.setBackgroundResource(R.drawable.primary_color_rectangle_with_solid_background);
 
         return convertView;
     }
