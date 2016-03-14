@@ -67,10 +67,10 @@ public class PestormixMasterActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.nothing, R.anim.slide_out);
     }
 
-    public void changeOrientationIfIsPhone(){
+    public void changeOrientationIfIsPhone() {
         boolean isTablet = getResources().getBoolean(R.bool.isTablet);
-        if (!isTablet){
-            setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (!isTablet) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 }

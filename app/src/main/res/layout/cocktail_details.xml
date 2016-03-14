@@ -4,58 +4,71 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/name"
-        android:textSize="@dimen/dialog_title" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:padding="@dimen/activity_default_padding"
-        android:textColor="@color/white" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/description"
-        android:textSize="@dimen/dialog_title" />
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:padding="@dimen/activity_default_padding"
-        android:textColor="@color/white" />
+        android:background="@drawable/primary_color_rectangle_background"
+        android:orientation="vertical">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/drinks"
-        android:textSize="@dimen/dialog_title" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:text="@string/name"
+            android:textSize="@dimen/dialog_title" />
 
-    <TextView
-        android:id="@+id/drinks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:padding="@dimen/activity_default_padding"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/activity_default_padding"
+            android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/accept"
-        android:layout_width="@dimen/create_cocktail_button"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/activity_default_padding"
-        android:text="@string/accept" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:text="@string/description"
+            android:textSize="@dimen/dialog_title" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/activity_default_padding"
+            android:textColor="@color/white" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:text="@string/drinks"
+            android:textSize="@dimen/dialog_title" />
+
+        <TextView
+            android:id="@+id/drinks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/activity_default_padding"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/accept"
+            android:layout_width="@dimen/create_cocktail_button"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/activity_default_padding"
+            android:text="@string/accept" />
+    </LinearLayout>
 </LinearLayout>
