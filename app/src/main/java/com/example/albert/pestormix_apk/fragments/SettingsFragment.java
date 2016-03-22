@@ -45,6 +45,7 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 showToast(R.string.login_google);
+                signInGoogle();
                 return true;
             }
         });
@@ -57,6 +58,10 @@ public class SettingsFragment extends PreferenceFragment {
                 return false;
             }
         });
+    }
+
+    private void signInGoogle() {
+        ((MainActivity) getActivity()).signIn();
     }
 
     private void goConfigValves() {

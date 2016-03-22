@@ -8,14 +8,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -29,16 +33,56 @@ import com.example.albert.pestormix_apk.fragments.HomeFragment;
 import com.example.albert.pestormix_apk.fragments.MuseFragment;
 import com.example.albert.pestormix_apk.fragments.SettingsFragment;
 import com.example.albert.pestormix_apk.nfc.NfcController;
+import com.example.albert.pestormix_apk.utils.Utils;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
-public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.io.InputStream;
 
+public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+
+    private static final String TAG = "MainActivity";
+    private static final int RC_SIGN_IN = 9001;
+    Fragment fragment;
     private NavigationView drawer;
     private DrawerLayout drawerLayout;
-    Fragment fragment;
-
     private ActionBarDrawerToggle drawerToggle;
     private TextView toolbarTitle;
     private NfcAdapter nfcAdapter;
+    private GoogleApiClient mGoogleApiClient;
+
+    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        if (adapter != null) {
+            final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+
+            IntentFilter[] filters = new IntentFilter[1];
+            String[][] techList = new String[][]{};
+
+            // Notice that this is the same filter as in our manifest.
+            filters[0] = new IntentFilter();
+            filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+            filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+            try {
+                filters[0].addDataType("text/plain");
+            } catch (IntentFilter.MalformedMimeTypeException e) {
+                throw new RuntimeException("Check your mime type.");
+            }
+
+            adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+        }
+    }
+
+    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        if (adapter != null)
+            adapter.disableForegroundDispatch(activity);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +98,7 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0);
         drawer.setNavigationItemSelectedListener(this);
-        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
         int firtsScreen = R.id.navigation_cocktails;
@@ -66,6 +110,14 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         nfcAdapter = NfcController.getInstance(this).getAdapter();
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
     }
 
     private void navigate(int id) {
@@ -195,32 +247,67 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         super.onPause();
     }
 
-    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        if (adapter != null) {
-            final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
-            final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+    }
 
-            IntentFilter[] filters = new IntentFilter[1];
-            String[][] techList = new String[][]{};
+    public void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 
-            // Notice that this is the same filter as in our manifest.
-            filters[0] = new IntentFilter();
-            filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
-            filters[0].addCategory(Intent.CATEGORY_DEFAULT);
-            try {
-                filters[0].addDataType("text/plain");
-            } catch (IntentFilter.MalformedMimeTypeException e) {
-                throw new RuntimeException("Check your mime type.");
-            }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
         }
     }
 
-    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        if (adapter != null)
-            adapter.disableForegroundDispatch(activity);
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        Log.d(TAG, "code:" + result.getStatus().getStatusCode());
+        Log.d(TAG, "message:" + result.getStatus().getStatusMessage());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            showToast(acct.getDisplayName());
+            showToast(acct.getEmail());
+            showToast(acct.getId());
+            showToast(acct.getIdToken());
+            showToast(acct.getPhotoUrl().toString());
+            Log.d(TAG, acct.getPhotoUrl().toString());
+            new AsyncTask<String, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(String... urls) {
+                    String urldisplay = urls[0];
+                    Bitmap mIcon11 = null;
+                    try {
+
+                        InputStream in = new java.net.URL(urldisplay).openStream();
+                        mIcon11 = BitmapFactory.decodeStream(in);
+
+                    } catch (Exception e) {
+                        Log.e("Error", e.getMessage());
+                        e.printStackTrace();
+                    }
+                    return mIcon11;
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap bitmap) {
+                    if (bitmap != null)
+                        showToast(Utils.BitMapToString(bitmap));
+                }
+            }.execute(acct.getPhotoUrl().toString());
+
+        } else {
+            // Signed out, show unauthenticated UI.
+            showToast("Signed out, show unauthenticated UI.");
+        }
     }
 }
