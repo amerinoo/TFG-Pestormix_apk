@@ -15,13 +15,17 @@ import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
@@ -33,7 +37,6 @@ import com.example.albert.pestormix_apk.fragments.HomeFragment;
 import com.example.albert.pestormix_apk.fragments.MuseFragment;
 import com.example.albert.pestormix_apk.fragments.SettingsFragment;
 import com.example.albert.pestormix_apk.nfc.NfcController;
-import com.example.albert.pestormix_apk.utils.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -274,16 +277,16 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         Log.d(TAG, "message:" + result.getStatus().getStatusMessage());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
+            final GoogleSignInAccount acct = result.getSignInAccount();
             showToast(acct.getDisplayName());
             showToast(acct.getEmail());
             showToast(acct.getId());
             showToast(acct.getIdToken());
             showToast(acct.getPhotoUrl().toString());
             Log.d(TAG, acct.getPhotoUrl().toString());
-            new AsyncTask<String, Void, Bitmap>() {
+            new AsyncTask<String, Void, Pair<String, Bitmap>>() {
                 @Override
-                protected Bitmap doInBackground(String... urls) {
+                protected Pair<String, Bitmap> doInBackground(String... urls) {
                     String urldisplay = urls[0];
                     Bitmap mIcon11 = null;
                     try {
@@ -295,13 +298,15 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
                         Log.e("Error", e.getMessage());
                         e.printStackTrace();
                     }
-                    return mIcon11;
+                    return new Pair<>(acct.getDisplayName(), mIcon11);
                 }
 
                 @Override
-                protected void onPostExecute(Bitmap bitmap) {
+                protected void onPostExecute(Pair<String, Bitmap> pair) {
+                    String name = pair.first;
+                    Bitmap bitmap = pair.second;
                     if (bitmap != null)
-                        showToast(Utils.BitMapToString(bitmap));
+                        addHeader(name, bitmap);
                 }
             }.execute(acct.getPhotoUrl().toString());
 
@@ -309,5 +314,12 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
             // Signed out, show unauthenticated UI.
             showToast("Signed out, show unauthenticated UI.");
         }
+    }
+
+    private void addHeader(String name, Bitmap image) {
+        View view = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        ((ImageView) view.findViewById(R.id.image)).setImageBitmap(image);
+        ((TextView) view.findViewById(R.id.name)).setText(name);
+        drawer.addHeaderView(view);
     }
 }
