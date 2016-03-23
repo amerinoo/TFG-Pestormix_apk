@@ -50,7 +50,7 @@ public class SplashActivity extends PestormixMasterActivity {
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                boolean sentToken = ((PestormixApplication) getApplication()).getBoolean(Constants.PREFERENCE_SENT_TOKEN_TO_SERVER_KEY, false);
+                boolean sentToken = ((PestormixApplication) getApplication()).getBoolean(Constants.PREFERENCES_SENT_TOKEN_TO_SERVER_KEY, false);
                 if (sentToken) {
                     initApp();
                 } else {
@@ -64,9 +64,9 @@ public class SplashActivity extends PestormixMasterActivity {
     }
 
     private void initApp() {
-        if (getPestormixApplication().getBoolean(Constants.PREFERENCE_TUTORIAL_KEY, true)) {
-            if (getPestormixApplication().getBoolean(Constants.PREFERENCE_INIT_DATA_KEY, true)) {
-                getPestormixApplication().putBoolean(Constants.PREFERENCE_INIT_DATA_KEY, false);
+        if (getPestormixApplication().getBoolean(Constants.PREFERENCES_TUTORIAL_KEY, true)) {
+            if (getPestormixApplication().getBoolean(Constants.PREFERENCES_INIT_DATA_KEY, true)) {
+                getPestormixApplication().putBoolean(Constants.PREFERENCES_INIT_DATA_KEY, false);
                 DataController.init(getRealm());
             }
             openTutorial();

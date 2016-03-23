@@ -10,7 +10,7 @@ import java.io.ByteArrayOutputStream;
  * Created by Albert on 22/03/2016.
  */
 public abstract class Utils {
-    public static String BitMapToString(Bitmap bitmap) {
+    public static String bitmapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
@@ -18,7 +18,7 @@ public abstract class Utils {
         return temp;
     }
 
-    public static Bitmap StringToBitMap(String encodedString) {
+    public static Bitmap stringToBitmap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);

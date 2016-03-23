@@ -21,7 +21,7 @@ public class AllReadyActivity extends PestormixMasterActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                getPestormixApplication().putBoolean(Constants.PREFERENCE_TUTORIAL_KEY, false);
+                getPestormixApplication().putBoolean(Constants.PREFERENCES_TUTORIAL_KEY, false);
                 Intent intent = new Intent(AllReadyActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
