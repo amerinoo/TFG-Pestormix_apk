@@ -37,6 +37,8 @@ import com.example.albert.pestormix_apk.fragments.HomeFragment;
 import com.example.albert.pestormix_apk.fragments.MuseFragment;
 import com.example.albert.pestormix_apk.fragments.SettingsFragment;
 import com.example.albert.pestormix_apk.nfc.NfcController;
+import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormix_apk.utils.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -305,8 +307,10 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
                 protected void onPostExecute(Pair<String, Bitmap> pair) {
                     String name = pair.first;
                     Bitmap bitmap = pair.second;
-                    if (bitmap != null)
+                    if (bitmap != null) {
                         addHeader(name, bitmap);
+                        saveUserInformationToPreferences(name, bitmap);
+                    }
                 }
             }.execute(acct.getPhotoUrl().toString());
 
@@ -314,6 +318,12 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
             // Signed out, show unauthenticated UI.
             showToast("Signed out, show unauthenticated UI.");
         }
+    }
+
+    private void saveUserInformationToPreferences(String name, Bitmap bitmap) {
+        String image = Utils.bitmapToString(bitmap);
+        getPestormixApplication().putString(Constants.PREFERENCES_USER_NAME, name);
+        getPestormixApplication().putString(Constants.PREFERENCES_USER_IMAGE, image);
     }
 
     private void addHeader(String name, Bitmap image) {

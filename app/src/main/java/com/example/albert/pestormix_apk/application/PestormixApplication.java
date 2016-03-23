@@ -24,8 +24,7 @@ public class PestormixApplication extends Application {
     }
 
     public SharedPreferences getPestormixSharedPreferences() {
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES_KEY, Context.MODE_PRIVATE);
-        return preferences;
+        return getSharedPreferences(Constants.PREFERENCES_KEY, Context.MODE_PRIVATE);
     }
 
     public boolean getBoolean(String key, boolean defValue) {
@@ -34,5 +33,13 @@ public class PestormixApplication extends Application {
 
     public void putBoolean(String key, boolean value) {
         getPestormixSharedPreferences().edit().putBoolean(key, value).commit();
+    }
+
+    public String getString(String key, String defValue) {
+        return getPestormixSharedPreferences().getString(key, defValue);
+    }
+
+    public void putString(String key, String value) {
+        getPestormixSharedPreferences().edit().putString(key, value).commit();
     }
 }
