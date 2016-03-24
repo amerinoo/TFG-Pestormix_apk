@@ -33,20 +33,6 @@ public class SplashActivity extends PestormixMasterActivity {
         changeOrientationIfIsPhone();
         setContentView(R.layout.activity_splash);
 
-        handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Registering BroadcastReceiver
-                registerReceiver();
-
-                if (checkPlayServices()) {
-                    // Start IntentService to register this application with GCM.
-                    Intent intent = new Intent(getApplicationContext(), RegistrationIntentService.class);
-                    startService(intent);
-                }
-            }
-        }, 2000);
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -59,8 +45,23 @@ public class SplashActivity extends PestormixMasterActivity {
                 }
             }
         };
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (getPestormixApplication().getBoolean(Constants.PREFERENCES_SENT_TOKEN_TO_SERVER_KEY, false)) {
+                    initApp();
+                } else {
+                    registerReceiver();
 
-
+                    if (checkPlayServices()) {
+                        // Start IntentService to register this application with GCM.
+                        Intent intent = new Intent(getApplicationContext(), RegistrationIntentService.class);
+                        startService(intent);
+                    }
+                }
+            }
+        }, 2000);
     }
 
     private void initApp() {
@@ -82,7 +83,7 @@ public class SplashActivity extends PestormixMasterActivity {
     }
 
     private void openMain() {
-        Intent intent = new Intent(getPestormixApplication(), MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

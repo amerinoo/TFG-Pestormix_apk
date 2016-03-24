@@ -10,12 +10,12 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -45,8 +45,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import java.io.InputStream;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -94,11 +98,40 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         super.onCreate(savedInstanceState);
         changeOrientationIfIsPhone();
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = initToolbar();
+        initNavigationDrawer(toolbar);
+        checkUserInformation();
+        museVisible(getPestormixApplication().getBoolean(getString(R.string.PREFERENCE_MUSE), false));
+        nfcAdapter = NfcController.getInstance(this).getAdapter();
+        initGoogleApiClient();
+    }
+
+    private void checkUserInformation() {
+        Bitmap image = Utils.stringToBitmap(getPestormixApplication().getString(Constants.PREFERENCES_USER_IMAGE, null));
+        String name = getPestormixApplication().getString(Constants.PREFERENCES_USER_NAME, null);
+        if (name != null && image != null) addHeader(name, image);
+    }
+
+    private Toolbar initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         Menu menu = toolbar.getMenu();
         getMenuInflater().inflate(R.menu.menu_search_view, menu);
         setSupportActionBar(toolbar);
+        return toolbar;
+    }
+
+    private void initGoogleApiClient() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
+    private void initNavigationDrawer(Toolbar toolbar) {
         drawer = (NavigationView) findViewById(R.id.main_drawer);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0);
@@ -109,20 +142,6 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         int firtsScreen = R.id.navigation_cocktails;
         navigate(firtsScreen);
         drawer.getMenu().findItem(firtsScreen).setChecked(true);
-
-        museVisible(getPestormixApplication().getBoolean(getString(R.string.PREFERENCE_MUSE), false));
-
-        nfcAdapter = NfcController.getInstance(this).getAdapter();
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
     }
 
     private void navigate(int id) {
@@ -254,12 +273,23 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        showToast(connectionResult.toString());
     }
 
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    public void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        saveUserInformationToPreferences(null, null);
+                        removeHeader();
+                    }
+                });
     }
 
     @Override
@@ -279,40 +309,11 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         Log.d(TAG, "message:" + result.getStatus().getStatusMessage());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
-            final GoogleSignInAccount acct = result.getSignInAccount();
-            showToast(acct.getDisplayName());
-            showToast(acct.getEmail());
-            showToast(acct.getId());
-            showToast(acct.getIdToken());
-            showToast(acct.getPhotoUrl().toString());
-            Log.d(TAG, acct.getPhotoUrl().toString());
-            new AsyncTask<String, Void, Pair<String, Bitmap>>() {
-                @Override
-                protected Pair<String, Bitmap> doInBackground(String... urls) {
-                    String urldisplay = urls[0];
-                    Bitmap mIcon11 = null;
-                    try {
-
-                        InputStream in = new java.net.URL(urldisplay).openStream();
-                        mIcon11 = BitmapFactory.decodeStream(in);
-
-                    } catch (Exception e) {
-                        Log.e("Error", e.getMessage());
-                        e.printStackTrace();
-                    }
-                    return new Pair<>(acct.getDisplayName(), mIcon11);
-                }
-
-                @Override
-                protected void onPostExecute(Pair<String, Bitmap> pair) {
-                    String name = pair.first;
-                    Bitmap bitmap = pair.second;
-                    if (bitmap != null) {
-                        addHeader(name, bitmap);
-                        saveUserInformationToPreferences(name, bitmap);
-                    }
-                }
-            }.execute(acct.getPhotoUrl().toString());
+            GoogleSignInAccount acct = result.getSignInAccount();
+            Uri url = acct.getPhotoUrl();
+            final String displayName = acct.getDisplayName();
+            Bitmap userImage = getUserImage(url);
+            refreshUserInformation(displayName, userImage);
 
         } else {
             // Signed out, show unauthenticated UI.
@@ -320,8 +321,50 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         }
     }
 
+    private Bitmap getUserImage(Uri url) {
+        Bitmap bitmap = null;
+        if (url == null) {
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_person);
+        } else {
+            String urlString = url.toString();
+            try {
+                bitmap = new AsyncTask<String, Void, Bitmap>() {
+                    @Override
+                    protected Bitmap doInBackground(String... urls) {
+                        String urldisplay = urls[0];
+                        Bitmap mIcon11 = null;
+                        try {
+
+                            InputStream in = new URL(urldisplay).openStream();
+                            mIcon11 = BitmapFactory.decodeStream(in);
+
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage());
+                            e.printStackTrace();
+                        }
+                        return mIcon11;
+                    }
+
+                }.execute(urlString).get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        return bitmap;
+    }
+
+    protected void refreshUserInformation(String displayName, Bitmap bitmap) {
+        if (bitmap != null) {
+            addHeader(displayName, bitmap);
+            saveUserInformationToPreferences(displayName, bitmap);
+        }
+    }
+
     private void saveUserInformationToPreferences(String name, Bitmap bitmap) {
-        String image = Utils.bitmapToString(bitmap);
+        String image = null;
+        if (bitmap != null)
+            image = Utils.bitmapToString(bitmap);
+        getPestormixApplication().putBoolean(Constants.PREFERENCES_USER_LOGGED, name != null);
         getPestormixApplication().putString(Constants.PREFERENCES_USER_NAME, name);
         getPestormixApplication().putString(Constants.PREFERENCES_USER_IMAGE, image);
     }
@@ -331,5 +374,11 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         ((ImageView) view.findViewById(R.id.image)).setImageBitmap(image);
         ((TextView) view.findViewById(R.id.name)).setText(name);
         drawer.addHeaderView(view);
+    }
+
+    private void removeHeader() {
+        if (drawer.getHeaderCount() > 0) {
+            drawer.removeHeaderView(drawer.getHeaderView(0));
+        }
     }
 }

@@ -10,6 +10,7 @@ public abstract class Constants {
     public static final String PREFERENCES_TUTORIAL_KEY = "tutorial";
     public static final String PREFERENCES_INIT_DATA_KEY = "init_data";
     public static final String PREFERENCES_SENT_TOKEN_TO_SERVER_KEY = "sent_token_to_server";
+    public static final String PREFERENCES_USER_LOGGED = "user_logged";
     public static final String PREFERENCES_USER_NAME = "user_name";
     public static final String PREFERENCES_USER_IMAGE = "user_image";
 
