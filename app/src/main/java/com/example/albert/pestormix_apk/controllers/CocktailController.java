@@ -47,7 +47,6 @@ public abstract class CocktailController extends MasterController {
         cocktails.add(cocktail);
     }
 
-
     public static void generateCocktails(Realm realm) {
         DataController.generateCocktails(realm);
     }
@@ -87,14 +86,15 @@ public abstract class CocktailController extends MasterController {
     }
 
     public static Cocktail getCocktailFromString(Realm realm, String data) throws CocktailFormatException {
-        String[] split = data.split(",", 4);
-        if (split.length < 4 || !split[0].equals("Pestormix")) {
+        String[] split = data.split(",", 5);
+        if (split.length < 5 || !split[0].equals("Pestormix")) {
             throw new CocktailFormatException();
         }
         Cocktail cocktail = new Cocktail();
         cocktail.setName(split[1]);
         cocktail.setDescription(split[2]);
-        setDrinksFromString(realm, cocktail, split[3]);
+        cocktail.setAlcohol(Boolean.valueOf(split[3]));
+        setDrinksFromString(realm, cocktail, split[4]);
         return cocktail;
     }
 
@@ -113,8 +113,9 @@ public abstract class CocktailController extends MasterController {
     }
 
     public static void setDrinksFromString(Realm realm, Cocktail cocktail, String drinksString) {
-        for (String name : drinksString.split(",")) {
-            addDrink(cocktail, DrinkController.getDrinkByName(realm, name));
+        List<Drink> drinks = DrinkController.getDrinksFromString(realm, drinksString);
+        for (Drink drink : drinks) {
+            addDrink(cocktail, drink);
         }
     }
 
