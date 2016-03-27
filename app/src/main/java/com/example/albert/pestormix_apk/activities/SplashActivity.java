@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
@@ -12,16 +13,28 @@ import android.util.Log;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.backend.cocktailApi.CocktailApi;
+import com.example.albert.pestormix_apk.backend.cocktailApi.model.CocktailBean;
+import com.example.albert.pestormix_apk.controllers.CocktailController;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.gcm.RegistrationIntentService;
+import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.Constants;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+
+import java.io.IOException;
+import java.util.List;
 
 public class SplashActivity extends PestormixMasterActivity {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "SplashActivity";
+    public final String serverRootUrl = "https://pestormix-apk.appspot.com/_ah/api/"; //No cal perque ja esta desplegat
+//    public final String serverRootUrl = "http://10.0.2.2:8080/_ah/api/";
+
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean isReceiverRegistered;
@@ -72,8 +85,35 @@ public class SplashActivity extends PestormixMasterActivity {
             }
             openTutorial();
         } else {
+            updateCocktails();
             openMain();
         }
+    }
+
+    private void updateCocktails() {
+        new AsyncTask<Long, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Long... params) {
+                CocktailApi cocktailApi = new CocktailApi.Builder(AndroidHttp.newCompatibleTransport(), AndroidJsonFactory.getDefaultInstance(), null)
+                        .setRootUrl(serverRootUrl)
+                        .build();
+                List<Cocktail> cocktails = CocktailController.getCocktails(getRealm());
+                for (Cocktail cocktail : cocktails) {
+                    CocktailBean cocktailBean = new CocktailBean();
+                    cocktailBean.setName(cocktail.getName());
+                    cocktailBean.setDescription(cocktail.getDescription());
+                    cocktailBean.setAlcohol(cocktail.isAlcohol());
+                    cocktailBean.setDrinks(CocktailController.getDrinksAsString(cocktail));
+                    try {
+                        cocktailApi.insertCocktail((long) 1, cocktailBean).execute();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return null;
+            }
+        }.execute((long) 1);
     }
 
     private void openTutorial() {
