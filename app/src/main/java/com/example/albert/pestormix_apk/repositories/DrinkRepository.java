@@ -3,6 +3,7 @@ package com.example.albert.pestormix_apk.repositories;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Drink;
+import com.example.albert.pestormix_apk.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +17,16 @@ public abstract class DrinkRepository {
 
     public static List<Drink> init() {
         List<Drink> drinks = new ArrayList<>();
-        drinks.add(getDrink(getStringResource(R.string.drink_water),
-                getStringResource(R.string.drink_water_description), false, R.drawable.agua));
-        drinks.add(getDrink(getStringResource(R.string.drink_coca_cola),
-                getStringResource(R.string.drink_coca_cola_description), false, R.drawable.cocacola));
-        drinks.add(getDrink(getStringResource(R.string.drink_lemonade),
-                getStringResource(R.string.drink_lemonade_description), false, R.drawable.limonada));
-        drinks.add(getDrink(getStringResource(R.string.drink_orangeade),
-                getStringResource(R.string.drink_orangeade_description), false, R.drawable.naranjada));
-        drinks.add(getDrink(getStringResource(R.string.drink_ron),
-                getStringResource(R.string.drink_ron_description), true, R.drawable.ron_barcelo));
+        drinks.add(getDrink(Utils.getStringResource(R.string.drink_water),
+                Utils.getStringResource(R.string.drink_water_description), false, R.drawable.agua));
+        drinks.add(getDrink(Utils.getStringResource(R.string.drink_coca_cola),
+                Utils.getStringResource(R.string.drink_coca_cola_description), false, R.drawable.cocacola));
+        drinks.add(getDrink(Utils.getStringResource(R.string.drink_lemonade),
+                Utils.getStringResource(R.string.drink_lemonade_description), false, R.drawable.limonada));
+        drinks.add(getDrink(Utils.getStringResource(R.string.drink_orangeade),
+                Utils.getStringResource(R.string.drink_orangeade_description), false, R.drawable.naranjada));
+        drinks.add(getDrink(Utils.getStringResource(R.string.drink_ron),
+                Utils.getStringResource(R.string.drink_ron_description), true, R.drawable.ron_barcelo));
         return drinks;
     }
 
