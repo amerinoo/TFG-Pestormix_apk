@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.application.MasterController;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.exceptions.CocktailFormatException;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormix_apk.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,24 +21,24 @@ import io.realm.RealmList;
 /**
  * Created by Albert on 27/01/2016.
  */
-public abstract class CocktailRepository extends MasterController {
+public abstract class CocktailRepository {
 
     public static List<Cocktail> init(Realm realm) {
         List<Cocktail> cocktails = new ArrayList<>();
-        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_water),
-                getStringResource(R.string.cocktail_water_description), getStringResource(R.string.cocktail_water));
-        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_coca_cola),
-                getStringResource(R.string.cocktail_coca_cola_description),
-                getStringResource(R.string.drink_coca_cola));
-        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_lemonade),
-                getStringResource(R.string.cocktail_lemonade_description),
-                getStringResource(R.string.drink_lemonade));
-        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_orangeade),
-                getStringResource(R.string.cocktail_orangeade_description),
-                getStringResource(R.string.drink_orangeade));
-        generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_cuba_libre),
-                getStringResource(R.string.cocktail_cuba_libre_description),
-                getStringResource(R.string.drink_coca_cola) + "," + getStringResource(R.string.drink_ron));
+        generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_water),
+                Utils.getStringResource(R.string.cocktail_water_description), Utils.getStringResource(R.string.cocktail_water));
+        generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_coca_cola),
+                Utils.getStringResource(R.string.cocktail_coca_cola_description),
+                Utils.getStringResource(R.string.drink_coca_cola));
+        generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_lemonade),
+                Utils.getStringResource(R.string.cocktail_lemonade_description),
+                Utils.getStringResource(R.string.drink_lemonade));
+        generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_orangeade),
+                Utils.getStringResource(R.string.cocktail_orangeade_description),
+                Utils.getStringResource(R.string.drink_orangeade));
+        generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_cuba_libre),
+                Utils.getStringResource(R.string.cocktail_cuba_libre_description),
+                Utils.getStringResource(R.string.drink_coca_cola) + "," + Utils.getStringResource(R.string.drink_ron));
         return cocktails;
     }
 
@@ -142,7 +142,7 @@ public abstract class CocktailRepository extends MasterController {
 
         if (oldName != null) {
             DataController.updateCocktail(realm, cocktail, oldName);
-            putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
+            Utils.putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
         } else {
             DataController.updateCocktail(realm, cocktail);
         }
@@ -156,13 +156,13 @@ public abstract class CocktailRepository extends MasterController {
 
     public static void removeCocktailByName(Realm realm, String cocktailName) {
         DataController.removeCocktailByName(realm, cocktailName);
-        putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
+        Utils.putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
 
     }
 
     public static void removeAllCocktails(Realm realm) {
         DataController.removeAllCocktails(realm);
-        putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
+        Utils.putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
     }
 
     public static void updateCocktails(Context context) {
