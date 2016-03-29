@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ItemsAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.controllers.CocktailController;
-import com.example.albert.pestormix_apk.controllers.DrinkController;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
+import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.enums.CreateCocktailType;
 import com.example.albert.pestormix_apk.fragments.DetailCocktailFragment;
 import com.example.albert.pestormix_apk.models.Cocktail;
@@ -52,7 +52,7 @@ public class ManuallyActivity extends PestormixMasterActivity {
         ListView itemsList = (ListView) findViewById(R.id.items_list);
 
 
-        final List<Drink> drinks = DrinkController.getDrinks(getRealm());
+        final List<Drink> drinks = DrinkRepository.getDrinks(getRealm());
         drinksAdapter = new ArrayList<>();
         checkIntent();
         removeEquals(drinks, drinksAdapter);
@@ -118,7 +118,7 @@ public class ManuallyActivity extends PestormixMasterActivity {
     private Cocktail getCocktailFromAdapter() {
         Cocktail cocktail = new Cocktail();
         for (int i = 0; i < adapter.getCount(); i++) {
-            CocktailController.addDrink(cocktail, adapter.getItem(i));
+            CocktailRepository.addDrink(cocktail, adapter.getItem(i));
         }
         return cocktail;
     }
@@ -135,13 +135,13 @@ public class ManuallyActivity extends PestormixMasterActivity {
             name = bundle.getString(Constants.EXTRA_COCKTAIL_NAME);
             description = bundle.getString(Constants.EXTRA_COCKTAIL_DESCRIPTION);
             String drinksString = bundle.getString(Constants.EXTRA_COCKTAIL_DRINKS);
-            drinksAdapter = DrinkController.getDrinksFromString(getRealm(), drinksString);
+            drinksAdapter = DrinkRepository.getDrinksFromString(getRealm(), drinksString);
             createCocktailType = CreateCocktailType.EDIT;
         }
     }
 
     private void goGiveCocktailName(Cocktail cocktail) {
-        String drinks = CocktailController.getDrinksAsString(cocktail);
+        String drinks = CocktailRepository.getDrinksAsString(cocktail);
         Intent intent = new Intent(this, GiveCocktailNameActivity.class);
         intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, name);
         intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, description);
@@ -155,7 +155,7 @@ public class ManuallyActivity extends PestormixMasterActivity {
             showToast(R.string.obligate_add_drink);
         } else {
             DetailCocktailFragment fragment = (DetailCocktailFragment) getFragmentManager().findFragmentById(R.id.detail_content);
-            String drinks = CocktailController.getDrinksAsString(cocktail);
+            String drinks = CocktailRepository.getDrinksAsString(cocktail);
             if (fragment == null) {
                 Intent intent = new Intent(this, DetailCocktailActivity.class);
                 intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, name);
