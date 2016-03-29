@@ -29,12 +29,12 @@ import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ScanQrActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
-import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.nfc.NfcController;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
 import com.example.albert.pestormix_apk.utils.Constants;
 
@@ -54,6 +54,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     private ArrayAdapter<String> stringArrayAdapter;
     private ImageView nfc;
     private NfcController nfcController;
+    private BroadcastReceiver broadcastReceiver;
 
     public static HomeFragment getInstance() {
         return new HomeFragment();
@@ -79,15 +80,16 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
 
     private void configView() {
 
-        configBroadcastReciver();
         configGlasses();
         configNfc();
         configQr();
         configCocktails();
     }
 
-    private void configBroadcastReciver() {
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    @Override
+    public void onStart() {
+        super.onStart();
+        broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 configCocktails();
@@ -96,6 +98,12 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constants.ACTION_PULL_COMPLETED);
         getActivity().registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().unregisterReceiver(broadcastReceiver);
     }
 
     private void configNfc() {
@@ -176,7 +184,6 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         if (view.getId() == R.id.cocktails_list) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            CocktailAdapter adapter = (CocktailAdapter) ((ListView) view).getAdapter();
             cocktailName = adapter.getItem(acmi.position).getName();
             menu.setHeaderTitle(cocktailName);
             MenuInflater inflater = getActivity().getMenuInflater();

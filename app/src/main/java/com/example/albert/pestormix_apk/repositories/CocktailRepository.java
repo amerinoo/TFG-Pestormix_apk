@@ -1,9 +1,9 @@
 package com.example.albert.pestormix_apk.repositories;
 
-import android.content.Context;
 import android.content.Intent;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.application.PestormixApplication;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.exceptions.CocktailFormatException;
 import com.example.albert.pestormix_apk.models.Cocktail;
@@ -118,7 +118,7 @@ public abstract class CocktailRepository {
 
     public static void addCocktailToDB(Realm realm, Cocktail cocktail) {
         DataController.addCocktail(realm, cocktail);
-
+        pushCocktailsToRemote();
     }
 
     public static Cocktail getCocktailByName(Realm realm, String cocktailName) {
@@ -141,7 +141,7 @@ public abstract class CocktailRepository {
 
         if (oldName != null) {
             DataController.updateCocktail(realm, cocktail, oldName);
-            Utils.putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
+            pushCocktailsToRemote();
         } else {
             DataController.updateCocktail(realm, cocktail);
         }
@@ -155,15 +155,22 @@ public abstract class CocktailRepository {
 
     public static void removeCocktailByName(Realm realm, String cocktailName) {
         DataController.removeCocktailByName(realm, cocktailName);
-        Utils.putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
-
+        pushCocktailsToRemote();
     }
 
     public static void removeAllCocktails(Realm realm) {
         DataController.removeAllCocktails(realm);
     }
 
-    public static void updateCocktails(Context context) {
-        context.sendBroadcast(new Intent(Constants.ACTION_START_SYNC_WITH_REMOTE));
+    public static void updateCocktails() {
+        Intent intent = new Intent(Constants.ACTION_START_SYNC_WITH_REMOTE);
+        PestormixApplication.getContext().sendBroadcast(intent);
     }
+
+    public static void pushCocktailsToRemote() {
+        Intent intent = new Intent(Constants.ACTION_START_SYNC_TO_REMOTE);
+        PestormixApplication.getContext().sendBroadcast(intent);
+    }
+
+
 }

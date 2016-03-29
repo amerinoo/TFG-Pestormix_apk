@@ -29,7 +29,7 @@ public abstract class NetworkController {
         Cocktail cocktail = CocktailRepository.getCocktailByName(realm, cocktailName);
         String cocktailDrinks = CocktailRepository.getDrinksAsString(cocktail);
         String jsonMessage = getJsonAsString(realm, cocktailDrinks, glassName);
-        if (remove) CocktailRepository.removeCocktailByName(realm, cocktail.getName());
+        if (remove) CocktailRepository.removeCocktailByName(realm,cocktail.getName());
         System.out.println(jsonMessage);
         AsyncTask<String, Void, Boolean> execute = new SendMessageTask().execute(jsonMessage);
         try {

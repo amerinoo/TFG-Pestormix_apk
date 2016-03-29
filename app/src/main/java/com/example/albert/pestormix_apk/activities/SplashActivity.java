@@ -74,7 +74,7 @@ public class SplashActivity extends PestormixMasterActivity {
             }
             openTutorial();
         } else {
-            CocktailRepository.updateCocktails(getApplicationContext());
+            CocktailRepository.updateCocktails();
             openMain();
         }
     }

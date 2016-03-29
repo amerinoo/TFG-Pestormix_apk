@@ -136,7 +136,7 @@ public class PestormixApplication extends Application {
     }
 
     void backgroundPushToRemote() {
-        if (!(m_pushing || m_pulling)) {
+        if (!syncInProgress()) {
             cocktailBag.reload();
             new AsyncPushTask().execute();
         }

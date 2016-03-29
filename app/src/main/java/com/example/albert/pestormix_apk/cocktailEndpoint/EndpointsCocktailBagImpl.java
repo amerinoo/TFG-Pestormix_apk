@@ -34,6 +34,7 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
     @Override
     public void reload() {
         List<Cocktail> cocktails = CocktailRepository.getCocktails(pestormixApplication.getRealm());
+        cocktailBeans.clear();
         for (Cocktail cocktail : cocktails) {
             CocktailBean cocktailBean = new CocktailBean();
             cocktailBean.setName(cocktail.getName());
