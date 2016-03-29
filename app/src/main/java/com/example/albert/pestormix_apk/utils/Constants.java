@@ -13,22 +13,28 @@ public abstract class Constants {
     public static final String PREFERENCES_USER_LOGGED = "user_logged";
     public static final String PREFERENCES_USER_NAME = "user_name";
     public static final String PREFERENCES_USER_IMAGE = "user_image";
+    public static final String PREFERENCES_USER_ID = "user_id";
+    public static final String PREFERENCES_NEED_TO_PUSH = "need_to_push";
 
     //Network
     public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";
     public static final String NETWORK_RASPBERRY_PORT = "1110";
 
+    //Intent extras
     public static final String EXTRA_IS_TUTORIAL = "extra_is_tutorial";
     public static final String EXTRA_COCKTAIL = "extra_cocktail";
     public static final String EXTRA_COCKTAIL_NAME = "extra_cocktail_name";
-
     public static final String EXTRA_COCKTAIL_DESCRIPTION = "extra_cocktail_description";
     public static final String EXTRA_COCKTAIL_DRINKS = "extra_cocktail_drinks";
     public static final String EXTRA_CREATE_COCKTAIL_TYPE = "extra_create_coctail_type";
-
-
     public static final String EXTRA_QUESTION_ID = "extra_question_id";
-
     public final static String EXTRA_DRINK_NAME = "extra_drink_name";
+
+    //Broadcast actions
     public static final String ACTION_REGISTRATION_COMPLETE = "registrationComplete";
+    public static final String ACTION_START_SYNC_WITH_REMOTE = "start_sync_with_remote";
+    public static final String ACTION_START_SYNC_TO_REMOTE = "start_sync_to_remote";
+    public static final String ACTION_START_SYNC_FROM_REMOTE = "start_sync_from_remote";
+    public static final String ACTION_ASYNC_FAILED = "async_failed";
+    public static final String ACTION_PULL_COMPLETED = "pull_completed";
 }

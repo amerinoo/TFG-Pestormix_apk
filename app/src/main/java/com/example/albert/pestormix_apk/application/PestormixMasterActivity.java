@@ -57,10 +57,7 @@ public class PestormixMasterActivity extends AppCompatActivity {
     }
 
     public Realm getRealm() {
-        if (realm == null) {
-            realm = Realm.getInstance(this);
-        }
-        return realm;
+        return getPestormixApplication().getRealm();
     }
 
     public void startActivityAnimation() {
