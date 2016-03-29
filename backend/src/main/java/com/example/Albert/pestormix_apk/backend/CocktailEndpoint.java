@@ -75,4 +75,16 @@ public class CocktailEndpoint {
         }
         return cocktails;
     }
+
+    @ApiMethod(name = "clearCocktails")
+    public void clearCocktails(@Named("id") Long id) {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        Key parent = new Entity("User", id).getKey();
+        Query query = new Query("Cocktail").setAncestor(parent);
+        List<Entity> results = datastoreService.prepare(query)
+                .asList(FetchOptions.Builder.withDefaults());
+        for (Entity entity : results) {
+            datastoreService.delete(entity.getKey());
+        }
+    }
 }
