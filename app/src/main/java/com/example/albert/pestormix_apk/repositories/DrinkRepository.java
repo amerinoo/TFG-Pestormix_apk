@@ -1,7 +1,8 @@
-package com.example.albert.pestormix_apk.controllers;
+package com.example.albert.pestormix_apk.repositories;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.MasterController;
+import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Drink;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import io.realm.Realm;
 /**
  * Created by Albert on 25/01/2016.
  */
-public abstract class DrinkController extends MasterController {
+public abstract class DrinkRepository extends MasterController {
 
     public static List<Drink> init() {
         List<Drink> drinks = new ArrayList<>();

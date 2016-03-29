@@ -1,5 +1,6 @@
-package com.example.albert.pestormix_apk.controllers;
+package com.example.albert.pestormix_apk.repositories;
 
+import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Question;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import io.realm.Realm;
 /**
  * Created by Albert on 29/01/2016.
  */
-public abstract class QuestionController {
+public abstract class QuestionRepository {
     public static List<Question> init() {
         List<Question> questions = new ArrayList<>();
         for (int i = 0; i < 6; i++) {

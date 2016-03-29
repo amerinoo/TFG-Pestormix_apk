@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
-import com.example.albert.pestormix_apk.controllers.DrinkController;
+import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.models.Drink;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class DetailCocktailFragment extends PestormixMasterFragment {
         LinearLayout alcohol = (LinearLayout) mainView.findViewById(R.id.alcohol);
         LinearLayout noAlcohol = (LinearLayout) mainView.findViewById(R.id.no_alcohol);
 
-        List<Drink> drinkList = DrinkController.getDrinksFromString(getRealm(), drinks);
+        List<Drink> drinkList = DrinkRepository.getDrinksFromString(getRealm(), drinks);
         for (Drink drink : drinkList) {
             if (drink.isAlcohol())
                 alcohol.addView(getTextView(drink.getName()));

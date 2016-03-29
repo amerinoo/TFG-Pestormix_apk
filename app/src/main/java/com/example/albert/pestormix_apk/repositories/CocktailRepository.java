@@ -1,11 +1,16 @@
-package com.example.albert.pestormix_apk.controllers;
+package com.example.albert.pestormix_apk.repositories;
+
+import android.content.Context;
+import android.content.Intent;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.MasterController;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.exceptions.CocktailFormatException;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +21,8 @@ import io.realm.RealmList;
 /**
  * Created by Albert on 27/01/2016.
  */
-public abstract class CocktailController extends MasterController {
+public abstract class CocktailRepository extends MasterController {
+
     public static List<Cocktail> init(Realm realm) {
         List<Cocktail> cocktails = new ArrayList<>();
         generateCocktail(realm, cocktails, getStringResource(R.string.cocktail_water),
@@ -40,7 +46,7 @@ public abstract class CocktailController extends MasterController {
         Cocktail cocktail = new Cocktail();
         cocktail.setName(name);
         cocktail.setDescription(description);
-        List<Drink> drinksFromString = DrinkController.getDrinksFromString(realm, drinks);
+        List<Drink> drinksFromString = DrinkRepository.getDrinksFromString(realm, drinks);
         for (Drink drink : drinksFromString) {
             addDrink(cocktail, drink);
         }
@@ -49,14 +55,6 @@ public abstract class CocktailController extends MasterController {
 
     public static void generateCocktails(Realm realm) {
         DataController.generateCocktails(realm);
-    }
-
-    public static void setName(Cocktail cocktail, String name) {
-        cocktail.setName(name);
-    }
-
-    public static void setDescription(Cocktail cocktail, String description) {
-        cocktail.setDescription(description);
     }
 
     public static void addDrink(Cocktail cocktail, Drink drink) {
@@ -71,12 +69,12 @@ public abstract class CocktailController extends MasterController {
         if (data != null && !data.equals("")) {
             Cocktail cocktail;
             try {
-                cocktail = CocktailController.getCocktailFromString(activity.getRealm(), data);
+                cocktail = CocktailRepository.getCocktailFromString(activity.getRealm(), data);
             } catch (CocktailFormatException e) {
                 activity.showToast(activity.getString(R.string.cocktail_format_error));
                 return null;
             }
-            if (CocktailController.cocktailExist(activity.getRealm(), cocktail)) {
+            if (CocktailRepository.cocktailExist(activity.getRealm(), cocktail)) {
                 activity.showToast(activity.getString(R.string.cocktail_name_already_exist));
             } else {
                 return cocktail;
@@ -113,7 +111,7 @@ public abstract class CocktailController extends MasterController {
     }
 
     public static void setDrinksFromString(Realm realm, Cocktail cocktail, String drinksString) {
-        List<Drink> drinks = DrinkController.getDrinksFromString(realm, drinksString);
+        List<Drink> drinks = DrinkRepository.getDrinksFromString(realm, drinksString);
         for (Drink drink : drinks) {
             addDrink(cocktail, drink);
         }
@@ -121,6 +119,7 @@ public abstract class CocktailController extends MasterController {
 
     public static void addCocktailToDB(Realm realm, Cocktail cocktail) {
         DataController.addCocktail(realm, cocktail);
+
     }
 
     public static Cocktail getCocktailByName(Realm realm, String cocktailName) {
@@ -140,14 +139,33 @@ public abstract class CocktailController extends MasterController {
     }
 
     public static void updateCocktail(Realm realm, Cocktail cocktail, String oldName) {
-        DataController.updateCocktail(realm, cocktail, oldName);
+
+        if (oldName != null) {
+            DataController.updateCocktail(realm, cocktail, oldName);
+            putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
+        } else {
+            DataController.updateCocktail(realm, cocktail);
+        }
+    }
+
+    public static void updateCocktails(Realm realm, List<Cocktail> cocktails) {
+        for (Cocktail cocktail : cocktails) {
+            updateCocktail(realm, cocktail, null);
+        }
     }
 
     public static void removeCocktailByName(Realm realm, String cocktailName) {
         DataController.removeCocktailByName(realm, cocktailName);
+        putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
+
     }
 
     public static void removeAllCocktails(Realm realm) {
         DataController.removeAllCocktails(realm);
+        putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
+    }
+
+    public static void updateCocktails(Context context) {
+        context.sendBroadcast(new Intent(Constants.ACTION_START_SYNC_WITH_REMOTE));
     }
 }

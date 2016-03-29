@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Valve;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
+import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
 
 import org.json.JSONException;
@@ -24,10 +26,10 @@ import io.realm.Realm;
  */
 public abstract class NetworkController {
     public static Boolean send(Realm realm, String cocktailName, String glassName, boolean remove) {
-        Cocktail cocktail = CocktailController.getCocktailByName(realm, cocktailName);
-        String cocktailDrinks = CocktailController.getDrinksAsString(cocktail);
+        Cocktail cocktail = CocktailRepository.getCocktailByName(realm, cocktailName);
+        String cocktailDrinks = CocktailRepository.getDrinksAsString(cocktail);
         String jsonMessage = getJsonAsString(realm, cocktailDrinks, glassName);
-        if (remove) CocktailController.removeCocktailByName(realm, cocktail.getName());
+        if (remove) CocktailRepository.removeCocktailByName(realm, cocktail.getName());
         System.out.println(jsonMessage);
         AsyncTask<String, Void, Boolean> execute = new SendMessageTask().execute(jsonMessage);
         try {
@@ -40,7 +42,7 @@ public abstract class NetworkController {
 
     private static String getJsonAsString(Realm realm, String cocktailDrinks, String glassName) {
         JSONObject jsonObject = new JSONObject();
-        List<Valve> valves = ValveController.getValves(realm);
+        List<Valve> valves = ValveRepository.getValves(realm);
         try {
             jsonObject.put("glass", glassName);
         } catch (JSONException e) {

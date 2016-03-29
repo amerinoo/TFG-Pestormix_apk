@@ -14,7 +14,7 @@ import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
 import com.example.albert.pestormix_apk.activities.ScanQrActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
-import com.example.albert.pestormix_apk.controllers.CocktailController;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
@@ -80,7 +80,7 @@ public class CreateCocktailFragment extends PestormixMasterFragment implements O
     }
 
     private void processData(String data) {
-        Cocktail cocktail = CocktailController.processData(getMasterActivity(), data);
+        Cocktail cocktail = CocktailRepository.processData(getMasterActivity(), data);
         if (cocktail != null) {
             updateCocktail(cocktail);
         }

@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.DetailHelpActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
-import com.example.albert.pestormix_apk.controllers.QuestionController;
+import com.example.albert.pestormix_apk.repositories.QuestionRepository;
 import com.example.albert.pestormix_apk.models.Question;
 import com.example.albert.pestormix_apk.utils.Constants;
 
@@ -49,7 +49,7 @@ public class HelpFragment extends PestormixMasterFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DetailHelpFragment fragment = (DetailHelpFragment) getFragmentManager().findFragmentById(R.id.detail_content);
-                Question question = QuestionController.getQuestionById(getRealm(), position);
+                Question question = QuestionRepository.getQuestionById(getRealm(), position);
                 if (fragment == null) {
                     Intent intent = new Intent(getActivity(), DetailHelpActivity.class);
                     intent.putExtra(Constants.EXTRA_QUESTION_ID, question.getId());
@@ -61,7 +61,7 @@ public class HelpFragment extends PestormixMasterFragment {
             }
         });
 
-        List<String> items = QuestionController.getQuestionsStrings(getRealm());
+        List<String> items = QuestionRepository.getQuestionsStrings(getRealm());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.row_single_text_view, items);
         list.setAdapter(adapter);
     }

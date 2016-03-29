@@ -1,5 +1,6 @@
-package com.example.albert.pestormix_apk.controllers;
+package com.example.albert.pestormix_apk.repositories;
 
+import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Valve;
 
@@ -11,7 +12,7 @@ import io.realm.Realm;
 /**
  * Created by Albert on 02/02/2016.
  */
-public abstract class ValveController {
+public abstract class ValveRepository {
     public static List<Valve> init() {
         List<Valve> valves = new ArrayList<>();
         for (int i = 0; i < 4; i++) {

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
-import com.example.albert.pestormix_apk.controllers.QuestionController;
+import com.example.albert.pestormix_apk.repositories.QuestionRepository;
 import com.example.albert.pestormix_apk.models.Question;
 
 /**
@@ -48,7 +48,7 @@ public class DetailHelpFragment extends PestormixMasterFragment {
     }
 
     public void update(int id) {
-        Question questionObject = QuestionController.getQuestionById(getRealm(),id);
+        Question questionObject = QuestionRepository.getQuestionById(getRealm(), id);
         question.setText(questionObject.getQuestion());
         answer.setText(questionObject.getAnswer());
     }

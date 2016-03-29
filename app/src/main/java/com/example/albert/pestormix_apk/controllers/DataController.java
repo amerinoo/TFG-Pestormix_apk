@@ -5,6 +5,11 @@ import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Glass;
 import com.example.albert.pestormix_apk.models.Question;
 import com.example.albert.pestormix_apk.models.Valve;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
+import com.example.albert.pestormix_apk.repositories.DrinkRepository;
+import com.example.albert.pestormix_apk.repositories.GlassRepository;
+import com.example.albert.pestormix_apk.repositories.QuestionRepository;
+import com.example.albert.pestormix_apk.repositories.ValveRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +57,7 @@ public abstract class DataController {
      ******************/
 
     public static void generateCocktails(Realm realm) {
-        List<Cocktail> cocktails = CocktailController.init(realm);
+        List<Cocktail> cocktails = CocktailRepository.init(realm);
 
         realm.beginTransaction();
         for (Cocktail cocktail : cocktails) {
@@ -91,6 +96,12 @@ public abstract class DataController {
         realm.commitTransaction();
     }
 
+    public static void updateCocktail(Realm realm, Cocktail cocktail) {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(cocktail);
+        realm.commitTransaction();
+    }
+
     public static void updateCocktail(Realm realm, Cocktail cocktail, String oldName) {
         removeCocktailByName(realm, oldName);
         addItem(realm, cocktail);
@@ -121,7 +132,7 @@ public abstract class DataController {
      * Start Drink
      ******************/
     public static void generateDrinks(Realm realm) {
-        List<Drink> drinks = DrinkController.init();
+        List<Drink> drinks = DrinkRepository.init();
         realm.beginTransaction();
         for (Drink drink : drinks) {
             try {
@@ -167,7 +178,7 @@ public abstract class DataController {
      * Start Question
      ******************/
     private static void generateQuestions(Realm realm) {
-        List<Question> questions = QuestionController.init();
+        List<Question> questions = QuestionRepository.init();
 
         realm.beginTransaction();
         for (Question question : questions) {
@@ -213,7 +224,7 @@ public abstract class DataController {
      * Start Valve
      ******************/
     private static void generateValves(Realm realm) {
-        List<Valve> valves = ValveController.init();
+        List<Valve> valves = ValveRepository.init();
 
         realm.beginTransaction();
         for (Valve valve : valves) {
@@ -261,7 +272,7 @@ public abstract class DataController {
      * Start Glass
      ******************/
     public static void generateGlasses(Realm realm) {
-        List<Glass> glasses = GlassController.init();
+        List<Glass> glasses = GlassRepository.init();
         realm.beginTransaction();
         for (Glass glass : glasses) {
             try {

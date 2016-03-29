@@ -7,7 +7,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
-import com.example.albert.pestormix_apk.controllers.CocktailController;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.Constants;
 
@@ -45,7 +45,7 @@ public class PestormixMasterFragment extends Fragment {
         Intent intent = new Intent(getActivity(), ManuallyActivity.class);
         intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, cocktail.getName());
         intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, cocktail.getDescription());
-        intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, CocktailController.getDrinksAsString(cocktail));
+        intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, CocktailRepository.getDrinksAsString(cocktail));
         startActivity(intent);
     }
 

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
-import com.example.albert.pestormix_apk.controllers.DrinkController;
+import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.listeners.OnInformationClickListener;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.utils.Constants;
@@ -36,7 +36,7 @@ public class ScreenSlidePageFragment extends PestormixMasterFragment implements 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String nameDrink = getArguments().getString(Constants.EXTRA_DRINK_NAME);
-        drink = DrinkController.getDrinkByName(getRealm(), nameDrink);
+        drink = DrinkRepository.getDrinkByName(getRealm(), nameDrink);
     }
 
     @Override
