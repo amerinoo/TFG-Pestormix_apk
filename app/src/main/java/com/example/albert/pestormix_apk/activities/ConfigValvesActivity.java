@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ScreenSlidePagerAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.controllers.DrinkController;
-import com.example.albert.pestormix_apk.controllers.ValveController;
+import com.example.albert.pestormix_apk.repositories.DrinkRepository;
+import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Valve;
 import com.example.albert.pestormix_apk.utils.Constants;
@@ -56,12 +56,12 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
     }
 
     private void configView() {
-        valves = ValveController.getValves(getRealm());
+        valves = ValveRepository.getValves(getRealm());
         valveTabs = new ArrayList<>();
         valveTabsName = new ArrayList<>();
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        List<Drink> drinks = DrinkController.getDrinks(getRealm());
+        List<Drink> drinks = DrinkRepository.getDrinks(getRealm());
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager(), drinks);
         mPager.setAdapter(mPagerAdapter);
 
@@ -158,9 +158,9 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         onClick(valveTabs.get(lastSelected));
         Drink drink;
         for (int i = 0; i < valveTabs.size(); i++) {
-            drink = DrinkController.getDrinkByName(getRealm(), getDrinkName((Integer) valveTabs.get(i).getTag()));
+            drink = DrinkRepository.getDrinkByName(getRealm(), getDrinkName((Integer) valveTabs.get(i).getTag()));
             int position = (Integer) valveTabs.get(i).getTag();
-            ValveController.updateValve(getRealm(), valves.get(i), drink, position);
+            ValveRepository.updateValve(getRealm(), valves.get(i), drink, position);
         }
         setIsSaved(true);
         showToast(R.string.save_completed);
