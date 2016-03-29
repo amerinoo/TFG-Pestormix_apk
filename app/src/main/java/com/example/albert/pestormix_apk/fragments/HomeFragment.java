@@ -289,7 +289,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     }
 
     private void processData(String data) {
-        Cocktail cocktail = CocktailRepository.processData(getMasterActivity(), data);
+        Cocktail cocktail = CocktailRepository.processData(data);
         if (cocktail != null) {
             CocktailRepository.addCocktailToDB(getRealm(), cocktail);
             showConfirmOrder(cocktail.getName(), true);

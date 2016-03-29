@@ -6,9 +6,9 @@ import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.utils.Utils;
 
 import io.realm.Realm;
 
@@ -17,22 +17,16 @@ import io.realm.Realm;
  */
 public class PestormixMasterActivity extends AppCompatActivity {
 
-    private Realm realm;
-
     public PestormixApplication getPestormixApplication() {
         return (PestormixApplication) getApplication();
     }
 
     public void showToast(CharSequence text) {
-        Toast toast = Toast.makeText(getPestormixApplication(), text, Toast.LENGTH_SHORT);
-        toast.getView().findViewById(android.R.id.message).setBackgroundResource(android.R.color.transparent);
-        toast.show();
+        Utils.showToast(text);
     }
 
     public void showToast(int resId) {
-        Toast toast = Toast.makeText(getPestormixApplication(), resId, Toast.LENGTH_SHORT);
-        toast.getView().findViewById(android.R.id.message).setBackgroundResource(android.R.color.transparent);
-        toast.show();
+        Utils.showToast(resId);
     }
 
     public void loadFragment(int resId, Fragment fragment) {

@@ -3,20 +3,29 @@ package com.example.albert.pestormix_apk.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.example.albert.pestormix_apk.application.PestormixApplication;
 
 import java.io.ByteArrayOutputStream;
+
+import io.realm.Realm;
 
 /**
  * Created by Albert on 22/03/2016.
  */
 public abstract class Utils {
 
+    public static Realm getRealm() {
+        return PestormixApplication.getContext().getRealm();
+    }
+
     public static String getStringResource(int id) {
         return PestormixApplication.getContext().getString(id);
     }
-
+    public static boolean getBooleanPreference(String key, Boolean defValue) {
+        return PestormixApplication.getContext().getBoolean(key, defValue);
+    }
     public static void putBooleanPreference(String key, Boolean value) {
         PestormixApplication.getContext().putBoolean(key, value);
     }
@@ -38,6 +47,18 @@ public abstract class Utils {
             e.getMessage();
             return null;
         }
+    }
+
+    public static void showToast(CharSequence text) {
+        Toast toast = Toast.makeText(PestormixApplication.getContext(), text, Toast.LENGTH_SHORT);
+        toast.getView().findViewById(android.R.id.message).setBackgroundResource(android.R.color.transparent);
+        toast.show();
+    }
+
+    public static void showToast(int resId) {
+        Toast toast = Toast.makeText(PestormixApplication.getContext(), resId, Toast.LENGTH_SHORT);
+        toast.getView().findViewById(android.R.id.message).setBackgroundResource(android.R.color.transparent);
+        toast.show();
     }
 
 }

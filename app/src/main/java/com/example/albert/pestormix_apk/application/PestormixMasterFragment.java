@@ -7,9 +7,10 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ManuallyActivity;
-import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormix_apk.utils.Utils;
 
 import io.realm.Realm;
 
@@ -18,15 +19,15 @@ import io.realm.Realm;
  */
 public class PestormixMasterFragment extends Fragment {
     public void showToast(CharSequence text) {
-        ((PestormixMasterActivity) getActivity()).showToast(text);
-    }
-
-    public Realm getRealm() {
-        return ((PestormixMasterActivity) getActivity()).getRealm();
+        Utils.showToast(text);
     }
 
     public void showToast(int resId) {
-        ((PestormixMasterActivity) getActivity()).showToast(resId);
+        Utils.showToast(resId);
+    }
+
+    public Realm getRealm() {
+        return Utils.getRealm();
     }
 
     public void hideKeyboard() {
@@ -47,9 +48,5 @@ public class PestormixMasterFragment extends Fragment {
         intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, cocktail.getDescription());
         intent.putExtra(Constants.EXTRA_COCKTAIL_DRINKS, CocktailRepository.getDrinksAsString(cocktail));
         startActivity(intent);
-    }
-
-    public PestormixMasterActivity getMasterActivity() {
-        return (PestormixMasterActivity) getActivity();
     }
 }

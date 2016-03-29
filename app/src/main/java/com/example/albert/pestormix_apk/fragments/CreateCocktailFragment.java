@@ -80,7 +80,7 @@ public class CreateCocktailFragment extends PestormixMasterFragment implements O
     }
 
     private void processData(String data) {
-        Cocktail cocktail = CocktailRepository.processData(getMasterActivity(), data);
+        Cocktail cocktail = CocktailRepository.processData(data);
         if (cocktail != null) {
             updateCocktail(cocktail);
         }

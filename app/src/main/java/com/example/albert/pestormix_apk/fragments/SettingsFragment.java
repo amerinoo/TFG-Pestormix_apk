@@ -11,8 +11,10 @@ import android.view.View;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ConfigValvesActivity;
 import com.example.albert.pestormix_apk.activities.MainActivity;
-import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormix_apk.utils.Utils;
+
+import io.realm.Realm;
 
 /**
  * Created by Albert on 24/01/2016.
@@ -91,7 +93,7 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private boolean isUserLogged() {
-        return ((MainActivity) getActivity()).getPestormixApplication().getBoolean(Constants.PREFERENCES_USER_LOGGED, false);
+        return Utils.getBooleanPreference(Constants.PREFERENCES_USER_LOGGED, false);
     }
 
     private void signInGoogle() {
@@ -118,6 +120,10 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     public void showToast(int resId) {
-        ((PestormixMasterActivity) getActivity()).showToast(resId);
+        Utils.showToast(resId);
+    }
+
+    private Realm getRealm(){
+        return Utils.getRealm();
     }
 }

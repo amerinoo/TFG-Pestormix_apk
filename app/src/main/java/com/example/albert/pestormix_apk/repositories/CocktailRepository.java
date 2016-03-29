@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.albert.pestormix_apk.R;
-import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.exceptions.CocktailFormatException;
 import com.example.albert.pestormix_apk.models.Cocktail;
@@ -65,17 +64,17 @@ public abstract class CocktailRepository {
         return getDrinksAsString(cocktail, ",");
     }
 
-    public static Cocktail processData(PestormixMasterActivity activity, String data) {
+    public static Cocktail processData(String data) {
         if (data != null && !data.equals("")) {
             Cocktail cocktail;
             try {
-                cocktail = CocktailRepository.getCocktailFromString(activity.getRealm(), data);
+                cocktail = CocktailRepository.getCocktailFromString(Utils.getRealm(), data);
             } catch (CocktailFormatException e) {
-                activity.showToast(activity.getString(R.string.cocktail_format_error));
+                Utils.showToast(Utils.getStringResource(R.string.cocktail_format_error));
                 return null;
             }
-            if (CocktailRepository.cocktailExist(activity.getRealm(), cocktail)) {
-                activity.showToast(activity.getString(R.string.cocktail_name_already_exist));
+            if (CocktailRepository.cocktailExist(Utils.getRealm(), cocktail)) {
+                Utils.showToast(Utils.getStringResource(R.string.cocktail_name_already_exist));
             } else {
                 return cocktail;
             }
