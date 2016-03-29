@@ -162,7 +162,6 @@ public abstract class CocktailRepository {
 
     public static void removeAllCocktails(Realm realm) {
         DataController.removeAllCocktails(realm);
-        Utils.putBooleanPreference(Constants.PREFERENCES_NEED_TO_PUSH, true);
     }
 
     public static void updateCocktails(Context context) {
