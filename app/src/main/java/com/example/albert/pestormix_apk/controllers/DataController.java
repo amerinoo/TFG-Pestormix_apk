@@ -17,6 +17,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
@@ -82,6 +83,7 @@ public abstract class DataController {
 
     public static List<Cocktail> getCocktails(Realm realm) {
         RealmResults<Cocktail> results = realm.where(Cocktail.class).findAll();
+        results.sort("name", Sort.ASCENDING);
         List<Cocktail> cocktails = new ArrayList<>();
         for (Cocktail cocktail : results) {
             cocktails.add(cocktail);

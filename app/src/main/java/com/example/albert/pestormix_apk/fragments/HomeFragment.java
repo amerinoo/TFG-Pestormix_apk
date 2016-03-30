@@ -79,7 +79,6 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     }
 
     private void configView() {
-
         configGlasses();
         configNfc();
         configQr();
