@@ -10,7 +10,7 @@ import java.util.List;
 public interface CocktailBag {
     void reload();
 
-    void pushToRemote(Long userId);
+    void pushToRemote(String userId);
 
-    List<CocktailBean> pullFromRemote(Long userId);
+    List<CocktailBean> pullFromRemote(String userId);
 }

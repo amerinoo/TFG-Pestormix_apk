@@ -46,7 +46,7 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
     }
 
     @Override
-    public void pushToRemote(Long userId) {
+    public void pushToRemote(String userId) {
         try {
             cocktailApi.clearCocktails(userId).execute();
 
@@ -60,7 +60,7 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
     }
 
     @Override
-    public List<CocktailBean> pullFromRemote(Long userId) {
+    public List<CocktailBean> pullFromRemote(String userId) {
         List<CocktailBean> cocktails = null;
         try {
             cocktails = cocktailApi.getCocktails(userId).execute().getItems();

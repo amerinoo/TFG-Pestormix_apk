@@ -286,7 +286,7 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
-                        saveUserInformationToPreferences(null, null);
+                        refreshUserInformation("1", null, null);
                         removeHeader();
                     }
                 });
@@ -311,10 +311,10 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             Uri url = acct.getPhotoUrl();
-            final String displayName = acct.getDisplayName();
+            String id = acct.getId();
+            String displayName = acct.getDisplayName();
             Bitmap userImage = getUserImage(url);
-            refreshUserInformation(displayName, userImage);
-
+            refreshUserInformation(id, displayName, userImage);
         } else {
             // Signed out, show unauthenticated UI.
             showToast("Signed out, show unauthenticated UI.");
@@ -353,20 +353,22 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         return bitmap;
     }
 
-    protected void refreshUserInformation(String displayName, Bitmap bitmap) {
+    protected void refreshUserInformation(String id, String displayName, Bitmap bitmap) {
         if (bitmap != null) {
             addHeader(displayName, bitmap);
-            saveUserInformationToPreferences(displayName, bitmap);
         }
+        saveUserInformationToPreferences(id, displayName, bitmap);
+        sendBroadcast(new Intent(Constants.ACTION_START_SYNC_WITH_REMOTE));
     }
 
-    private void saveUserInformationToPreferences(String name, Bitmap bitmap) {
+    private void saveUserInformationToPreferences(String id, String name, Bitmap bitmap) {
         String image = null;
         if (bitmap != null)
             image = Utils.bitmapToString(bitmap);
         getPestormixApplication().putBoolean(Constants.PREFERENCES_USER_LOGGED, name != null);
         getPestormixApplication().putString(Constants.PREFERENCES_USER_NAME, name);
         getPestormixApplication().putString(Constants.PREFERENCES_USER_IMAGE, image);
+        getPestormixApplication().setUserId(id);
     }
 
     private void addHeader(String name, Bitmap image) {

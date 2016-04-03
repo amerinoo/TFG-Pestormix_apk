@@ -63,7 +63,7 @@ public abstract class DataController {
         realm.beginTransaction();
         for (Cocktail cocktail : cocktails) {
             try {
-                realm.copyToRealm(cocktail);
+                realm.copyToRealmOrUpdate(cocktail);
             } catch (RealmPrimaryKeyConstraintException e) {
             }
         }

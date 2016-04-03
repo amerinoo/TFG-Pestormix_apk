@@ -13,7 +13,8 @@ public abstract class Constants {
     public static final String PREFERENCES_USER_LOGGED = "user_logged";
     public static final String PREFERENCES_USER_NAME = "user_name";
     public static final String PREFERENCES_USER_IMAGE = "user_image";
-    public static final String PREFERENCES_USER_ID = "user_id";
+    public static final String PREFERENCES_USER_GOOGLE_ID = "user_id";
+    public static final String PREFERENCES_USER_GCM_ID = "user_gcm_id";
     public static final String PREFERENCES_NEED_TO_PUSH = "need_to_push";
 
     //Network

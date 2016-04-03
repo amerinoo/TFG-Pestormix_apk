@@ -38,7 +38,7 @@ public class CocktailEndpoint {
     private static final Logger log = Logger.getLogger(CocktailEndpoint.class.getName());
 
     @ApiMethod(name = "insertCocktail")
-    public void insertCocktail(@Named("id") Long id, CocktailBean cocktailBean) {
+    public void insertCocktail(@Named("id") String id, CocktailBean cocktailBean) {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         Transaction txn = datastoreService.beginTransaction();
         try {
@@ -58,7 +58,7 @@ public class CocktailEndpoint {
     }
 
     @ApiMethod(name = "getCocktails")
-    public List<CocktailBean> getCocktails(@Named("id") Long id) {
+    public List<CocktailBean> getCocktails(@Named("id") String id) {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         Key parent = new Entity("User", id).getKey();
         List<CocktailBean> cocktails = new ArrayList<>();
@@ -77,7 +77,7 @@ public class CocktailEndpoint {
     }
 
     @ApiMethod(name = "clearCocktails")
-    public void clearCocktails(@Named("id") Long id) {
+    public void clearCocktails(@Named("id") String id) {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         Key parent = new Entity("User", id).getKey();
         Query query = new Query("Cocktail").setAncestor(parent);

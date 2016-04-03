@@ -7,10 +7,13 @@ import android.util.Log;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
+import com.example.albert.pestormix_apk.backend.registration.Registration;
 import com.example.albert.pestormix_apk.utils.Constants;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
 
@@ -50,6 +53,7 @@ public class RegistrationIntentService extends IntentService {
             // sent to your server. If the boolean is false, send the token to your server,
             // otherwise your server should have already received the token.
             application.putBoolean(Constants.PREFERENCES_SENT_TOKEN_TO_SERVER_KEY, true);
+            application.putString(Constants.PREFERENCES_USER_GCM_ID, token);
             // [END register_for_gcm]
         } catch (Exception e) {
             Log.d(TAG, "Failed to complete token refresh", e);
@@ -62,8 +66,11 @@ public class RegistrationIntentService extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
-    private void sendRegistrationToServer(String token) {
-
+    private void sendRegistrationToServer(String token) throws IOException {
+        Registration.Builder builder = new Registration.Builder(AndroidHttp.newCompatibleTransport(),
+                new AndroidJsonFactory(), null);
+        Registration registration = builder.build();
+        registration.register(token).execute();
     }
 
     private void subscribeTopics(String token) throws IOException {

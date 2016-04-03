@@ -166,7 +166,7 @@ public class PestormixApplication extends Application {
                 m_pulling = false;
 
                 if (result == null) {
-                    sendBroadcast(new Intent(Constants.ACTION_ASYNC_FAILED));
+                    sendBroadcast(new Intent(Constants.ACTION_START_SYNC_TO_REMOTE));
                 } else {
                     CocktailRepository.removeAllCocktails(getRealm());
                     List<Cocktail> cocktails = new ArrayList<>();
@@ -186,13 +186,12 @@ public class PestormixApplication extends Application {
         }.execute();
     }
 
-    public Long getUserId() {
-        return Long.parseLong(getString(Constants.PREFERENCES_USER_ID, "1"));
+    public String getUserId() {
+        return getString(Constants.PREFERENCES_USER_GOOGLE_ID, "1");
     }
 
-    public void setUserId(Long userId) {
-        String id = String.valueOf(userId);
-        putString(Constants.PREFERENCES_USER_ID, id);
+    public void setUserId(String userId) {
+        putString(Constants.PREFERENCES_USER_GOOGLE_ID, userId);
     }
 
     private class AsyncPushTask extends AsyncTask<Void, Void, Integer> {
