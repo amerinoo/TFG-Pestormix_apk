@@ -1,7 +1,10 @@
 package com.example.albert.pestormix_apk.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -22,6 +25,14 @@ public abstract class Utils {
 
     public static String getStringResource(int id) {
         return PestormixApplication.getContext().getString(id);
+    }
+    public static final int getColorResource(Context context, int id) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 23) {
+            return ContextCompat.getColor(context, id);
+        } else {
+            return context.getResources().getColor(id);
+        }
     }
     public static boolean getBooleanPreference(String key, Boolean defValue) {
         return PestormixApplication.getContext().getBoolean(key, defValue);

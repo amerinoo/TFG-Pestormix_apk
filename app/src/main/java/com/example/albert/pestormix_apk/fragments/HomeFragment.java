@@ -38,6 +38,7 @@ import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
 import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormix_apk.utils.Utils;
 
 import java.util.List;
 
@@ -287,7 +288,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         SearchView.SearchAutoComplete searchText = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         cocktailsName = CocktailRepository.getCocktailsNames(getRealm());
         stringArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.row_single_text_view, cocktailsName);
-        searchText.setTextColor(getResources().getColor(R.color.colorBackground));
+        searchText.setTextColor(Utils.getColorResource(getActivity(), R.color.colorBackground));
         searchText.setThreshold(1);
         searchText.setHint(getString(R.string.cocktail_name));
         searchText.setAdapter(stringArrayAdapter);

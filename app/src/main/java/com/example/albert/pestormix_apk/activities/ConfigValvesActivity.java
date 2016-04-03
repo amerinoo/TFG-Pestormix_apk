@@ -15,11 +15,12 @@ import android.widget.TextView;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ScreenSlidePagerAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.repositories.DrinkRepository;
-import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Valve;
+import com.example.albert.pestormix_apk.repositories.DrinkRepository;
+import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormix_apk.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
             int lastItem = (int) valveTabs.get(lastSelected).getTag();
             int lastCurrentItem = mPager.getCurrentItem();
             valveTabs.get(lastSelected).setSelected(false);
-            valveTabsName.get(lastSelected).setTextColor(getResources().getColor(R.color.white));
+            valveTabsName.get(lastSelected).setTextColor(Utils.getColorResource(this, R.color.white));
             if (lastItem != lastCurrentItem) {
                 valveTabs.get(lastSelected).setTag(lastCurrentItem);
                 valveTabsName.get(lastSelected).setText(getDrinkName(lastCurrentItem));
@@ -125,7 +126,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         int currentItem = (int) v.getTag();
         mPager.setCurrentItem(currentItem);
         valveTabsName.get(position).setText(getDrinkName(currentItem));
-        valveTabsName.get(position).setTextColor(getResources().getColor(R.color.black));
+        valveTabsName.get(position).setTextColor(Utils.getColorResource(this, R.color.black));
         lastSelected = position;
 
     }

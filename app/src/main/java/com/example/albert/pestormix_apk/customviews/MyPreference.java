@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.utils.Utils;
 
 /**
  * Created by Sergi on 07/03/2016.
@@ -25,6 +26,6 @@ public class MyPreference extends Preference {
     protected void onBindView(View view) {
         super.onBindView(view);
         TextView titleView = (TextView) view.findViewById(android.R.id.title);
-        titleView.setTextColor(getContext().getResources().getColor(R.color.white));
+        titleView.setTextColor(Utils.getColorResource(getContext(), R.color.white));
     }
 }
