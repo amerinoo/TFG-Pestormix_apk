@@ -1,6 +1,7 @@
 package com.example.albert.pestormix_apk.repositories;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
@@ -21,6 +22,8 @@ import io.realm.RealmList;
  * Created by Albert on 27/01/2016.
  */
 public abstract class CocktailRepository {
+
+    private static final String TAG = "CocktailRepository";
 
     public static List<Cocktail> init(Realm realm) {
         List<Cocktail> cocktails = new ArrayList<>();
@@ -68,6 +71,7 @@ public abstract class CocktailRepository {
         if (data != null && !data.equals("")) {
             Cocktail cocktail;
             try {
+                Log.d(TAG, data);
                 cocktail = CocktailRepository.getCocktailFromString(Utils.getRealm(), data);
             } catch (CocktailFormatException e) {
                 Utils.showToast(Utils.getStringResource(R.string.cocktail_format_error));
@@ -83,15 +87,14 @@ public abstract class CocktailRepository {
     }
 
     public static Cocktail getCocktailFromString(Realm realm, String data) throws CocktailFormatException {
-        String[] split = data.split(",", 5);
-        if (split.length < 5 || !split[0].equals("Pestormix")) {
+        String[] split = data.split(",", 4);
+        if (split.length < 4 || !split[0].equals("Pestormix")) {
             throw new CocktailFormatException();
         }
         Cocktail cocktail = new Cocktail();
         cocktail.setName(split[1]);
         cocktail.setDescription(split[2]);
-        cocktail.setAlcohol(Boolean.valueOf(split[3]));
-        setDrinksFromString(realm, cocktail, split[4]);
+        setDrinksFromString(realm, cocktail, split[3]);
         return cocktail;
     }
 
@@ -112,13 +115,18 @@ public abstract class CocktailRepository {
     public static void setDrinksFromString(Realm realm, Cocktail cocktail, String drinksString) {
         List<Drink> drinks = DrinkRepository.getDrinksFromString(realm, drinksString);
         for (Drink drink : drinks) {
+            if (!cocktail.isAlcohol() && drink.isAlcohol()) cocktail.setAlcohol(true);
             addDrink(cocktail, drink);
         }
     }
 
     public static void addCocktailToDB(Realm realm, Cocktail cocktail) {
+        addCocktailToDB(realm, cocktail, true);
+    }
+
+    public static void addCocktailToDB(Realm realm, Cocktail cocktail, boolean push) {
         DataController.addCocktail(realm, cocktail);
-        pushCocktailsToRemote();
+        if (push) pushCocktailsToRemote();
     }
 
     public static Cocktail getCocktailByName(Realm realm, String cocktailName) {
@@ -154,8 +162,12 @@ public abstract class CocktailRepository {
     }
 
     public static void removeCocktailByName(Realm realm, String cocktailName) {
+        removeCocktailByName(realm, cocktailName, false);
+    }
+
+    public static void removeCocktailByName(Realm realm, String cocktailName, boolean push) {
         DataController.removeCocktailByName(realm, cocktailName);
-        pushCocktailsToRemote();
+        if (push) pushCocktailsToRemote();
     }
 
     public static void removeAllCocktails(Realm realm) {

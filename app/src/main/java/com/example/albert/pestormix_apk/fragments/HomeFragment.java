@@ -3,6 +3,7 @@ package com.example.albert.pestormix_apk.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.view.ContextMenu;
@@ -34,19 +36,21 @@ import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
+import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
 import com.example.albert.pestormix_apk.utils.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Albert on 24/01/2016.
  */
 public class HomeFragment extends PestormixMasterFragment implements OnNfcDataReceived {
-
 
     private View mainView;
     private String cocktailName;
@@ -86,6 +90,16 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         configNfc();
         configQr();
         configCocktails();
+        configSpeech();
+    }
+
+    private void configSpeech() {
+        mainView.findViewById(R.id.speech_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
     }
 
     private void configSwipe() {
@@ -169,28 +183,40 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         });
     }
 
-    private void showConfirmOrder(final String cocktailName, final boolean remove) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.confirmOrder))
-                .setMessage(getString(R.string.youre_asking) + cocktailName)
-                .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Boolean sended = NetworkController.send(getRealm(), cocktailName, glassName, remove);
-                        if (sended) {
-                            showToast(cocktailName + getString(R.string.send_ok));
-                        } else {
-                            showToast(getString(R.string.send_error) + cocktailName);
-                        }
-                    }
-                })
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (remove)
-                            CocktailRepository.removeCocktailByName(getRealm(), cocktailName);
-                    }
-                }).show();
+    private void showConfirmOrder(String cocktailName, final boolean remove) {
+        Cocktail cocktailByName = CocktailRepository.getCocktailByName(getRealm(), cocktailName);
+        showConfirmOrder(cocktailByName, remove);
+    }
+
+    private void showConfirmOrder(final Cocktail cocktail, final boolean remove) {
+        final AlertDialog dialog;
+        View detailsView = LayoutInflater.from(getActivity()).inflate(R.layout.confirm_order, null, false);
+        ((TextView) detailsView.findViewById(R.id.name)).setText(cocktail.getName());
+        ((TextView) detailsView.findViewById(R.id.drinks)).setText(CocktailRepository.getDrinksAsString(cocktail, getString(R.string.drinks_detail_separator)));
+
+        dialog = new AlertDialog.Builder(getActivity())
+                .setView(detailsView)
+                .create();
+        detailsView.findViewById(R.id.accept).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean sended = NetworkController.send(getRealm(), cocktail, glassName, remove);
+                if (sended) {
+                    showToast(cocktail.getName() + getString(R.string.send_ok));
+                } else {
+                    showToast(getString(R.string.send_error) + cocktail.getName());
+                }
+            }
+        });
+        detailsView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (remove)
+                    CocktailRepository.removeCocktailByName(getRealm(), cocktail.getName(), false);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override
@@ -225,6 +251,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     private void showDetails(String cocktailName) {
         Cocktail cocktail = CocktailRepository.getCocktailByName(getRealm(), cocktailName);
         final AlertDialog dialog;
+
         View detailsView = LayoutInflater.from(getActivity()).inflate(R.layout.cocktail_details, null, false);
         ((TextView) detailsView.findViewById(R.id.name)).setText(cocktail.getName());
         if (cocktail.getDescription().equals("")) {
@@ -233,6 +260,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
             ((TextView) detailsView.findViewById(R.id.description)).setText(cocktail.getDescription());
         }
         ((TextView) detailsView.findViewById(R.id.drinks)).setText(CocktailRepository.getDrinksAsString(cocktail, getString(R.string.drinks_detail_separator)));
+
         dialog = new AlertDialog.Builder(getActivity())
                 .setView(detailsView)
                 .create();
@@ -311,7 +339,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     private void processData(String data) {
         Cocktail cocktail = CocktailRepository.processData(data);
         if (cocktail != null) {
-            CocktailRepository.addCocktailToDB(getRealm(), cocktail);
+            CocktailRepository.addCocktailToDB(getRealm(), cocktail, false);
             showConfirmOrder(cocktail.getName(), true);
         }
     }
@@ -324,6 +352,41 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                 String extra = data.getStringExtra(Constants.EXTRA_COCKTAIL);
                 processData(extra);
             }
+        } else if (requestCode == ActivityRequestCodes.CODE_SPEECH_INPUT) {
+            if (resultCode == Activity.RESULT_OK && null != data) {
+                List<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                String order = result.get(0).toLowerCase();
+                processSpeechOrder(order);
+            }
+        }
+    }
+
+    private void processSpeechOrder(String order) {
+        List<Drink> drinks = DrinkRepository.getDrinks(getRealm());
+        StringBuilder cocktailBuilder = new StringBuilder("Pestormix,Speech Cocktail,");
+        boolean oneOrMoreDrinks = false;
+        for (Drink drink : drinks) {
+            if (order.contains(drink.getName().toLowerCase())) {
+                oneOrMoreDrinks = true;
+                cocktailBuilder.append(",").append(drink.getName());
+            }
+        }
+        if (oneOrMoreDrinks) processData(cocktailBuilder.toString());
+        else showToast("You have to say valid drinks");
+    }
+
+    /**
+     * Showing google speech input dialog
+     */
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        try {
+            startActivityForResult(intent, ActivityRequestCodes.CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            showToast("Speecho not supported");
         }
     }
 }

@@ -13,29 +13,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/padding_20">
+            android:padding="@dimen/padding_10">
 
             <Spinner
                 android:id="@+id/glass_spinner"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.6"
                 android:spinnerMode="dropdown" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.4"
-                android:gravity="right"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/qr_button"
@@ -48,7 +47,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/nfc_button"
@@ -58,7 +58,20 @@
                         android:src="@drawable/icon_nfc" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
 
+                    <ImageView
+                        android:id="@+id/speech_button"
+                        android:layout_width="@dimen/home_circle"
+                        android:layout_height="@dimen/home_circle"
+                        android:background="@drawable/primary_color_square_selector"
+                        android:src="@android:drawable/ic_btn_speak_now"
+                        android:tint="@color/black" />
+                </LinearLayout>
             </LinearLayout>
 
 

@@ -25,8 +25,7 @@ import io.realm.Realm;
  * Created by Albert on 07/02/2016.
  */
 public abstract class NetworkController {
-    public static Boolean send(Realm realm, String cocktailName, String glassName, boolean remove) {
-        Cocktail cocktail = CocktailRepository.getCocktailByName(realm, cocktailName);
+    public static Boolean send(Realm realm, Cocktail cocktail, String glassName, boolean remove) {
         String cocktailDrinks = CocktailRepository.getDrinksAsString(cocktail);
         String jsonMessage = getJsonAsString(realm, cocktailDrinks, glassName);
         if (remove) CocktailRepository.removeCocktailByName(realm,cocktail.getName());
