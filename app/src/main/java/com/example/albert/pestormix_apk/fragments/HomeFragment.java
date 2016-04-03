@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -79,10 +80,22 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     }
 
     private void configView() {
+        configSwipe();
         configGlasses();
         configNfc();
         configQr();
         configCocktails();
+    }
+
+    private void configSwipe() {
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) mainView.findViewById(R.id.fragment_home_screen);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getActivity().sendBroadcast(new Intent(Constants.ACTION_START_SYNC_WITH_REMOTE));
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     @Override

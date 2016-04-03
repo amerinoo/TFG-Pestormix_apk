@@ -1,75 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_home_screen"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_20">
-
-        <Spinner
-            android:id="@+id/glass_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:spinnerMode="dropdown"
-            android:layout_weight="0.6" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.4"
-            android:gravity="right"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:padding="@dimen/padding_20">
+
+            <Spinner
+                android:id="@+id/glass_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.6"
+                android:spinnerMode="dropdown" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_gravity="center"
+                android:layout_weight="0.4"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-                <ImageView
-                    android:id="@+id/qr_button"
-                    android:layout_width="@dimen/home_circle"
-                    android:layout_height="@dimen/home_circle"
-                    android:background="@drawable/primary_color_square_selector"
-                    android:src="@drawable/icon_qr" />
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/qr_button"
+                        android:layout_width="@dimen/home_circle"
+                        android:layout_height="@dimen/home_circle"
+                        android:background="@drawable/primary_color_square_selector"
+                        android:src="@drawable/icon_qr" />
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/nfc_button"
-                    android:layout_width="@dimen/home_circle"
-                    android:layout_height="@dimen/home_circle"
-                    android:background="@drawable/primary_color_square_selector"
-                    android:src="@drawable/icon_nfc" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/nfc_button"
+                        android:layout_width="@dimen/home_circle"
+                        android:layout_height="@dimen/home_circle"
+                        android:background="@drawable/primary_color_square_selector"
+                        android:src="@drawable/icon_nfc" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
 
+        <ListView
+            android:id="@+id/cocktails_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:padding="@dimen/padding_10">
+
+        </ListView>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary" />
-
-    <ListView
-        android:id="@+id/cocktails_list"
-        android:padding="@dimen/padding_10"
-        android:divider="@android:color/transparent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ListView>
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
