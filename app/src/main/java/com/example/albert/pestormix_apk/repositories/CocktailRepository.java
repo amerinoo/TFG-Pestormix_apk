@@ -162,7 +162,7 @@ public abstract class CocktailRepository {
     }
 
     public static void removeCocktailByName(Realm realm, String cocktailName) {
-        removeCocktailByName(realm, cocktailName, false);
+        removeCocktailByName(realm, cocktailName, true);
     }
 
     public static void removeCocktailByName(Realm realm, String cocktailName, boolean push) {

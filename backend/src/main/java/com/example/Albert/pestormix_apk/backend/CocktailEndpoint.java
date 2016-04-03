@@ -76,15 +76,41 @@ public class CocktailEndpoint {
         return cocktails;
     }
 
-    @ApiMethod(name = "clearCocktails")
-    public void clearCocktails(@Named("id") String id) {
+    @ApiMethod(name = "deleteCocktailByName")
+    public void deleteCocktailByName(@Named("id") String id, @Named("name") String name) {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-        Key parent = new Entity("User", id).getKey();
-        Query query = new Query("Cocktail").setAncestor(parent);
-        List<Entity> results = datastoreService.prepare(query)
-                .asList(FetchOptions.Builder.withDefaults());
-        for (Entity entity : results) {
-            datastoreService.delete(entity.getKey());
+        Transaction txn = datastoreService.beginTransaction();
+        try {
+            Key parent = new Entity("User", id).getKey();
+            Query query = new Query("Cocktail").setAncestor(parent).setFilter(new Query.FilterPredicate("name", Query.FilterOperator.EQUAL, name));
+            Entity result = datastoreService.prepare(query)
+                    .asList(FetchOptions.Builder.withDefaults()).get(0);
+            datastoreService.delete(result.getKey());
+            txn.commit();
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+    }
+
+    @ApiMethod(name = "deleteAllCocktails")
+    public void deleteAllCocktails(@Named("id") String id) {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        Transaction txn = datastoreService.beginTransaction();
+        try {
+            Key parent = new Entity("User", id).getKey();
+            Query query = new Query("Cocktail").setAncestor(parent);
+            List<Entity> results = datastoreService.prepare(query)
+                    .asList(FetchOptions.Builder.withDefaults());
+            for (Entity entity : results) {
+                datastoreService.delete(entity.getKey());
+            }
+            txn.commit();
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
         }
     }
 }

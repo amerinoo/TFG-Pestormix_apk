@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/primary_color_rectangle_background"
+        android:padding="@dimen/padding_5"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -54,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="center_horizontal"
-                android:padding="@dimen/activity_default_padding"
+                android:padding="@dimen/padding_20"
                 android:textColor="@color/white" />
         </LinearLayout>
 
@@ -62,8 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:orientation="horizontal"
-            android:padding="@dimen/padding_5">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/cancel"
