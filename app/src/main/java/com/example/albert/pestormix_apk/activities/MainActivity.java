@@ -3,6 +3,7 @@ package com.example.albert.pestormix_apk.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -317,7 +318,12 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
             refreshUserInformation(id, displayName, userImage);
         } else {
             // Signed out, show unauthenticated UI.
-            showToast("Signed out, show unauthenticated UI.");
+            Utils.putBooleanPreference(Constants.PREFERENCES_USER_LOGGED, false);
+            FragmentManager fragmentManager = getFragmentManager();
+            SettingsFragment fragment = (SettingsFragment) fragmentManager.findFragmentById(R.id.main_content);
+            fragment.addLoginTitle();
+            signOut();
+            showToast("Signed out, unauthenticated.");
         }
     }
 

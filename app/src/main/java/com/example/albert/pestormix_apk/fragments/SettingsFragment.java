@@ -21,6 +21,8 @@ import io.realm.Realm;
  */
 public class SettingsFragment extends PreferenceFragment {
 
+    private Preference loginPreference;
+
     public static SettingsFragment getInstance() {
         return new SettingsFragment();
     }
@@ -45,8 +47,8 @@ public class SettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
-        final Preference loginPreference = findPreference(getString(R.string.PREFERENCE_LOGIN));
-        addLoginTitle(loginPreference);
+        loginPreference = findPreference(getString(R.string.PREFERENCE_LOGIN));
+        addLoginTitle();
         loginPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -60,7 +62,7 @@ public class SettingsFragment extends PreferenceFragment {
                     preference.setTitle(R.string.sign_out_google);
                 }
                 loginPreference.setEnabled(false);
-                reenableLogin(loginPreference);
+                reenableLogin();
                 return true;
             }
         });
@@ -75,7 +77,7 @@ public class SettingsFragment extends PreferenceFragment {
         });
     }
 
-    private void reenableLogin(final Preference loginPreference) {
+    private void reenableLogin() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -84,11 +86,11 @@ public class SettingsFragment extends PreferenceFragment {
         }, 1000);
     }
 
-    private void addLoginTitle(Preference preference) {
+    public void addLoginTitle() {
         if (isUserLogged()) {
-            preference.setTitle(R.string.sign_out_google);
+            loginPreference.setTitle(R.string.sign_out_google);
         } else {
-            preference.setTitle(R.string.sign_in_google);
+            loginPreference.setTitle(R.string.sign_in_google);
         }
     }
 
@@ -123,7 +125,7 @@ public class SettingsFragment extends PreferenceFragment {
         Utils.showToast(resId);
     }
 
-    private Realm getRealm(){
+    private Realm getRealm() {
         return Utils.getRealm();
     }
 }
