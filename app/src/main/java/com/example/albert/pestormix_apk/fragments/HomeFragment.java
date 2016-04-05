@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -61,6 +62,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     private ImageView nfc;
     private NfcController nfcController;
     private BroadcastReceiver broadcastReceiver;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public static HomeFragment getInstance() {
         return new HomeFragment();
@@ -103,7 +105,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
     }
 
     private void configSwipe() {
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) mainView.findViewById(R.id.fragment_home_screen);
+        swipeRefreshLayout = (SwipeRefreshLayout) mainView.findViewById(R.id.fragment_home_screen);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -152,6 +154,20 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
 
     private void configCocktails() {
         final ListView cocktails = (ListView) mainView.findViewById(R.id.cocktails_list);
+        cocktails.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (cocktails == null || cocktails.getChildCount() == 0) ?
+                                0 : cocktails.getChildAt(0).getTop();
+                swipeRefreshLayout.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+            }
+        });
         adapter = new CocktailAdapter(getActivity(), CocktailRepository.getCocktails(getRealm()));
         cocktails.setAdapter(adapter);
         registerForContextMenu(cocktails);
