@@ -38,6 +38,7 @@ import com.example.albert.pestormix_apk.fragments.HomeFragment;
 import com.example.albert.pestormix_apk.fragments.MuseFragment;
 import com.example.albert.pestormix_apk.fragments.SettingsFragment;
 import com.example.albert.pestormix_apk.nfc.NfcController;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
 import com.google.android.gms.auth.api.Auth;
@@ -287,8 +288,9 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
-                        refreshUserInformation("1", null, null);
+                        refreshUserInformation(Constants.DEFAULT_USER_ID, Constants.DEFAULT_USER_NAME, null, false);
                         removeHeader();
+                        CocktailRepository.restartCocktails(getRealm());
                     }
                 });
     }
@@ -297,7 +299,6 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -315,7 +316,7 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
             String id = acct.getId();
             String displayName = acct.getDisplayName();
             Bitmap userImage = getUserImage(url);
-            refreshUserInformation(id, displayName, userImage);
+            refreshUserInformation(id, displayName, userImage, true);
         } else {
             // Signed out, show unauthenticated UI.
             Utils.putBooleanPreference(Constants.PREFERENCES_USER_LOGGED, false);
@@ -359,19 +360,19 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         return bitmap;
     }
 
-    protected void refreshUserInformation(String id, String displayName, Bitmap bitmap) {
+    protected void refreshUserInformation(String id, String displayName, Bitmap bitmap, boolean logged) {
         if (bitmap != null) {
             addHeader(displayName, bitmap);
         }
-        saveUserInformationToPreferences(id, displayName, bitmap);
+        saveUserInformationToPreferences(id, displayName, bitmap,logged);
         sendBroadcast(new Intent(Constants.ACTION_START_SYNC_WITH_REMOTE));
     }
 
-    private void saveUserInformationToPreferences(String id, String name, Bitmap bitmap) {
+    private void saveUserInformationToPreferences(String id, String name, Bitmap bitmap, boolean logged) {
         String image = null;
         if (bitmap != null)
             image = Utils.bitmapToString(bitmap);
-        getPestormixApplication().putBoolean(Constants.PREFERENCES_USER_LOGGED, name != null);
+        getPestormixApplication().putBoolean(Constants.PREFERENCES_USER_LOGGED, logged);
         getPestormixApplication().putString(Constants.PREFERENCES_USER_NAME, name);
         getPestormixApplication().putString(Constants.PREFERENCES_USER_IMAGE, image);
         getPestormixApplication().setUserId(id);

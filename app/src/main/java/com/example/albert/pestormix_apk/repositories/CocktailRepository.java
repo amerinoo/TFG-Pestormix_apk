@@ -185,4 +185,8 @@ public abstract class CocktailRepository {
     }
 
 
+    public static void restartCocktails(Realm realm) {
+        removeAllCocktails(realm);
+        DataController.generateCocktails(realm);
+    }
 }

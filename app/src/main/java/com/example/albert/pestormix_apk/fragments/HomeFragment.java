@@ -222,6 +222,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                 } else {
                     showToast(getString(R.string.send_error) + cocktail.getName());
                 }
+                dialog.dismiss();
             }
         });
         detailsView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {

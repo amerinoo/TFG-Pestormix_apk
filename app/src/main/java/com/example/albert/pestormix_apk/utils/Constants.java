@@ -38,4 +38,10 @@ public abstract class Constants {
     public static final String ACTION_START_SYNC_FROM_REMOTE = "start_sync_from_remote";
     public static final String ACTION_ASYNC_FAILED = "async_failed";
     public static final String ACTION_PULL_COMPLETED = "pull_completed";
+
+    //Others
+    public static final String DEFAULT_USER_ID = "1";
+    public static final String DEFAULT_USER_NAME = "Default";
+    public static final String DEFAULT_USER_I = "1";
+
 }

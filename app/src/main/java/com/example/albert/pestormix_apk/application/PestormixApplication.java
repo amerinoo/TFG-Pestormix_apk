@@ -241,16 +241,17 @@ public class PestormixApplication extends Application {
     private final class BroadcastReceiverExtension extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_WITH_REMOTE)) {
-                syncWithRemote();
-            } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_TO_REMOTE)) {
-                pushToRemote();
-            } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_FROM_REMOTE)) {
-                pullFromRemote();
-            } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_ASYNC_FAILED)) {
-                m_pulling = false;
-                m_pushing = false;
+            if (getBoolean(Constants.PREFERENCES_USER_LOGGED, false)) {
+                if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_WITH_REMOTE)) {
+                    syncWithRemote();
+                } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_TO_REMOTE)) {
+                    pushToRemote();
+                } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_FROM_REMOTE)) {
+                    pullFromRemote();
+                } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_ASYNC_FAILED)) {
+                    m_pulling = false;
+                    m_pushing = false;
+                }
             }
         }
     }
