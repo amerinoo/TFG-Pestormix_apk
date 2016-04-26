@@ -174,11 +174,6 @@ public abstract class CocktailRepository {
         DataController.removeAllCocktails(realm);
     }
 
-    public static void updateCocktails() {
-        Intent intent = new Intent(Constants.ACTION_START_SYNC_WITH_REMOTE);
-        PestormixApplication.getContext().sendBroadcast(intent);
-    }
-
     public static void pushCocktailsToRemote() {
         Intent intent = new Intent(Constants.ACTION_START_SYNC_TO_REMOTE);
         PestormixApplication.getContext().sendBroadcast(intent);

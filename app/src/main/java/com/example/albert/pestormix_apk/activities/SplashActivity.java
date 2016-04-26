@@ -12,7 +12,6 @@ import android.util.Log;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.gcm.RegistrationIntentService;
 import com.example.albert.pestormix_apk.utils.Constants;
@@ -74,7 +73,6 @@ public class SplashActivity extends PestormixMasterActivity {
             }
             openTutorial();
         } else {
-            CocktailRepository.updateCocktails();
             openMain();
         }
     }

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,8 +18,11 @@ import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import io.realm.Realm;
 
@@ -32,7 +37,8 @@ public class PestormixApplication extends Application {
     private boolean m_pushing = false;
     private int pushQueue = 0;
     private CocktailBag cocktailBag;
-    private BroadcastReceiver m_broadcastReceiver;
+    private BroadcastReceiver cloudBroadcastReceiver;
+    private BroadcastReceiver networkBroadcastReceiver;
     private Realm realm;
 
     public static PestormixApplication getContext() {
@@ -44,19 +50,30 @@ public class PestormixApplication extends Application {
         super.onCreate();
         PestormixApplication.context = this;
         this.cocktailBag = CocktailBagFactory.getCocktailBag(this);
-        configBroadcast();
+        configCloudBroadcast();
+        configNetworkBroadcast();
     }
 
-    private void configBroadcast() {
+    private void configNetworkBroadcast() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        if (networkBroadcastReceiver == null) {
+            networkBroadcastReceiver = new BroadcastReceiverNetwork();
+            registerReceiver(networkBroadcastReceiver, intentFilter);
+        }
+    }
+
+    private void configCloudBroadcast() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constants.ACTION_START_SYNC_WITH_REMOTE);
         intentFilter.addAction(Constants.ACTION_START_SYNC_TO_REMOTE);
         intentFilter.addAction(Constants.ACTION_START_SYNC_FROM_REMOTE);
         intentFilter.addAction(Constants.ACTION_ASYNC_FAILED);
 
-        if (m_broadcastReceiver == null) {
-            m_broadcastReceiver = new BroadcastReceiverExtension();
-            registerReceiver(m_broadcastReceiver, intentFilter);
+        if (cloudBroadcastReceiver == null) {
+            cloudBroadcastReceiver = new BroadcastReceiverCloud();
+            registerReceiver(cloudBroadcastReceiver, intentFilter);
         }
     }
 
@@ -90,8 +107,11 @@ public class PestormixApplication extends Application {
 
     @Override
     public void onTerminate() {
-        if (null != m_broadcastReceiver) {
-            unregisterReceiver(m_broadcastReceiver);
+        if (null != cloudBroadcastReceiver) {
+            unregisterReceiver(cloudBroadcastReceiver);
+        }
+        if (null != networkBroadcastReceiver) {
+            unregisterReceiver(networkBroadcastReceiver);
         }
 
         super.onTerminate();
@@ -148,13 +168,12 @@ public class PestormixApplication extends Application {
         new AsyncTask<Void, Void, List<CocktailBean>>() {
             @Override
             protected List<CocktailBean> doInBackground(Void... params) {
-                List<CocktailBean> cocktails;
+                List<CocktailBean> cocktails = null;
                 try {
                     Log.d(TAG, "start cocktailBag.pullFromRemote");
                     cocktails = cocktailBag.pullFromRemote(getUserId());
                 } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
-                    return null;
                 }
                 return cocktails;
             }
@@ -194,6 +213,18 @@ public class PestormixApplication extends Application {
         putString(Constants.PREFERENCES_USER_GOOGLE_ID, userId);
     }
 
+    public boolean isUserLogged() {
+        return getBoolean(Constants.PREFERENCES_USER_LOGGED, false);
+    }
+
+    private boolean isConnected() {
+        return getBoolean(Constants.PREFERENCES_NETWORK_CONNECTED, false);
+    }
+
+    private void setConnected(boolean connected) {
+        putBoolean(Constants.PREFERENCES_NETWORK_CONNECTED, connected);
+    }
+
     private class AsyncPushTask extends AsyncTask<Void, Void, Integer> {
         static final int SUCCESS = 0;
         static final int ERROR = 1;
@@ -228,9 +259,6 @@ public class PestormixApplication extends Application {
                 } else {
                     Log.d(TAG, "cocktailBag.pushToRemote done");
                     putBoolean(Constants.PREFERENCES_NEED_TO_PUSH, false);
-                    // Push is complete. Now do a pull in case the remote
-                    // done.txt has changed.
-                    pullFromRemote();
                 }
             } else {
                 sendBroadcast(new Intent(Constants.ACTION_ASYNC_FAILED));
@@ -238,10 +266,10 @@ public class PestormixApplication extends Application {
         }
     }
 
-    private final class BroadcastReceiverExtension extends BroadcastReceiver {
+    private final class BroadcastReceiverCloud extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (getBoolean(Constants.PREFERENCES_USER_LOGGED, false)) {
+            if (isUserLogged() && isConnected()) {
                 if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_WITH_REMOTE)) {
                     syncWithRemote();
                 } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_TO_REMOTE)) {
@@ -253,6 +281,74 @@ public class PestormixApplication extends Application {
                     m_pushing = false;
                 }
             }
+        }
+    }
+
+    private class BroadcastReceiverNetwork extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equalsIgnoreCase(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                isConnectingToInternet(context);
+            }
+        }
+
+        public void isConnectingToInternet(Context context) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            if (activeNetwork != null) {
+                if (checkNetworkInfo(activeNetwork)) {
+                    context.sendBroadcast(new Intent(Constants.ACTION_START_SYNC_FROM_REMOTE));
+                    return;
+                }
+            }
+            Log.v(TAG, "You are not connected to Internet!");
+            setConnected(false);
+        }
+
+        private boolean checkNetworkInfo(NetworkInfo networkInfo) {
+            if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED) && checkAccessInternet()) {
+                Log.v(TAG, "Now you are connected to Internet!");
+                setConnected(true);
+                return true;
+            }
+            return false;
+        }
+
+        private boolean checkAccessInternet() {
+            try {
+                return new AsyncTask<Void, Void, Boolean>() {
+                    @Override
+                    protected Boolean doInBackground(Void... params) {
+                        boolean connected = false;
+                        try {
+                            connected = executeICMP();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return connected;
+                    }
+                }.execute().get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        private boolean executeICMP() {
+            System.out.println("execute ICMP");
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                long init = Calendar.getInstance().getTimeInMillis();
+                Process mIpAddrProcess = runtime.exec("/system/bin/ping -c 1 -W 2 8.8.8.8"); // -W timeout in seconds
+                int mExitValue = mIpAddrProcess.waitFor();
+                long end = Calendar.getInstance().getTimeInMillis();
+                System.out.println(" mExitValue " + mExitValue + " time:" + (end - init));
+                return mExitValue == 0;
+            } catch (InterruptedException | IOException ignore) {
+                ignore.printStackTrace();
+                System.out.println(" Exception:" + ignore);
+            }
+            return false;
         }
     }
 }

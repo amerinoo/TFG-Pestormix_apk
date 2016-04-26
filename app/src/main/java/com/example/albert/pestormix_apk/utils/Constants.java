@@ -16,6 +16,7 @@ public abstract class Constants {
     public static final String PREFERENCES_USER_GOOGLE_ID = "user_id";
     public static final String PREFERENCES_USER_GCM_ID = "user_gcm_id";
     public static final String PREFERENCES_NEED_TO_PUSH = "need_to_push";
+    public static final String PREFERENCES_NETWORK_CONNECTED = "network_connected";
 
     //Network
     public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";
@@ -42,6 +43,5 @@ public abstract class Constants {
     //Others
     public static final String DEFAULT_USER_ID = "1";
     public static final String DEFAULT_USER_NAME = "Default";
-    public static final String DEFAULT_USER_I = "1";
 
 }
