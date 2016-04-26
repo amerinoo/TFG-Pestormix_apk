@@ -81,4 +81,7 @@
     <!-- Fake data -->
     <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a,</string>
     <string name="cocktailDrinks">Prova,,Ron Barceló,Coca Cola</string>
+    <string name="welcome">Welcome to the application Pestormix. This is a short tutorial for first application settings. First need to configure the valves are choosing which product in each. The number of each valve can see the identified deposits provided in the machine. Once you have chosen the products of four valves, you can continue with the next step of the tutorial.</string>
+    <string name="all_ready">Congratulations! You must tuned the basic configuration to operate. From now you can start creating your custom cocktails to order them any time. Good luck!</string>
+    <string name="about_me">Albert Eduard Merino Pulido\nEscola Politècnica Superior (UdL)\nTreball Fi de Grau\nCurs 2015-2016</string>
 </resources>
