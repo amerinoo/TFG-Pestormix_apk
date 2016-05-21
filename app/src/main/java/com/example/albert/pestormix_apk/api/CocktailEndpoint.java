@@ -29,7 +29,7 @@ public class CocktailEndpoint {
     }
 
     public List<CocktailBean> getCocktails(String userId) {
-        String url = main_url + "cocktails?userId=" + "7777";
+        String url = main_url + "cocktails?userId=" + userId;
         String result = GET(url);
         List<CocktailBean> cocktailBean = new ArrayList<>();
         if (result != null) {
@@ -48,13 +48,14 @@ public class CocktailEndpoint {
     }
 
     public void deleteAllCocktails(String userId) {
-
+        String url = main_url + "cocktails?userId=" + userId;
+        DELETE(url);
     }
 
     public void insertCocktail(String userId, CocktailBean cocktailBean) throws JSONException {
-        String url = main_url + "cocktails";
+        String url = main_url + "cocktails?userId=" + userId;
         JSONObject jsonObject = cocktailToJson(userId, cocktailBean);
-        POST(url,jsonObject);
+        POST(url, jsonObject);
     }
 
     private void POST(String urls, JSONObject jsonObject) {
@@ -70,6 +71,16 @@ public class CocktailEndpoint {
             wr.flush();
             wr.close();
             conn.getResponseCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }private void DELETE(String urls) {
+        Log.d("DELETE_URL@@@@@@@@", urls);
+        try {
+            URL url = new URL(urls);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("DELETE");
+            connection.getResponseCode();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,6 +105,7 @@ public class CocktailEndpoint {
         jsonObject.put("drinks", cocktail.getDrinks());
         return jsonObject;
     }
+
     private String GET(String urls) {
         Log.d("GET_URL@@@@@@@@", urls);
         try {
@@ -117,7 +129,6 @@ public class CocktailEndpoint {
         }
         return null;
     }
-
 
 
 //    @ApiMethod(name = "insertCocktail")

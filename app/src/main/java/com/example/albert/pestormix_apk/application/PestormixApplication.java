@@ -184,7 +184,7 @@ public class PestormixApplication extends Application {
 
                 m_pulling = false;
 
-                if (result == null) {
+                if (result == null || result.size() == 0) {
                     sendBroadcast(new Intent(Constants.ACTION_START_SYNC_TO_REMOTE));
                 } else {
                     CocktailRepository.removeAllCocktails(getRealm());
