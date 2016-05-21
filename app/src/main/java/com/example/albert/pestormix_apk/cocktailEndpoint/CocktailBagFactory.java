@@ -1,5 +1,8 @@
 package com.example.albert.pestormix_apk.cocktailEndpoint;
 
+import android.preference.PreferenceManager;
+
+import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
 
 /**
@@ -7,6 +10,11 @@ import com.example.albert.pestormix_apk.application.PestormixApplication;
  */
 public class CocktailBagFactory {
     public static CocktailBag getCocktailBag(PestormixApplication pestormixApplication) {
-        return new EndpointsCocktailBagImpl(pestormixApplication);
+
+        String isHeroku = PreferenceManager.getDefaultSharedPreferences(pestormixApplication).getString(pestormixApplication.getString(R.string.PREFERENCE_HEROKU), "Google");
+        if (isHeroku.equals("Heroku"))
+            return new EndpointsCocktailHerokuImpl(pestormixApplication);
+        else
+            return new EndpointsCocktailBagImpl(pestormixApplication);
     }
 }
