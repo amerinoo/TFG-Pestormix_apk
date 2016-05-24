@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
@@ -18,7 +19,7 @@ import com.example.albert.pestormix_apk.utils.Constants;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-public class SplashActivity extends PestormixMasterActivity {
+public class SplashActivity extends PestormixMasterActivity implements Animation.AnimationListener {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "SplashActivity";
@@ -26,14 +27,17 @@ public class SplashActivity extends PestormixMasterActivity {
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean isReceiverRegistered;
-    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changeOrientationIfIsPhone();
         setContentView(R.layout.activity_splash);
-
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce);
+        Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce);
+        animation.setAnimationListener(this);
+        findViewById(R.id.title).startAnimation(animation);
+        findViewById(R.id.loading).startAnimation(animation2);
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -46,23 +50,6 @@ public class SplashActivity extends PestormixMasterActivity {
                 }
             }
         };
-        handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (getPestormixApplication().getBoolean(Constants.PREFERENCES_SENT_TOKEN_TO_SERVER_KEY, false)) {
-                    initApp();
-                } else {
-                    registerReceiver();
-
-                    if (checkPlayServices()) {
-                        // Start IntentService to register this application with GCM.
-                        Intent intent = new Intent(getApplicationContext(), RegistrationIntentService.class);
-                        startService(intent);
-                    }
-                }
-            }
-        }, 2000);
     }
 
     private void initApp() {
@@ -87,12 +74,6 @@ public class SplashActivity extends PestormixMasterActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        handler.removeCallbacksAndMessages(null);
-        super.onBackPressed();
     }
 
     @Override
@@ -135,5 +116,29 @@ public class SplashActivity extends PestormixMasterActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        if (getPestormixApplication().getBoolean(Constants.PREFERENCES_SENT_TOKEN_TO_SERVER_KEY, false)) {
+            initApp();
+        } else {
+            registerReceiver();
+            if (checkPlayServices()) {
+                // Start IntentService to register this application with GCM.
+                Intent intent = new Intent(getApplicationContext(), RegistrationIntentService.class);
+                startService(intent);
+            }
+        }
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }

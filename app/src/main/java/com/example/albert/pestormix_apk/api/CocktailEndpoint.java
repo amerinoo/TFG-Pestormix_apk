@@ -74,7 +74,9 @@ public class CocktailEndpoint {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }private void DELETE(String urls) {
+    }
+
+    private void DELETE(String urls) {
         Log.d("DELETE_URL@@@@@@@@", urls);
         try {
             URL url = new URL(urls);
@@ -129,82 +131,4 @@ public class CocktailEndpoint {
         }
         return null;
     }
-
-
-//    @ApiMethod(name = "insertCocktail")
-//    public void insertCocktail(@Named("id") String id, CocktailBean cocktailBean) {
-//        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-//        Transaction txn = datastoreService.beginTransaction();
-//        try {
-//            Key parent = new Entity("User", id).getKey();
-//            Entity taskEntity = new Entity("Cocktail", cocktailBean.getName(), parent);
-//            taskEntity.setProperty("name", cocktailBean.getName());
-//            taskEntity.setProperty("description", cocktailBean.getDescription());
-//            taskEntity.setProperty("alcohol", cocktailBean.isAlcohol());
-//            taskEntity.setProperty("drinks", cocktailBean.getDrinks());
-//            datastoreService.put(taskEntity);
-//            txn.commit();
-//        } finally {
-//            if (txn.isActive()) {
-//                txn.rollback();
-//            }
-//        }
-//    }
-//
-//    @ApiMethod(name = "getCocktails")
-//    public List<CocktailBean> getCocktails(@Named("id") String id) {
-//        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-//        Key parent = new Entity("User", id).getKey();
-//        List<CocktailBean> cocktails = new ArrayList<>();
-//        Query query = new Query("Cocktail").setAncestor(parent);
-//        List<Entity> results = datastoreService.prepare(query)
-//                .asList(FetchOptions.Builder.withDefaults());
-//        for (Entity entity : results) {
-//            CocktailBean cocktail = new CocktailBean();
-//            cocktail.setName((String) entity.getProperty("name"));
-//            cocktail.setDescription((String) entity.getProperty("description"));
-//            cocktail.setAlcohol((boolean) entity.getProperty("alcohol"));
-//            cocktail.setDrinks((String) entity.getProperty("drinks"));
-//            cocktails.add(cocktail);
-//        }
-//        return cocktails;
-//    }
-//
-//    @ApiMethod(name = "deleteCocktailByName")
-//    public void deleteCocktailByName(@Named("id") String id, @Named("name") String name) {
-//        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-//        Transaction txn = datastoreService.beginTransaction();
-//        try {
-//            Key parent = new Entity("User", id).getKey();
-//            Query query = new Query("Cocktail").setAncestor(parent).setFilter(new Query.FilterPredicate("name", Query.FilterOperator.EQUAL, name));
-//            Entity result = datastoreService.prepare(query)
-//                    .asList(FetchOptions.Builder.withDefaults()).get(0);
-//            datastoreService.delete(result.getKey());
-//            txn.commit();
-//        } finally {
-//            if (txn.isActive()) {
-//                txn.rollback();
-//            }
-//        }
-//    }
-//
-//    @ApiMethod(name = "deleteAllCocktails")
-//    public void deleteAllCocktails(@Named("id") String id) {
-//        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-//        Transaction txn = datastoreService.beginTransaction();
-//        try {
-//            Key parent = new Entity("User", id).getKey();
-//            Query query = new Query("Cocktail").setAncestor(parent);
-//            List<Entity> results = datastoreService.prepare(query)
-//                    .asList(FetchOptions.Builder.withDefaults());
-//            for (Entity entity : results) {
-//                datastoreService.delete(entity.getKey());
-//            }
-//            txn.commit();
-//        } finally {
-//            if (txn.isActive()) {
-//                txn.rollback();
-//            }
-//        }
-//    }
 }

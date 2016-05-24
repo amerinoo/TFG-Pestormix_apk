@@ -11,6 +11,7 @@
     <string name="title_about_author">About the author</string>
 
     <!-- General -->
+    <string name="loading">Loading...</string>
     <string name="information">Information</string>
     <string name="activate_nfc">Do you want to activate the NFC?</string>
     <string name="nfc_disabled">NFC is disabled</string>
@@ -19,6 +20,8 @@
 
     <!-- Tutorial -->
     <string name="tutorial_continue">Continue</string>
+    <string name="welcome">Welcome to the application Pestormix. This is a short tutorial for first application settings. First need to configure the valves are choosing which product in each. The number of each valve can see the identified deposits provided in the machine. Once you have chosen the products of four valves, you can continue with the next step of the tutorial.</string>
+    <string name="all_ready">Congratulations! You must tuned the basic configuration to operate. From now you can start creating your custom cocktails to order them any time. Good luck!</string>
 
     <!-- Cocktail -->
     <string name="option_1">Details</string>
@@ -44,10 +47,12 @@
     <string name="manually">Manually</string>
     <string name="qr_code">QR code</string>
     <string name="nfc_tag">NFC tag</string>
+
     <!-- Manually-->
     <string name="select_drink">Select a drink</string>
     <string name="obligate_add_drink">You have to add some drink</string>
     <string name="no_more_drinks_available">No more drinks available</string>
+
     <!-- Give Cocktail Name-->
     <string name="give_name">Give it a name</string>
     <string name="give_description">Give it a description</string>
@@ -60,6 +65,9 @@
     <string name="cocktail_name_already_exist">A cocktail with this name already exists</string>
     <string name="give_name_mandatory">You have to give a name for it</string>
     <string name="cocktail_format_error">Cocktail\'s format is invalid</string>
+
+    <!-- About the author-->
+    <string name="about_me">Albert Eduard Merino Pulido\nEscola Politècnica Superior (UdL)\nTreball Fi de Grau\nCurs 2015-2016</string>
 
     <!-- Settings -->
     <string name="configure_valves">Configure the valves</string>
@@ -82,7 +90,4 @@
     <!-- Fake data -->
     <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a,</string>
     <string name="cocktailDrinks">Prova,,Ron Barceló,Coca Cola</string>
-    <string name="welcome">Welcome to the application Pestormix. This is a short tutorial for first application settings. First need to configure the valves are choosing which product in each. The number of each valve can see the identified deposits provided in the machine. Once you have chosen the products of four valves, you can continue with the next step of the tutorial.</string>
-    <string name="all_ready">Congratulations! You must tuned the basic configuration to operate. From now you can start creating your custom cocktails to order them any time. Good luck!</string>
-    <string name="about_me">Albert Eduard Merino Pulido\nEscola Politècnica Superior (UdL)\nTreball Fi de Grau\nCurs 2015-2016</string>
 </resources>
