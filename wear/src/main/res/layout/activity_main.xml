@@ -5,7 +5,7 @@
     android:id="@+id/watch_view_stub"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:rectLayout="@layout/rect_activity_main"
-    app:roundLayout="@layout/round_activity_main"
-    tools:context="com.example.albert.pestormix_apk.MainActivity"
+    app:rectLayout="@layout/content_activity_main"
+    app:roundLayout="@layout/content_activity_main"
+    tools:context=".activities.MainActivity"
     tools:deviceIds="wear" />
