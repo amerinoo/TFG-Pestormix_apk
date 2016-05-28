@@ -7,9 +7,18 @@ import io.realm.RealmObject;
  */
 public class Glass extends RealmObject {
     private String name;
+    private int capacity;
 
     public Glass() {
         name = "";
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public String getName() {
