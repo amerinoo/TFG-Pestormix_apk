@@ -38,9 +38,11 @@ import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
+import com.example.albert.pestormix_apk.models.Valve;
 import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.repositories.DrinkRepository;
+import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
 import com.example.albert.pestormix_apk.utils.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
@@ -175,7 +177,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = getStringOfTextView((TextView) view.findViewById(R.id.name));
-                showConfirmOrder(name, false);
+                showConfirmOrder(name);
             }
         });
     }
@@ -199,12 +201,12 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         });
     }
 
-    private void showConfirmOrder(String cocktailName, final boolean remove) {
-        Cocktail cocktailByName = CocktailRepository.getCocktailByName(getRealm(), cocktailName);
-        showConfirmOrder(cocktailByName, remove);
+    private void showConfirmOrder(String cocktailName) {
+        Cocktail cocktail = CocktailRepository.getCocktailByName(getRealm(), cocktailName);
+        showConfirmOrder(cocktail);
     }
 
-    private void showConfirmOrder(final Cocktail cocktail, final boolean remove) {
+    private void showConfirmOrder(final Cocktail cocktail) {
         final AlertDialog dialog;
         View detailsView = LayoutInflater.from(getActivity()).inflate(R.layout.confirm_order, null, false);
         ((TextView) detailsView.findViewById(R.id.name)).setText(cocktail.getName());
@@ -216,7 +218,8 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         detailsView.findViewById(R.id.accept).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean sended = NetworkController.send(getRealm(), cocktail, glassName, remove);
+                List<Valve> valves = ValveRepository.getValves(getRealm());
+                Boolean sended = NetworkController.send(valves, cocktail, glassName);
                 if (sended) {
                     showToast(cocktail.getName() + getString(R.string.send_ok));
                 } else {
@@ -228,8 +231,6 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         detailsView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (remove)
-                    CocktailRepository.removeCocktailByName(getRealm(), cocktail.getName(), false);
                 dialog.dismiss();
             }
         });
@@ -342,7 +343,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = getStringOfTextView((TextView) view.findViewById(android.R.id.text1));
                 hideKeyboard();
-                showConfirmOrder(name, false);
+                showConfirmOrder(name);
             }
         });
     }
@@ -353,12 +354,14 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         processData(data);
     }
 
+    /**
+     * Create cocktail with NFC or QR data
+     *
+     * @param data NFC or QR data
+     */
     private void processData(String data) {
         Cocktail cocktail = CocktailRepository.processData(data);
-        if (cocktail != null) {
-            CocktailRepository.addCocktailToDB(getRealm(), cocktail, false);
-            showConfirmOrder(cocktail.getName(), true);
-        }
+        showConfirmOrder(cocktail);
     }
 
     @Override

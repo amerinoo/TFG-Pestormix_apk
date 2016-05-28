@@ -63,10 +63,6 @@ public abstract class CocktailRepository {
         cocktail.getDrinks().add(drink);
     }
 
-    public static String getDrinksAsString(Cocktail cocktail) {
-        return getDrinksAsString(cocktail, ",");
-    }
-
     public static Cocktail processData(String data) {
         if (data != null && !data.equals("")) {
             Cocktail cocktail;
@@ -98,6 +94,18 @@ public abstract class CocktailRepository {
         return cocktail;
     }
 
+    public static void setDrinksFromString(Realm realm, Cocktail cocktail, String drinksString) {
+        List<Drink> drinks = DrinkRepository.getDrinksFromString(realm, drinksString);
+        for (Drink drink : drinks) {
+            if (!cocktail.isAlcohol() && drink.isAlcohol()) cocktail.setAlcohol(true);
+            addDrink(cocktail, drink);
+        }
+    }
+
+    public static String getDrinksAsString(Cocktail cocktail) {
+        return getDrinksAsString(cocktail, ",");
+    }
+
     public static String getDrinksAsString(Cocktail cocktail, String separator) {
         String drinks = "";
         for (Drink drink : cocktail.getDrinks()) drinks += drink.getName() + separator;
@@ -110,14 +118,6 @@ public abstract class CocktailRepository {
         List<Drink> drinks = new ArrayList<>();
         for (Drink drink : results) drinks.add(drink);
         return drinks;
-    }
-
-    public static void setDrinksFromString(Realm realm, Cocktail cocktail, String drinksString) {
-        List<Drink> drinks = DrinkRepository.getDrinksFromString(realm, drinksString);
-        for (Drink drink : drinks) {
-            if (!cocktail.isAlcohol() && drink.isAlcohol()) cocktail.setAlcohol(true);
-            addDrink(cocktail, drink);
-        }
     }
 
     public static void addCocktailToDB(Realm realm, Cocktail cocktail) {
