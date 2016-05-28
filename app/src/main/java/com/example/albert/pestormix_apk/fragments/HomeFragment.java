@@ -33,15 +33,16 @@ import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ScanQrActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
-import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
+import com.example.albert.pestormix_apk.models.Glass;
 import com.example.albert.pestormix_apk.models.Valve;
 import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.repositories.DrinkRepository;
+import com.example.albert.pestormix_apk.repositories.GlassRepository;
 import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
 import com.example.albert.pestormix_apk.utils.Constants;
@@ -57,7 +58,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
 
     private View mainView;
     private String cocktailName;
-    private String glassName;
+    private int glassCapacity;
     private CocktailAdapter adapter;
     private List<String> cocktailsName;
     private ArrayAdapter<String> stringArrayAdapter;
@@ -184,15 +185,16 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
 
     private void configGlasses() {
         Spinner glasses = (Spinner) mainView.findViewById(R.id.glass_spinner);
-        final List<String> glassesNames = DataController.getGlassesNames(getRealm());
+        final List<String> glassesNames = GlassRepository.getGlassesNames(getRealm());
         ArrayAdapter glassesAdapter = new ArrayAdapter<>(getActivity(), R.layout.row_single_text_view, glassesNames);
         glasses.setAdapter(glassesAdapter);
         glasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String name = glassesNames.get(position);
-                showToast(name);
-                glassName = name;
+                Glass glass = GlassRepository.getGlasseByName(getRealm(), name);
+                glassCapacity = glass.getCapacity();
+                showToast(String.valueOf(glass.getCapacity()));
             }
 
             @Override
@@ -219,7 +221,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
             @Override
             public void onClick(View v) {
                 List<Valve> valves = ValveRepository.getValves(getRealm());
-                Boolean sended = NetworkController.send(valves, cocktail, glassName);
+                Boolean sended = NetworkController.send(valves, cocktail, glassCapacity);
                 if (sended) {
                     showToast(cocktail.getName() + getString(R.string.send_ok));
                 } else {

@@ -285,17 +285,21 @@ public abstract class DataController {
         realm.commitTransaction();
     }
 
-    public static List<String> getGlassesNames(Realm realm) {
+    public static List<Glass> getGlasses(Realm realm) {
         RealmResults<Glass> results = realm.where(Glass.class).findAll();
-        List<String> names = new ArrayList<>();
+        List<Glass> glasses = new ArrayList<>();
         for (Glass glass : results) {
-            names.add(glass.getName());
+            glasses.add(glass);
         }
-        return names;
+        return glasses;
+    }
+
+    public static Glass getGlassesByName(Realm realm, String name) {
+        return realm.where(Glass.class).equalTo("name", name).findFirst();
     }
 
     public static void removeAllGlasses(Realm realm) {
-        RealmResults<Glass> results = realm.where(Glass.class).findAll();
+        RealmResults<Glass> results = realm.where(Glass.class).findAllSorted("capacity");
         realm.beginTransaction();
         results.clear();
         realm.commitTransaction();

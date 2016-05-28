@@ -85,5 +85,6 @@
     <string name="PREFERENCE_LOGIN" translatable="false">preference_login</string>
     <string name="PREFERENCE_VALVES" translatable="false">preference_valves</string>
     <string name="PREFERENCE_HEROKU" translatable="false">preference_herokuu</string>
+    <string name="glass_name">Glass %d  cl</string>
 
 </resources>

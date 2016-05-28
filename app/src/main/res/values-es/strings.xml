@@ -20,7 +20,7 @@
     <!-- Tutorial -->
     <string name="tutorial_continue">Continuar</string>
     <string name="tutorial_welcome">Bienvenido a la aplicación Pestormix. Este es un breve tutorial para realizar los ajustes de inicio de la aplicación. En primer lugar deberás configurar las válvulas estableciendo qué producto hay en cada una. El número de cada válvula lo puedes ver en los depósitos proporcionados en la máquina. Una vez que haya elegido los productos de las cuatro válvulas, puede continuar con el siguiente paso del tutorial.</string>
-    <string name="tutorial_all_ready">¡Felicitaciones! Ha finalizado la configuración básica para operar. A partir de ahora puede empezar a crear sus cócteles personalizados para pedirlos en cualquier momento. ¡Buena suerte!</string>
+    <string name="tutorial_all_ready">¡Felicitaciones! Ha finalizado la configuración básica para operar. A partir de ahora puedes empezar a crear sus cócteles personalizados para pedirlos en cualquier momento. ¡Buena suerte!</string>
 
     <!-- Cocktail -->
     <string name="option_1">Detalles</string>

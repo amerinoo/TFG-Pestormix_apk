@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
  */
 public abstract class NetworkController {
 
-    public static Boolean send(List<Valve> valves, Cocktail cocktail, String glassName) {
+    public static Boolean send(List<Valve> valves, Cocktail cocktail, int glassName) {
         String cocktailDrinks = CocktailRepository.getDrinksAsString(cocktail);
         String jsonMessage = getJsonAsString(valves, cocktailDrinks, glassName);
         System.out.println(jsonMessage);
@@ -36,20 +36,19 @@ public abstract class NetworkController {
         return false;
     }
 
-    private static String getJsonAsString(List<Valve> valves, String cocktailDrinks, String glassName) {
+    private static String getJsonAsString(List<Valve> valves, String cocktailDrinks, int glassName) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("glass", glassName);
-        } catch (JSONException e) {
+        } catch (JSONException ignored) {
         }
         for (Valve valve : valves) {
             try {
                 JSONObject valveObject = new JSONObject();
                 valveObject.put("use", cocktailDrinks.contains(valve.getDrink().getName()));
-                valveObject.put("name", valve.getDrink().getName());
                 valveObject.put("alcohol", valve.getDrink().isAlcohol());
                 jsonObject.put("v" + valve.getId(), valveObject);
-            } catch (JSONException e) {
+            } catch (JSONException ignored) {
             }
         }
         return jsonObject.toString();
