@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Drinks' names-->
+    <string name="drink_water">Agua</string>
+    <string name="drink_lemonade">Limonada</string>
+    <string name="drink_orangeade">Naranjada</string>
+
+    <!--Drinks' description-->
+    <string name="drink_water_description">Descripción Agua</string>
+    <string name="drink_coca_cola_description">Descripción Coca Cola</string>
+    <string name="drink_lemonade_description">Descripción Limonada</string>
+    <string name="drink_orangeade_description">Descripción Naranjada</string>
+    <string name="drink_ron_description">Descripción Ron</string>
+
+    <!-- Cocktails's names-->
+    <string name="cocktail_water">Agua</string>
+    <string name="cocktail_lemonade">Limonada</string>
+    <string name="cocktail_orangeade">Naranjada</string>
+
+    <!-- Cocktails's description-->
+    <string name="cocktail_water_description">Descripción Agua</string>
+    <string name="cocktail_coca_cola_description">Descripción Coca cola</string>
+    <string name="cocktail_lemonade_description">Descripción Limonada</string>
+    <string name="cocktail_orangeade_description">Descripción naranjada</string>
+    <string name="cocktail_cuba_libre_description">Descripción Cuba libre</string>
+    
+</resources>

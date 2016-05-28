@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:lineSpacingExtra="@dimen/lineSpacingExtra"
-            android:text="@string/all_ready" />
+            android:text="@string/tutorial_all_ready" />
     </LinearLayout>
 
 </LinearLayout>

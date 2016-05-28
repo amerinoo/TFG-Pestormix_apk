@@ -93,7 +93,7 @@ public class NfcController {
 
     private void enableNfc() {
         new AlertDialog.Builder(context)
-                .setTitle(R.string.information)
+                .setTitle(R.string.nfc_disabled)
                 .setMessage(R.string.activate_nfc)
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                     @Override

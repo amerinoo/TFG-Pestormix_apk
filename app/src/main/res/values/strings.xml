@@ -1,17 +1,17 @@
 <resources>
 
     <!-- Ttiles -->
-    <string name="app_name">Pestormix</string>
+    <string name="app_name" translatable="false">Pestormix</string>
     <string name="title_cocktails">Cocktails</string>
     <string name="title_create_cocktail">Create cocktail</string>
     <string name="title_settings">Settings</string>
     <string name="title_valves">Valves</string>
-    <string name="title_muse">Muse</string>
+    <string name="title_muse" translatable="false">Muse</string>
     <string name="title_help">Help</string>
     <string name="title_about_author">About the author</string>
 
     <!-- General -->
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="information">Information</string>
     <string name="activate_nfc">Do you want to activate the NFC?</string>
     <string name="nfc_disabled">NFC is disabled</string>
@@ -20,19 +20,18 @@
 
     <!-- Tutorial -->
     <string name="tutorial_continue">Continue</string>
-    <string name="welcome">Welcome to the application Pestormix. This is a short tutorial for first application settings. First need to configure the valves are choosing which product in each. The number of each valve can see the identified deposits provided in the machine. Once you have chosen the products of four valves, you can continue with the next step of the tutorial.</string>
-    <string name="all_ready">Congratulations! You must tuned the basic configuration to operate. From now you can start creating your custom cocktails to order them any time. Good luck!</string>
+    <string name="tutorial_welcome">Welcome to the Pestormix application. This is a short tutorial to make adjustments to start the application. First you must configure the setting valves which product in each one. The number of each valve you can see in the tanks provided in the machine. Once you have chosen the products of the four valves, you can proceed to the next step of the tutorial.</string>
+    <string name="tutorial_all_ready">Congratulation! You have completed the basic configuration to operate. From now you can start creating your custom cocktails to order them at any time. Good luck!</string>
 
     <!-- Cocktail -->
     <string name="option_1">Details</string>
     <string name="option_2">Edit</string>
     <string name="option_3">Remove</string>
-    <string name="confirmOrder">Confirm the order</string>
     <string name="youre_asking">"You're asking for"</string>
     <string name="quit">Are you sure you want to quit?</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
-    <string name="cocktail_removed">The cocktail will be removed permanetly</string>
+    <string name="cocktail_removed">The cocktail will be removed permanently</string>
     <string name="search">Search</string>
 
     <!-- Cocktail Details -->
@@ -40,7 +39,7 @@
     <string name="description">Description</string>
     <string name="drinks">Drinks</string>
     <string name="missing_description">This cocktail doesn\'t have description</string>
-    <string name="drinks_detail_separator">\u0020 - \u0020</string>
+    <string name="drinks_detail_separator" translatable="false">\u0020 - \u0020</string>
 
     <!-- Create cocktail-->
     <string name="how_will_create_cocktail">How will you create the cocktail?</string>
@@ -54,8 +53,8 @@
     <string name="no_more_drinks_available">No more drinks available</string>
 
     <!-- Give Cocktail Name-->
-    <string name="give_name">Give it a name</string>
-    <string name="give_description">Give it a description</string>
+    <string name="give_name">Give a name</string>
+    <string name="give_description">Give a description</string>
     <string name="cocktail_name">Cocktail name</string>
     <string name="cocktail_description">Cocktail description (Optional)</string>
     <string name="save">Save</string>
@@ -67,27 +66,24 @@
     <string name="cocktail_format_error">Cocktail\'s format is invalid</string>
 
     <!-- About the author-->
-    <string name="about_me">Albert Eduard Merino Pulido\nEscola Politècnica Superior (UdL)\nTreball Fi de Grau\nCurs 2015-2016</string>
+    <string name="about_me">Albert Eduard Merino Pulido\nEscola Politècnica Superior (UdL)\nFinal Project\nCourse 2015–2016</string>
 
     <!-- Settings -->
     <string name="configure_valves">Configure the valves</string>
-    <string name="V1">V1</string>
-    <string name="V2">V2</string>
-    <string name="V3">V3</string>
-    <string name="V4">V4</string>
+    <string name="muse" translatable="false">Muse</string>
+    <string name="V1" translatable="false">V1</string>
+    <string name="V2" translatable="false">V2</string>
+    <string name="V3" translatable="false">V3</string>
+    <string name="V4" translatable="false">V4</string>
     <string name="sign_in_google">Sign-in with Google</string>
     <string name="sign_out_google">Sign-out of Google</string>
-    <string name="muse">Muse</string>
     <string name="exit_without_saving">Exit without saving?</string>
-    <string name="save_completed">Save completed</string>
+    <string name="save_completed">Saved completed</string>
 
     <!-- Preferences-->
-    <string name="PREFERENCE_MUSE">preference_muse</string>
-    <string name="PREFERENCE_LOGIN">preference_login</string>
-    <string name="PREFERENCE_VALVES">preference_valves</string>
-    <string name="PREFERENCE_HEROKU">preference_herokuu</string>
+    <string name="PREFERENCE_MUSE" translatable="false">preference_muse</string>
+    <string name="PREFERENCE_LOGIN" translatable="false">preference_login</string>
+    <string name="PREFERENCE_VALVES" translatable="false">preference_valves</string>
+    <string name="PREFERENCE_HEROKU" translatable="false">preference_herokuu</string>
 
-    <!-- Fake data -->
-    <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a,</string>
-    <string name="cocktailDrinks">Prova,,Ron Barceló,Coca Cola</string>
 </resources>

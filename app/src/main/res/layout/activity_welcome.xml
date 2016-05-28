@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lineSpacingExtra="@dimen/lineSpacingExtra"
-                android:text="@string/welcome" />
+                android:text="@string/tutorial_welcome" />
 
             <Button
                 android:id="@+id/continue_button"

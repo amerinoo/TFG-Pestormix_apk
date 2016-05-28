@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Ttiles -->
+    <string name="title_cocktails">Cócteles</string>
+    <string name="title_create_cocktail">Crear cóctel</string>
+    <string name="title_settings">Ajustes</string>
+    <string name="title_valves">Válvulas</string>
+    <string name="title_help">Ayuda</string>
+    <string name="title_about_author">Sobre el autor</string>
+
+    <!-- General -->
+    <string name="loading">Cargando…</string>
+    <string name="information">Información</string>
+    <string name="activate_nfc">¿Quieres activar el NFC?</string>
+    <string name="nfc_disabled">NFC está desactivado</string>
+    <string name="send_ok">\u0020ha sido enviado con éxito</string>
+    <string name="send_error">"Fallo al enviar "</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_continue">Continuar</string>
+    <string name="tutorial_welcome">Bienvenido a la aplicación Pestormix. Este es un breve tutorial para realizar los ajustes de inicio de la aplicación. En primer lugar deberás configurar las válvulas estableciendo qué producto hay en cada una. El número de cada válvula lo puedes ver en los depósitos proporcionados en la máquina. Una vez que haya elegido los productos de las cuatro válvulas, puede continuar con el siguiente paso del tutorial.</string>
+    <string name="tutorial_all_ready">¡Felicitaciones! Ha finalizado la configuración básica para operar. A partir de ahora puede empezar a crear sus cócteles personalizados para pedirlos en cualquier momento. ¡Buena suerte!</string>
+
+    <!-- Cocktail -->
+    <string name="option_1">Detalles</string>
+    <string name="option_2">Editar</string>
+    <string name="option_3">Eliminar</string>
+    <string name="youre_asking">"Usted está pidiendo"</string>
+    <string name="quit">¿Seguro que quieres salir?</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="cocktail_removed">El cóctel se eliminará de forma permanente</string>
+    <string name="search">Buscar</string>
+
+    <!-- Cocktail Details -->
+    <string name="name">Nombre</string>
+    <string name="description">Descripción</string>
+    <string name="drinks">Bebidas</string>
+    <string name="missing_description">Este cóctel no tiene descripción</string>
+
+    <!-- Create cocktail-->
+    <string name="how_will_create_cocktail">¿Cómo va a crear el cóctel?</string>
+    <string name="manually">Manualmente</string>
+    <string name="qr_code">Código QR</string>
+    <string name="nfc_tag">Etiqueta NFC</string>
+
+    <!-- Manually-->
+    <string name="select_drink">Seleccione una bebida</string>
+    <string name="obligate_add_drink">Tienes que añadir alguna bebida</string>
+    <string name="no_more_drinks_available">No hay más bebidas disponibles</string>
+
+    <!-- Give Cocktail Name-->
+    <string name="give_name">Dale un nombre</string>
+    <string name="give_description">Dale una descripción</string>
+    <string name="cocktail_name">Nombre del cóctel</string>
+    <string name="cocktail_description">Descripción del cóctel (Opcional)</string>
+    <string name="save">Guardar</string>
+    <string name="are_you_sure">¿Estás seguro?</string>
+    <string name="cocktail_removed_restart_creation">El cóctel no será creado y tendrás que volver a iniciar la creación</string>
+    <string name="cocktail_not_updated_restart_edition">El cóctel no será editado y tendrás que volver a iniciar la edición</string>
+    <string name="cocktail_name_already_exist">Ya existe un cóctel con este nombre</string>
+    <string name="give_name_mandatory">Hay que darle un nombre </string>
+    <string name="cocktail_format_error">El formato de cóctel no es válido</string>
+
+    <!-- About the author-->
+    <string name="about_me">Albert Eduard Merino Pulido\nEscola Politècnica Superior (UdL)\nTrabajo Fin de Grado\nCurso 2015–2016</string>
+
+    <!-- Settings -->
+    <string name="configure_valves">Configurar las válvulas</string>
+    <string name="sign_in_google">Inicia sesión con Google</string>
+    <string name="sign_out_google">Cerrar sesión con Google</string>
+    <string name="exit_without_saving">¿Salir sin guardar?</string>
+    <string name="save_completed">Guardado completado</string>
+
+</resources>
