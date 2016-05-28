@@ -24,7 +24,6 @@ public class ScanQrActivity extends PestormixMasterActivity {
     private SurfaceView cameraView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
-    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +32,9 @@ public class ScanQrActivity extends PestormixMasterActivity {
         setContentView(R.layout.activity_scan_qr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        activity = this;
         cameraView = new SurfaceView(this);
-        ((LinearLayout) findViewById(R.id.window)).addView(cameraView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        ((LinearLayout) findViewById(R.id.window)).addView(cameraView,
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         barcodeDetector =
                 new BarcodeDetector.Builder(this)
                         .setBarcodeFormats(Barcode.QR_CODE)
@@ -75,7 +74,7 @@ public class ScanQrActivity extends PestormixMasterActivity {
                 public void surfaceCreated(SurfaceHolder holder) {
                     try {
                         cameraSource.start(cameraView.getHolder());
-                    } catch (SecurityException | IOException se) {
+                    } catch (SecurityException | IOException ignored) {
                     }
                 }
 

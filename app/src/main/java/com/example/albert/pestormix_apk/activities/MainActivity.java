@@ -54,7 +54,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends PestormixMasterActivity implements NavigationView.OnNavigationItemSelectedListener,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "MainActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -288,7 +289,8 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
-                        refreshUserInformation(Constants.DEFAULT_USER_ID, Constants.DEFAULT_USER_NAME, null, false);
+                        refreshUserInformation(Constants.DEFAULT_USER_ID,
+                                Constants.DEFAULT_USER_NAME, null, false);
                         removeHeader();
                         CocktailRepository.restartCocktails(getRealm());
                     }
@@ -324,7 +326,7 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
             SettingsFragment fragment = (SettingsFragment) fragmentManager.findFragmentById(R.id.main_content);
             fragment.addLoginTitle();
             signOut();
-            showToast("Signed out, unauthenticated.");
+            showToast(R.string.error_login);
         }
     }
 

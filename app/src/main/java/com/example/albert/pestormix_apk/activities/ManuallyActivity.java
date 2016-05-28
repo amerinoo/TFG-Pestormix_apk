@@ -14,12 +14,12 @@ import android.widget.TextView;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ItemsAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.repositories.CocktailRepository;
-import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.enums.CreateCocktailType;
 import com.example.albert.pestormix_apk.fragments.DetailCocktailFragment;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
+import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
 
 import java.util.ArrayList;
@@ -154,7 +154,8 @@ public class ManuallyActivity extends PestormixMasterActivity {
         if (cocktail.getDrinks().size() == 0) {
             showToast(R.string.obligate_add_drink);
         } else {
-            DetailCocktailFragment fragment = (DetailCocktailFragment) getFragmentManager().findFragmentById(R.id.detail_content);
+            DetailCocktailFragment fragment = (DetailCocktailFragment) getFragmentManager()
+                    .findFragmentById(R.id.detail_content);
             String drinks = CocktailRepository.getDrinksAsString(cocktail);
             if (fragment == null) {
                 Intent intent = new Intent(this, DetailCocktailActivity.class);

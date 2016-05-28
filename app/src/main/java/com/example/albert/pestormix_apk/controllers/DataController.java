@@ -10,6 +10,7 @@ import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.repositories.GlassRepository;
 import com.example.albert.pestormix_apk.repositories.QuestionRepository;
 import com.example.albert.pestormix_apk.repositories.ValveRepository;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public abstract class DataController {
         for (Cocktail cocktail : cocktails) {
             try {
                 realm.copyToRealmOrUpdate(cocktail);
-            } catch (RealmPrimaryKeyConstraintException e) {
+            } catch (RealmPrimaryKeyConstraintException ignored) {
             }
         }
         realm.commitTransaction();
@@ -77,13 +78,13 @@ public abstract class DataController {
 
     public static void removeCocktailByName(Realm realm, String name) {
         realm.beginTransaction();
-        realm.where(Cocktail.class).equalTo("name", name).findAll().clear();
+        realm.where(Cocktail.class).equalTo(Constants.COCKTAIL_NAME, name).findAll().clear();
         realm.commitTransaction();
     }
 
     public static List<Cocktail> getCocktails(Realm realm) {
         RealmResults<Cocktail> results = realm.where(Cocktail.class).findAll();
-        results.sort("name", Sort.ASCENDING);
+        results.sort(Constants.COCKTAIL_NAME, Sort.ASCENDING);
         List<Cocktail> cocktails = new ArrayList<>();
         for (Cocktail cocktail : results) {
             cocktails.add(cocktail);
@@ -110,24 +111,22 @@ public abstract class DataController {
     }
 
     public static Cocktail getCocktailByName(Realm realm, String name) {
-        return realm.where(Cocktail.class).equalTo("name", name).findFirst();
+        return realm.where(Cocktail.class).equalTo(Constants.COCKTAIL_NAME, name).findFirst();
     }
 
     public static boolean cocktailExist(Realm realm, Cocktail cocktail) {
-        RealmResults<Cocktail> results = realm.where(Cocktail.class).equalTo("name", cocktail.getName()).findAll();
-        return results.size() > 0;
+        Cocktail cocktail1 = getCocktailByName(realm, cocktail.getName());
+        return cocktail1 != null;
     }
 
-
     public static List<String> getCocktailsNames(Realm realm) {
-        RealmResults<Cocktail> results = realm.where(Cocktail.class).findAll();
+        List<Cocktail> results = getCocktails(realm);
         List<String> names = new ArrayList<>();
         for (Cocktail cocktail : results) {
             names.add(cocktail.getName());
         }
         return names;
     }
-
     /****************** End Cocktail ******************/
 
     /******************
@@ -139,19 +138,9 @@ public abstract class DataController {
         for (Drink drink : drinks) {
             try {
                 realm.copyToRealm(drink);
-            } catch (RealmPrimaryKeyConstraintException e) {
+            } catch (RealmPrimaryKeyConstraintException ignored) {
             }
         }
-        realm.commitTransaction();
-    }
-
-    public static void addDrink(Realm realm, Drink drink) {
-        addItem(realm, drink);
-    }
-
-    public static void removeDrinkByName(Realm realm, String name) {
-        realm.beginTransaction();
-        realm.where(Drink.class).equalTo("name", name).findAll().clear();
         realm.commitTransaction();
     }
 
@@ -163,7 +152,7 @@ public abstract class DataController {
     }
 
     public static Drink getDrinkByName(Realm realm, String name) {
-        return realm.where(Drink.class).equalTo("name", name).findFirst();
+        return realm.where(Drink.class).equalTo(Constants.DRINK_NAME, name).findFirst();
     }
 
     public static List<Drink> getDrinks(Realm realm) {
@@ -174,26 +163,25 @@ public abstract class DataController {
         }
         return drinks;
     }
-/******************* End Drink ******************/
+    /******************* End Drink ******************/
 
     /******************
      * Start Question
      ******************/
     private static void generateQuestions(Realm realm) {
         List<Question> questions = QuestionRepository.init();
-
         realm.beginTransaction();
         for (Question question : questions) {
             try {
                 realm.copyToRealm(question);
-            } catch (RealmPrimaryKeyConstraintException e) {
+            } catch (RealmPrimaryKeyConstraintException ignored) {
             }
         }
         realm.commitTransaction();
     }
 
     public static List<Question> getQuestions(Realm realm) {
-        RealmResults<Question> results = realm.where(Question.class).findAllSorted("id");
+        RealmResults<Question> results = realm.where(Question.class).findAllSorted(Constants.QUESTION_ID);
         List<Question> questions = new ArrayList<>();
         for (Question question : results) {
             questions.add(question);
@@ -202,7 +190,7 @@ public abstract class DataController {
     }
 
     public static List<String> getQuestionsStrings(Realm realm) {
-        RealmResults<Question> results = realm.where(Question.class).findAll();
+        List<Question> results = getQuestions(realm);
         List<String> list = new ArrayList<>();
         for (Question question : results) {
             list.add(question.getQuestion());
@@ -211,7 +199,7 @@ public abstract class DataController {
     }
 
     public static Question getQuestionById(Realm realm, int id) {
-        return realm.where(Question.class).equalTo("id", id).findFirst();
+        return realm.where(Question.class).equalTo(Constants.QUESTION_ID, id).findFirst();
     }
 
     public static void removeAllQuestions(Realm realm) {
@@ -220,7 +208,7 @@ public abstract class DataController {
         results.clear();
         realm.commitTransaction();
     }
-/******************* End Question ******************/
+    /******************* End Question ******************/
 
     /******************
      * Start Valve
@@ -232,23 +220,19 @@ public abstract class DataController {
         for (Valve valve : valves) {
             try {
                 realm.copyToRealm(valve);
-            } catch (RealmPrimaryKeyConstraintException e) {
+            } catch (RealmPrimaryKeyConstraintException ignored) {
             }
         }
         realm.commitTransaction();
     }
 
     public static List<Valve> getValves(Realm realm) {
-        RealmResults<Valve> results = realm.where(Valve.class).findAllSorted("id");
+        RealmResults<Valve> results = realm.where(Valve.class).findAllSorted(Constants.VALVE_ID);
         List<Valve> valves = new ArrayList<>();
         for (Valve valve : results) {
             valves.add(valve);
         }
         return valves;
-    }
-
-    public static Valve getValveById(Realm realm, int id) {
-        return realm.where(Valve.class).equalTo("id", id).findFirst();
     }
 
     public static void removeAllValves(Realm realm) {
@@ -266,9 +250,7 @@ public abstract class DataController {
         realm.commitTransaction();
     }
 
-    /*******************
-     * End Valve
-     ******************/
+    /******************** End Valve ******************/
 
     /*******************
      * Start Glass
@@ -279,7 +261,7 @@ public abstract class DataController {
         for (Glass glass : glasses) {
             try {
                 realm.copyToRealm(glass);
-            } catch (RealmPrimaryKeyConstraintException e) {
+            } catch (RealmPrimaryKeyConstraintException ignored) {
             }
         }
         realm.commitTransaction();
@@ -295,16 +277,14 @@ public abstract class DataController {
     }
 
     public static Glass getGlassesByName(Realm realm, String name) {
-        return realm.where(Glass.class).equalTo("name", name).findFirst();
+        return realm.where(Glass.class).equalTo(Constants.GLASS_NAME, name).findFirst();
     }
 
     public static void removeAllGlasses(Realm realm) {
-        RealmResults<Glass> results = realm.where(Glass.class).findAllSorted("capacity");
+        RealmResults<Glass> results = realm.where(Glass.class).findAllSorted(Constants.GLASS_CAPACITY);
         realm.beginTransaction();
         results.clear();
         realm.commitTransaction();
     }
-    /*******************
-     * End Glass
-     ******************/
+    /******************** End Glass ******************/
 }

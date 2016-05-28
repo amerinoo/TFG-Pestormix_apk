@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 
 /**
  * Created by Albert on 27/01/2016.
@@ -55,10 +54,6 @@ public abstract class CocktailRepository {
         cocktails.add(cocktail);
     }
 
-    public static void generateCocktails(Realm realm) {
-        DataController.generateCocktails(realm);
-    }
-
     public static void addDrink(Cocktail cocktail, Drink drink) {
         cocktail.getDrinks().add(drink);
     }
@@ -70,11 +65,11 @@ public abstract class CocktailRepository {
                 Log.d(TAG, data);
                 cocktail = CocktailRepository.getCocktailFromString(Utils.getRealm(), data);
             } catch (CocktailFormatException e) {
-                Utils.showToast(Utils.getStringResource(R.string.cocktail_format_error));
+                Utils.showToast(R.string.cocktail_format_error);
                 return null;
             }
             if (CocktailRepository.cocktailExist(Utils.getRealm(), cocktail)) {
-                Utils.showToast(Utils.getStringResource(R.string.cocktail_name_already_exist));
+                Utils.showToast(R.string.cocktail_name_already_exist);
             } else {
                 return cocktail;
             }
@@ -103,20 +98,13 @@ public abstract class CocktailRepository {
     }
 
     public static String getDrinksAsString(Cocktail cocktail) {
-        return getDrinksAsString(cocktail, ",");
+        return getDrinksAsString(cocktail, Utils.getStringResource(R.string.default_separator));
     }
 
     public static String getDrinksAsString(Cocktail cocktail, String separator) {
         String drinks = "";
         for (Drink drink : cocktail.getDrinks()) drinks += drink.getName() + separator;
         drinks = drinks.substring(0, drinks.length() - separator.length()); //Delete the last ","
-        return drinks;
-    }
-
-    public static List<Drink> getDrinks(Cocktail cocktail) {
-        RealmList<Drink> results = cocktail.getDrinks();
-        List<Drink> drinks = new ArrayList<>();
-        for (Drink drink : results) drinks.add(drink);
         return drinks;
     }
 

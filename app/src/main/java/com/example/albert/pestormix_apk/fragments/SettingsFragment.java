@@ -14,8 +14,6 @@ import com.example.albert.pestormix_apk.activities.MainActivity;
 import com.example.albert.pestormix_apk.utils.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
 
-import io.realm.Realm;
-
 /**
  * Created by Albert on 24/01/2016.
  */
@@ -123,9 +121,5 @@ public class SettingsFragment extends PreferenceFragment {
 
     public void showToast(int resId) {
         Utils.showToast(resId);
-    }
-
-    private Realm getRealm() {
-        return Utils.getRealm();
     }
 }

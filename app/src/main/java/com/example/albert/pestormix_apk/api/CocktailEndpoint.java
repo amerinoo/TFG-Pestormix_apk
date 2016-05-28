@@ -3,6 +3,7 @@ package com.example.albert.pestormix_apk.api;
 import android.util.Log;
 
 import com.example.albert.pestormix_apk.backend.cocktailApi.model.CocktailBean;
+import com.example.albert.pestormix_apk.utils.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,21 +91,21 @@ public class CocktailEndpoint {
 
     private CocktailBean jsonToCocktailBean(JSONObject jsonObject) throws JSONException {
         CocktailBean bean = new CocktailBean();
-        bean.setName(jsonObject.getString("name"));
-        bean.setDescription(jsonObject.getString("description"));
-        bean.setAlcohol(jsonObject.getBoolean("alcohol"));
-        bean.setDrinks(jsonObject.getString("drinks"));
+        bean.setName(jsonObject.getString(Constants.COCKTAIL_NAME));
+        bean.setDescription(jsonObject.getString(Constants.COCKTAIL_DESCRIPTION));
+        bean.setAlcohol(jsonObject.getBoolean(Constants.COCKTAIL_ALCOHOL));
+        bean.setDrinks(jsonObject.getString(Constants.COCKTAIL_DRINKS));
         return bean;
     }
 
 
     private JSONObject cocktailToJson(String userId, CocktailBean cocktail) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", cocktail.getName());
-        jsonObject.put("userId", userId);
-        jsonObject.put("description", cocktail.getDescription());
-        jsonObject.put("alcohol", cocktail.getAlcohol());
-        jsonObject.put("drinks", cocktail.getDrinks());
+        jsonObject.put(Constants.COCKTAIL_NAME, cocktail.getName());
+        jsonObject.put(Constants.COCKTAIL_USER_ID, userId);
+        jsonObject.put(Constants.COCKTAIL_DESCRIPTION, cocktail.getDescription());
+        jsonObject.put(Constants.COCKTAIL_ALCOHOL, cocktail.getAlcohol());
+        jsonObject.put(Constants.COCKTAIL_DRINKS, cocktail.getDrinks());
         return jsonObject;
     }
 

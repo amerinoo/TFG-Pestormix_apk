@@ -26,7 +26,8 @@ public abstract class Utils {
     public static String getStringResource(int id) {
         return PestormixApplication.getContext().getString(id);
     }
-    public static final int getColorResource(Context context, int id) {
+
+    public static int getColorResource(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= 23) {
             return ContextCompat.getColor(context, id);
@@ -34,9 +35,11 @@ public abstract class Utils {
             return context.getResources().getColor(id);
         }
     }
+
     public static boolean getBooleanPreference(String key, Boolean defValue) {
         return PestormixApplication.getContext().getBoolean(key, defValue);
     }
+
     public static void putBooleanPreference(String key, Boolean value) {
         PestormixApplication.getContext().putBoolean(key, value);
     }
@@ -45,15 +48,13 @@ public abstract class Utils {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
+        return Base64.encodeToString(b, Base64.DEFAULT);
     }
 
     public static Bitmap stringToBitmap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
+            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         } catch (Exception e) {
             e.getMessage();
             return null;
@@ -72,4 +73,7 @@ public abstract class Utils {
         toast.show();
     }
 
+    public static int getIntegerResource(int id) {
+        return PestormixApplication.getContext().getResources().getInteger(id);
+    }
 }

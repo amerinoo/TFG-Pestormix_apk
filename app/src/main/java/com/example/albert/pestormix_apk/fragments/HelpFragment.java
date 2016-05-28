@@ -26,8 +26,7 @@ public class HelpFragment extends PestormixMasterFragment {
     private View mainView;
 
     public static HelpFragment getInstance() {
-        HelpFragment fragment = new HelpFragment();
-        return fragment;
+        return new HelpFragment();
     }
 
     @Nullable

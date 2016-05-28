@@ -21,6 +21,34 @@ public abstract class Constants {
     //Network
     public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";
     public static final String NETWORK_RASPBERRY_PORT = "1110";
+    public static final String NETWORK_GLASS = "glass";
+    public static final String NETWORK_USE = "use";
+    public static final String NETWORK_ALCOHOL = "alcohol";
+    public static final String NETWORK_VALVE = "v%s";
+
+    //Cocktail fields
+    public static final String COCKTAIL_NAME = "name";
+    public static final String COCKTAIL_USER_ID = "userId";
+    public static final String COCKTAIL_DESCRIPTION = "description";
+    public static final String COCKTAIL_ALCOHOL = "alcohol";
+    public static final String COCKTAIL_DRINKS = "drinks";
+
+    //Drink fields
+    public static final String DRINK_NAME = "name";
+
+    //Question fields
+    public static final String QUESTION_ID = "id";
+
+    //Valve fields
+    public static final String VALVE_ID = "id";
+
+    //Glass fields
+    public static final String GLASS_NAME = "name";
+    public static final String GLASS_CAPACITY = "capacity";
+
+    //Backend type
+    public static final String BACKEND_HEROKU = "Heroku";
+    public static final String BACKEND_GOOGLE = "Google";
 
     //Intent extras
     public static final String EXTRA_IS_TUTORIAL = "is_tutorial";
@@ -43,5 +71,4 @@ public abstract class Constants {
     //Others
     public static final String DEFAULT_USER_ID = "1";
     public static final String DEFAULT_USER_NAME = "Default";
-
 }

@@ -14,8 +14,7 @@ import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
  */
 public class AboutAuthorFragment extends PestormixMasterFragment {
     public static AboutAuthorFragment getInstance() {
-        AboutAuthorFragment fragment = new AboutAuthorFragment();
-        return fragment;
+        return new AboutAuthorFragment();
     }
 
     @Nullable

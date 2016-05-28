@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.enums.CreateCocktailType;
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
 
 public class GiveCocktailNameActivity extends PestormixMasterActivity {
@@ -39,7 +39,8 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         final EditText description = (EditText) findViewById(R.id.description);
         Button save = (Button) findViewById(R.id.save);
         Button cancel = (Button) findViewById(R.id.cancel);
-        createCocktailType = (CreateCocktailType) getIntent().getSerializableExtra(Constants.EXTRA_CREATE_COCKTAIL_TYPE);
+        createCocktailType = (CreateCocktailType) getIntent()
+                .getSerializableExtra(Constants.EXTRA_CREATE_COCKTAIL_TYPE);
         final Cocktail cocktail = new Cocktail();
         extraName = getIntent().getStringExtra(Constants.EXTRA_COCKTAIL_NAME);
         name.setText(extraName);
@@ -100,7 +101,7 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
             showToast(R.string.give_name_mandatory);
         } else {
             if (CocktailRepository.cocktailExist(getRealm(), cocktail)) {
-                showToast(getString(R.string.cocktail_name_already_exist));
+                showToast(R.string.cocktail_name_already_exist);
             } else {
                 CocktailRepository.addCocktailToDB(getRealm(), cocktail);
                 goMain();
@@ -112,8 +113,9 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         if (!checkFields(cocktail)) {
             showToast(R.string.give_name_mandatory);
         } else {
-            if (!extraName.equals(cocktail.getName()) && CocktailRepository.cocktailExist(getRealm(), cocktail)) {
-                showToast(getString(R.string.cocktail_name_already_exist));
+            if (!extraName.equals(cocktail.getName())
+                    && CocktailRepository.cocktailExist(getRealm(), cocktail)) {
+                showToast(R.string.cocktail_name_already_exist);
             } else {
                 CocktailRepository.updateCocktail(getRealm(), cocktail, extraName);
                 goMain();

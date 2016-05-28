@@ -1,8 +1,10 @@
 package com.example.albert.pestormix_apk.repositories;
 
+import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Valve;
+import com.example.albert.pestormix_apk.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ import io.realm.Realm;
 public abstract class ValveRepository {
     public static List<Valve> init() {
         List<Valve> valves = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < Utils.getIntegerResource(R.integer.number_of_valves); i++) {
             Valve valve = new Valve();
             valve.setId(i);
             valve.setDrinkPosition(i);

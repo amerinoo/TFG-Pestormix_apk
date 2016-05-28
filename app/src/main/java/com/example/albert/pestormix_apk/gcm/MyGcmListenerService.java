@@ -20,7 +20,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        sendNotification("You are recived this notification from " + from + "\n" + data.getString("message"));
+        sendNotification(data.getString("message"));
     }
 
     private void sendNotification(String message) {

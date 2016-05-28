@@ -16,7 +16,6 @@
             android:gravity="center|top"
             android:orientation="vertical">
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,6 +82,5 @@
                 android:text="@string/cancel" />
 
         </LinearLayout>
-
     </RelativeLayout>
 </LinearLayout>

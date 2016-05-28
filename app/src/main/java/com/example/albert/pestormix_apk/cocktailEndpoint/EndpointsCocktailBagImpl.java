@@ -2,6 +2,7 @@ package com.example.albert.pestormix_apk.cocktailEndpoint;
 
 import android.util.Log;
 
+import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
 import com.example.albert.pestormix_apk.backend.cocktailApi.CocktailApi;
 import com.example.albert.pestormix_apk.backend.cocktailApi.model.CocktailBean;
@@ -9,6 +10,7 @@ import com.example.albert.pestormix_apk.backend.messaging.Messaging;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormix_apk.utils.Utils;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
@@ -56,7 +58,10 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
     public void pushToRemote(String userId) {
         try {
             cocktailApi.deleteAllCocktails(userId).execute();
-            messaging.messagingEndpoint().sendMessage("PushToRemote by " + pestormixApplication.getString(Constants.PREFERENCES_USER_NAME, "Default")).execute();
+            messaging.messagingEndpoint().sendMessage(String.format(
+                    Utils.getStringResource(R.string.push_to_remote),
+                    pestormixApplication.getString(Constants.PREFERENCES_USER_NAME,
+                            Utils.getStringResource(R.string.default_only)))).execute();
             for (CocktailBean cocktailBean : cocktailBeans) {
                 cocktailApi.insertCocktail(userId, cocktailBean).execute();
             }
@@ -70,7 +75,10 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
     public List<CocktailBean> pullFromRemote(String userId) {
         List<CocktailBean> cocktails = null;
         try {
-            messaging.messagingEndpoint().sendMessage("PullFromRemote by " + pestormixApplication.getString(Constants.PREFERENCES_USER_NAME, "Default")).execute();
+            messaging.messagingEndpoint().sendMessage(String.format(
+                    Utils.getStringResource(R.string.pull_from_remote),
+                    pestormixApplication.getString(Constants.PREFERENCES_USER_NAME,
+                            Utils.getStringResource(R.string.default_only)))).execute();
             cocktails = cocktailApi.getCocktails(userId).execute().getItems();
         } catch (IOException e) {
             Log.e(EndpointsCocktailBagImpl.class.getSimpleName(), "Error when loading cocktailBeans", e);

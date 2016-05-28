@@ -24,10 +24,6 @@ public abstract class QuestionRepository {
         return questions;
     }
 
-    public static List<Question> getQuestions(Realm realm) {
-        return DataController.getQuestions(realm);
-    }
-
     public static List<String> getQuestionsStrings(Realm realm) {
         return DataController.getQuestionsStrings(realm);
     }

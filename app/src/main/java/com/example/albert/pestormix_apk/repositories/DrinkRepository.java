@@ -49,7 +49,7 @@ public abstract class DrinkRepository {
 
     public static List<Drink> getDrinksFromString(Realm realm, String drinksString) {
         List<Drink> drinks = new ArrayList<>();
-        for (String name : drinksString.split(",")) {
+        for (String name : drinksString.split(Utils.getStringResource(R.string.default_separator))) {
             drinks.add(getDrinkByName(realm, name));
         }
         return drinks;

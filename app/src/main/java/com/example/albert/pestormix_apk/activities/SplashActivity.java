@@ -41,11 +41,12 @@ public class SplashActivity extends PestormixMasterActivity implements Animation
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                boolean sentToken = ((PestormixApplication) getApplication()).getBoolean(Constants.PREFERENCES_SENT_TOKEN_TO_SERVER_KEY, false);
+                boolean sentToken = ((PestormixApplication) getApplication())
+                        .getBoolean(Constants.PREFERENCES_SENT_TOKEN_TO_SERVER_KEY, false);
                 if (sentToken) {
                     initApp();
                 } else {
-                    showToast("I need network the first time, sorry");
+                    showToast(R.string.network_first_time);
                     finish();
                 }
             }

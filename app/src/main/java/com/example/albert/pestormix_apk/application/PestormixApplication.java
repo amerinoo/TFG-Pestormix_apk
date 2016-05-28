@@ -293,7 +293,8 @@ public class PestormixApplication extends Application {
         }
 
         public void isConnectingToInternet(Context context) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager connectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
             if (activeNetwork != null) {
                 if (checkNetworkInfo(activeNetwork)) {

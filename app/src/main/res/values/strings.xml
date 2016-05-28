@@ -15,13 +15,22 @@
     <string name="information">Information</string>
     <string name="activate_nfc">Do you want to activate the NFC?</string>
     <string name="nfc_disabled">NFC is disabled</string>
-    <string name="send_ok">\u0020has been sent successfully</string>
-    <string name="send_error">"Failed to send "</string>
+    <string name="send_ok">%s has been sent successfully</string>
+    <string name="send_error">"Failed to send %s"</string>
+    <string name="default_only">Default</string>
+    <string name="default_separator">,</string>
 
     <!-- Tutorial -->
     <string name="tutorial_continue">Continue</string>
-    <string name="tutorial_welcome">Welcome to the Pestormix application. This is a short tutorial to make adjustments to start the application. First you must configure the setting valves which product in each one. The number of each valve you can see in the tanks provided in the machine. Once you have chosen the products of the four valves, you can proceed to the next step of the tutorial.</string>
-    <string name="tutorial_all_ready">Congratulation! You have completed the basic configuration to operate. From now you can start creating your custom cocktails to order them at any time. Good luck!</string>
+    <string name="tutorial_welcome">Welcome to the Pestormix application. This is a short tutorial
+        to make adjustments to start the application. First you must configure the setting valves
+        which product in each one. The number of each valve you can see in the tanks provided in the
+        machine. Once you have chosen the products of the four valves, you can proceed to the next
+        step of the tutorial.</string>
+    <string name="tutorial_all_ready">Congratulation! You have completed the basic configuration to
+        operate. From now you can start creating your custom cocktails to order them at any time.
+        Good luck!</string>
+    <string name="network_first_time">I need network the first time, sorry</string>
 
     <!-- Cocktail -->
     <string name="option_1">Details</string>
@@ -46,6 +55,8 @@
     <string name="manually">Manually</string>
     <string name="qr_code">QR code</string>
     <string name="nfc_tag">NFC tag</string>
+    <string name="valid_drinks">You have to say valid drinks</string>
+    <string name="speech_not_supported">Speech not supported</string>
 
     <!-- Manually-->
     <string name="select_drink">Select a drink</string>
@@ -59,14 +70,17 @@
     <string name="cocktail_description">Cocktail description (Optional)</string>
     <string name="save">Save</string>
     <string name="are_you_sure">Are you sure?</string>
-    <string name="cocktail_removed_restart_creation">The cocktail will be removed and you will have to re-start the creation</string>
-    <string name="cocktail_not_updated_restart_edition">The cocktail won\'t be edited and you will have to re-start the edition</string>
+    <string name="cocktail_removed_restart_creation">The cocktail will be removed and you will have
+        to re-start the creation</string>
+    <string name="cocktail_not_updated_restart_edition">The cocktail won\'t be edited and you will
+        have to re-start the edition</string>
     <string name="cocktail_name_already_exist">A cocktail with this name already exists</string>
     <string name="give_name_mandatory">You have to give a name for it</string>
     <string name="cocktail_format_error">Cocktail\'s format is invalid</string>
 
     <!-- About the author-->
-    <string name="about_me">Albert Eduard Merino Pulido\nEscola Politècnica Superior (UdL)\nFinal Project\nCourse 2015–2016</string>
+    <string name="about_me">Albert Eduard Merino Pulido\nEscola Politècnica Superior (UdL)\nFinal
+        Project\nCourse 2015–2016</string>
 
     <!-- Settings -->
     <string name="configure_valves">Configure the valves</string>
@@ -84,7 +98,14 @@
     <string name="PREFERENCE_MUSE" translatable="false">preference_muse</string>
     <string name="PREFERENCE_LOGIN" translatable="false">preference_login</string>
     <string name="PREFERENCE_VALVES" translatable="false">preference_valves</string>
-    <string name="PREFERENCE_HEROKU" translatable="false">preference_herokuu</string>
+    <string name="PREFERENCE_HEROKU" translatable="false">preference_heroku</string>
     <string name="glass_name">Glass %d  cl</string>
+    <string name="error_login">Error with login</string>
+
+    <!-- Endpoints -->
+    <string name="pull_from_remote">Google PullFromRemote by %s</string>
+    <string name="push_to_remote">Google PushToRemote by %s</string>
+    <string name="heroku_push_to_remote">Heroku PushToRemote by %s</string>
+    <string name="heroku_pull_from_remote">Heroku PullFromRemote by %s</string>
 
 </resources>

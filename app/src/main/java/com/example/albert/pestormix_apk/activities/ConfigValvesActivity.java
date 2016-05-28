@@ -159,7 +159,8 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         onClick(valveTabs.get(lastSelected));
         Drink drink;
         for (int i = 0; i < valveTabs.size(); i++) {
-            drink = DrinkRepository.getDrinkByName(getRealm(), getDrinkName((Integer) valveTabs.get(i).getTag()));
+            drink = DrinkRepository.getDrinkByName(getRealm(),
+                    getDrinkName((Integer) valveTabs.get(i).getTag()));
             int position = (Integer) valveTabs.get(i).getTag();
             ValveRepository.updateValve(getRealm(), valves.get(i), drink, position);
         }

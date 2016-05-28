@@ -3,4 +3,5 @@
     <integer name="activity_animation">500</integer>
     <integer name="card_flip_time_full">500</integer>
     <integer name="card_flip_time_half">250</integer>
+    <integer name="number_of_valves">4</integer>
 </resources>

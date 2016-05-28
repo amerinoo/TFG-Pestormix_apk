@@ -194,7 +194,6 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                 String name = glassesNames.get(position);
                 Glass glass = GlassRepository.getGlasseByName(getRealm(), name);
                 glassCapacity = glass.getCapacity();
-                showToast(String.valueOf(glass.getCapacity()));
             }
 
             @Override
@@ -223,9 +222,9 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                 List<Valve> valves = ValveRepository.getValves(getRealm());
                 Boolean sended = NetworkController.send(valves, cocktail, glassCapacity);
                 if (sended) {
-                    showToast(cocktail.getName() + getString(R.string.send_ok));
+                    showToast(String.format(getString(R.string.send_ok), cocktail.getName()));
                 } else {
-                    showToast(getString(R.string.send_error) + cocktail.getName());
+                    showToast(String.format(getString(R.string.send_error), cocktail.getName()));
                 }
                 dialog.dismiss();
             }
@@ -390,11 +389,11 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         for (Drink drink : drinks) {
             if (order.contains(drink.getName().toLowerCase())) {
                 oneOrMoreDrinks = true;
-                cocktailBuilder.append(",").append(drink.getName());
+                cocktailBuilder.append(getString(R.string.default_separator)).append(drink.getName());
             }
         }
         if (oneOrMoreDrinks) processData(cocktailBuilder.toString());
-        else showToast("You have to say valid drinks");
+        else showToast(R.string.valid_drinks);
     }
 
     /**
@@ -408,7 +407,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
         try {
             startActivityForResult(intent, ActivityRequestCodes.CODE_SPEECH_INPUT);
         } catch (ActivityNotFoundException a) {
-            showToast("Speecho not supported");
+            showToast(R.string.speech_not_supported);
         }
     }
 }

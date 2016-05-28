@@ -39,15 +39,15 @@ public abstract class NetworkController {
     private static String getJsonAsString(List<Valve> valves, String cocktailDrinks, int glassName) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("glass", glassName);
+            jsonObject.put(Constants.NETWORK_GLASS, glassName);
         } catch (JSONException ignored) {
         }
         for (Valve valve : valves) {
             try {
                 JSONObject valveObject = new JSONObject();
-                valveObject.put("use", cocktailDrinks.contains(valve.getDrink().getName()));
-                valveObject.put("alcohol", valve.getDrink().isAlcohol());
-                jsonObject.put("v" + valve.getId(), valveObject);
+                valveObject.put(Constants.NETWORK_USE, cocktailDrinks.contains(valve.getDrink().getName()));
+                valveObject.put(Constants.NETWORK_ALCOHOL, valve.getDrink().isAlcohol());
+                jsonObject.put(String.format(Constants.NETWORK_VALVE, valve.getId()), valveObject);
             } catch (JSONException ignored) {
             }
         }

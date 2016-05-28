@@ -55,7 +55,6 @@ public class ScreenSlidePageFragment extends PestormixMasterFragment implements 
                     .beginTransaction()
                     .replace(R.id.container, cardFrontFragment)
                     .commit();
-
         }
     }
 

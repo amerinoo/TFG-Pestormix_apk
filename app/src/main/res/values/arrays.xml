@@ -4,6 +4,7 @@
         <item>Heroku Backend</item>
         <item>Google Backend</item>
     </string-array>
+
     <string-array name="backends_values">
         <item>Heroku</item>
         <item>Google</item>
