@@ -79,7 +79,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         for (int i = 0; i < valveTabs.size(); i++) {
             valveTabs.get(i).setTag(valves.get(i).getDrinkPosition());
             valveTabs.get(i).setOnClickListener(this);
-            valveTabsName.get(i).setText(getDrinkName(valves.get(i).getDrinkPosition()));
+            valveTabsName.get(i).setText(getTitle(valves.get(i).getDrinkPosition()));
         }
 
         onClick(valveTabs.get(0));
@@ -118,14 +118,14 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
             valveTabsName.get(lastSelected).setTextColor(Utils.getColorResource(this, R.color.white));
             if (lastItem != lastCurrentItem) {
                 valveTabs.get(lastSelected).setTag(lastCurrentItem);
-                valveTabsName.get(lastSelected).setText(getDrinkName(lastCurrentItem));
+                valveTabsName.get(lastSelected).setText(getTitle(lastCurrentItem));
                 setIsSaved(false);
             }
         }
         v.setSelected(true);
         int currentItem = (int) v.getTag();
         mPager.setCurrentItem(currentItem);
-        valveTabsName.get(position).setText(getDrinkName(currentItem));
+        valveTabsName.get(position).setText(getTitle(currentItem));
         valveTabsName.get(position).setTextColor(Utils.getColorResource(this, R.color.black));
         lastSelected = position;
 
@@ -159,17 +159,20 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
         onClick(valveTabs.get(lastSelected));
         Drink drink;
         for (int i = 0; i < valveTabs.size(); i++) {
-            drink = DrinkRepository.getDrinkByName(getRealm(),
-                    getDrinkName((Integer) valveTabs.get(i).getTag()));
             int position = (Integer) valveTabs.get(i).getTag();
+            drink = getDrink(position);
             ValveRepository.updateValve(getRealm(), valves.get(i), drink, position);
         }
         setIsSaved(true);
         showToast(R.string.save_completed);
     }
 
-    private String getDrinkName(int position) {
+    private String getTitle(int position) {
         return (String) mPagerAdapter.getPageTitle(position);
+    }
+
+    private Drink getDrink(int position) {
+        return ((ScreenSlidePagerAdapter) mPagerAdapter).getItemByPosition(position);
     }
 
     private void cancel() {

@@ -141,7 +141,7 @@ public class ManuallyActivity extends PestormixMasterActivity {
     }
 
     private void goGiveCocktailName(Cocktail cocktail) {
-        String drinks = CocktailRepository.getDrinksAsString(cocktail);
+        String drinks = CocktailRepository.getDrinksAsString(cocktail, true);
         Intent intent = new Intent(this, GiveCocktailNameActivity.class);
         intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, name);
         intent.putExtra(Constants.EXTRA_COCKTAIL_DESCRIPTION, description);
@@ -156,7 +156,7 @@ public class ManuallyActivity extends PestormixMasterActivity {
         } else {
             DetailCocktailFragment fragment = (DetailCocktailFragment) getFragmentManager()
                     .findFragmentById(R.id.detail_content);
-            String drinks = CocktailRepository.getDrinksAsString(cocktail);
+            String drinks = CocktailRepository.getDrinksAsString(cocktail, true);
             if (fragment == null) {
                 Intent intent = new Intent(this, DetailCocktailActivity.class);
                 intent.putExtra(Constants.EXTRA_COCKTAIL_NAME, name);

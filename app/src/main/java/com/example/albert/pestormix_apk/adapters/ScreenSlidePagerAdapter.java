@@ -42,4 +42,9 @@ public class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return drinks.get(position).getName();
     }
+
+    public Drink getItemByPosition(int position) {
+        return drinks.get(position);
+    }
+
 }

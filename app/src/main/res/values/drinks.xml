@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Drinks' ids-->
+    <string name="drink_water_id" translatable="false">Water</string>
+    <string name="drink_coca_cola_id" translatable="false">Coca Cola</string>
+    <string name="drink_lemonade_id" translatable="false">Lemonade</string>
+    <string name="drink_orangeade_id" translatable="false">Orangeade</string>
+    <string name="drink_ron_id" translatable="false">Ron</string>
+
     <!--Drinks' names-->
     <string name="drink_water">Water</string>
     <string name="drink_coca_cola" translatable="false">Coca Cola</string>
     <string name="drink_lemonade">Lemonade</string>
     <string name="drink_orangeade">Orangeade</string>
     <string name="drink_ron" translatable="false">Ron</string>
+
 
     <!--Drinks' description-->
     <string name="drink_water_description">Water description</string>
@@ -21,6 +29,7 @@
     <string name="cocktail_lemonade">Lemonade</string>
     <string name="cocktail_orangeade">Orangeade</string>
     <string name="cocktail_cuba_libre" translatable="false">Cuba libre</string>
+
 
     <!-- Cocktails's description-->
     <string name="cocktail_water_description">Water description</string>

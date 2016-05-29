@@ -384,16 +384,20 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
 
     private void processSpeechOrder(String order) {
         List<Drink> drinks = DrinkRepository.getDrinks(getRealm());
-        StringBuilder cocktailBuilder = new StringBuilder("Pestormix,Speech Cocktail,");
+        StringBuilder cocktailBuilder = new StringBuilder("Pestormix,Speech Cocktail,Speech Cocktail Description");
         boolean oneOrMoreDrinks = false;
         for (Drink drink : drinks) {
-            if (order.contains(drink.getName().toLowerCase())) {
+            if (isContains(order, drink)) {
                 oneOrMoreDrinks = true;
-                cocktailBuilder.append(getString(R.string.default_separator)).append(drink.getName());
+                cocktailBuilder.append(getString(R.string.default_separator)).append(drink.getId());
             }
         }
         if (oneOrMoreDrinks) processData(cocktailBuilder.toString());
         else showToast(R.string.valid_drinks);
+    }
+
+    private boolean isContains(String order, Drink drink) {
+        return order.contains(drink.getName().toLowerCase()) || order.contains(drink.getId().toLowerCase());
     }
 
     /**

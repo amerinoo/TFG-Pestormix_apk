@@ -49,7 +49,7 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
             cocktailBean.setName(cocktail.getName());
             cocktailBean.setDescription(cocktail.getDescription());
             cocktailBean.setAlcohol(cocktail.isAlcohol());
-            cocktailBean.setDrinks(CocktailRepository.getDrinksAsString(cocktail));
+            cocktailBean.setDrinks(CocktailRepository.getDrinksAsString(cocktail,true));
             cocktailBeans.add(cocktailBean);
         }
     }

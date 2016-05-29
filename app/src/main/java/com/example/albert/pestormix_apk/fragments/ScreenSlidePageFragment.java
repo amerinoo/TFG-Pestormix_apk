@@ -25,7 +25,7 @@ public class ScreenSlidePageFragment extends PestormixMasterFragment implements 
     public static ScreenSlidePageFragment newInstance(Drink drink) {
         ScreenSlidePageFragment fragment = new ScreenSlidePageFragment();
         Bundle args = new Bundle();
-        args.putString(Constants.EXTRA_DRINK_NAME, drink.getName());
+        args.putString(Constants.EXTRA_DRINK_ID, drink.getId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,8 +35,8 @@ public class ScreenSlidePageFragment extends PestormixMasterFragment implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String nameDrink = getArguments().getString(Constants.EXTRA_DRINK_NAME);
-        drink = DrinkRepository.getDrinkByName(getRealm(), nameDrink);
+        String nameId = getArguments().getString(Constants.EXTRA_DRINK_ID);
+        drink = DrinkRepository.getDrinkById(getRealm(), nameId);
     }
 
     @Override

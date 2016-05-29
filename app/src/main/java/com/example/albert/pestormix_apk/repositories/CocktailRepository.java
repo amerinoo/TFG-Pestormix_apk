@@ -27,19 +27,17 @@ public abstract class CocktailRepository {
     public static List<Cocktail> init(Realm realm) {
         List<Cocktail> cocktails = new ArrayList<>();
         generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_water),
-                Utils.getStringResource(R.string.cocktail_water_description), Utils.getStringResource(R.string.cocktail_water));
+                Utils.getStringResource(R.string.cocktail_water_description), Utils.getStringResource(R.string.drink_water_id));
         generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_coca_cola),
                 Utils.getStringResource(R.string.cocktail_coca_cola_description),
-                Utils.getStringResource(R.string.drink_coca_cola));
+                Utils.getStringResource(R.string.drink_coca_cola_id));
         generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_lemonade),
-                Utils.getStringResource(R.string.cocktail_lemonade_description),
-                Utils.getStringResource(R.string.drink_lemonade));
+                Utils.getStringResource(R.string.cocktail_lemonade_description), Utils.getStringResource(R.string.drink_lemonade_id));
         generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_orangeade),
-                Utils.getStringResource(R.string.cocktail_orangeade_description),
-                Utils.getStringResource(R.string.drink_orangeade));
+                Utils.getStringResource(R.string.cocktail_orangeade_description), Utils.getStringResource(R.string.drink_orangeade_id));
         generateCocktail(realm, cocktails, Utils.getStringResource(R.string.cocktail_cuba_libre),
                 Utils.getStringResource(R.string.cocktail_cuba_libre_description),
-                Utils.getStringResource(R.string.drink_coca_cola) + "," + Utils.getStringResource(R.string.drink_ron));
+                Utils.getStringResource(R.string.drink_coca_cola_id) + Utils.getStringResource(R.string.default_separator) + Utils.getStringResource(R.string.drink_ron_id));
         return cocktails;
     }
 
@@ -98,12 +96,35 @@ public abstract class CocktailRepository {
     }
 
     public static String getDrinksAsString(Cocktail cocktail) {
-        return getDrinksAsString(cocktail, Utils.getStringResource(R.string.default_separator));
+        return getDrinksAsString(cocktail, false);
+    }
+
+    public static List<Drink> getDrinks(Cocktail cocktail) {
+        List<Drink> drinks = new ArrayList<>();
+        for (Drink drink : cocktail.getDrinks()) {
+            drinks.add(drink);
+        }
+        return drinks;
+    }
+
+    public static String getDrinksAsString(Cocktail cocktail, boolean backend) {
+        return getDrinksAsString(getDrinks(cocktail), backend, Utils.getStringResource(R.string.default_separator));
     }
 
     public static String getDrinksAsString(Cocktail cocktail, String separator) {
+        return getDrinksAsString(getDrinks(cocktail), separator);
+    }
+
+    public static String getDrinksAsString(List<Drink> drinkList, String separator) {
+        return getDrinksAsString(drinkList, false, separator);
+    }
+
+    public static String getDrinksAsString(List<Drink> drinkList, boolean backend, String separator) {
         String drinks = "";
-        for (Drink drink : cocktail.getDrinks()) drinks += drink.getName() + separator;
+        for (Drink drink : drinkList) {
+            String s = backend ? drink.getId() : drink.getName();
+            drinks += s + separator;
+        }
         drinks = drinks.substring(0, drinks.length() - separator.length()); //Delete the last ","
         return drinks;
     }
@@ -166,7 +187,6 @@ public abstract class CocktailRepository {
         Intent intent = new Intent(Constants.ACTION_START_SYNC_TO_REMOTE);
         PestormixApplication.getContext().sendBroadcast(intent);
     }
-
 
     public static void restartCocktails(Realm realm) {
         removeAllCocktails(realm);

@@ -8,12 +8,15 @@ import io.realm.RealmObject;
  * Created by Albert on 25/01/2016.
  */
 public class Drink extends RealmObject {
+    private String id;
     private String name;
     private String description;
     private boolean alcohol;
     private int image;
+//    private int color = Color.argb(alpha,red,green,blue);
 
     public Drink() {
+        this.id = "";
         this.name = "";
         this.description = "";
         this.alcohol = false;
@@ -50,5 +53,13 @@ public class Drink extends RealmObject {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

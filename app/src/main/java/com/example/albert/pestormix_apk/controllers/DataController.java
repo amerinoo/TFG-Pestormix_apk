@@ -151,6 +151,10 @@ public abstract class DataController {
         realm.commitTransaction();
     }
 
+    public static Drink getDrinkById(Realm realm, String id) {
+        return realm.where(Drink.class).equalTo(Constants.DRINK_ID, id).findFirst();
+    }
+
     public static Drink getDrinkByName(Realm realm, String name) {
         return realm.where(Drink.class).equalTo(Constants.DRINK_NAME, name).findFirst();
     }

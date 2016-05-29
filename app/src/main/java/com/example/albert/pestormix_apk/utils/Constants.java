@@ -19,7 +19,8 @@ public abstract class Constants {
     public static final String PREFERENCES_NETWORK_CONNECTED = "network_connected";
 
     //Network
-    public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";
+    public static final String NETWORK_RASPBERRY_IP = "192.168.1.100";
+//    public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";
     public static final String NETWORK_RASPBERRY_PORT = "1110";
     public static final String NETWORK_GLASS = "glass";
     public static final String NETWORK_USE = "use";
@@ -34,6 +35,7 @@ public abstract class Constants {
     public static final String COCKTAIL_DRINKS = "drinks";
 
     //Drink fields
+    public static final String DRINK_ID = "id";
     public static final String DRINK_NAME = "name";
 
     //Question fields
@@ -58,7 +60,7 @@ public abstract class Constants {
     public static final String EXTRA_COCKTAIL_DRINKS = "cocktail_drinks";
     public static final String EXTRA_CREATE_COCKTAIL_TYPE = "create_coctail_type";
     public static final String EXTRA_QUESTION_ID = "question_id";
-    public final static String EXTRA_DRINK_NAME = "drink_name";
+    public final static String EXTRA_DRINK_ID = "drink_name";
 
     //Broadcast actions
     public static final String ACTION_REGISTRATION_COMPLETE = "registrationComplete";

@@ -35,6 +35,7 @@ public class Cocktail extends RealmObject {
     }
 
     public void setDescription(String description) {
+        if (description == null) description = "";
         this.description = description;
     }
 
