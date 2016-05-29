@@ -50,14 +50,10 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cocktail.setName(name.getText().toString());
-                cocktail.setDescription(description.getText().toString());
-
-                if (createCocktailType == CreateCocktailType.NEW) {
-                    saveCocktail(cocktail);
-                } else if (createCocktailType == CreateCocktailType.EDIT) {
-                    updateCocktail(cocktail);
-                }
+                cocktail.setName(name.getText().toString().trim());
+                cocktail.setDescription(description.getText().toString().trim());
+                if (createCocktailType == CreateCocktailType.NEW) saveCocktail(cocktail);
+                else if (createCocktailType == CreateCocktailType.EDIT) updateCocktail(cocktail);
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -126,5 +122,4 @@ public class GiveCocktailNameActivity extends PestormixMasterActivity {
     private boolean checkFields(Cocktail cocktail) {
         return !cocktail.getName().equals("");
     }
-
 }
