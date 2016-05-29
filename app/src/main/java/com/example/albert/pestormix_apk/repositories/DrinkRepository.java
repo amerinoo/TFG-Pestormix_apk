@@ -23,7 +23,7 @@ public abstract class DrinkRepository {
                 Utils.getStringResource(R.string.drink_coca_cola_description), false, R.drawable.cocacola));
         drinks.add(getDrink(Utils.getStringResource(R.string.drink_lemonade_id), Utils.getStringResource(R.string.drink_lemonade),
                 Utils.getStringResource(R.string.drink_lemonade_description), false, R.drawable.limonada));
-        drinks.add(getDrink(Utils.getStringResource(R.string.drink_lemonade_id), Utils.getStringResource(R.string.drink_orangeade),
+        drinks.add(getDrink(Utils.getStringResource(R.string.drink_orangeade_id), Utils.getStringResource(R.string.drink_orangeade),
                 Utils.getStringResource(R.string.drink_orangeade_description), false, R.drawable.naranjada));
         drinks.add(getDrink(Utils.getStringResource(R.string.drink_ron_id), Utils.getStringResource(R.string.drink_ron),
                 Utils.getStringResource(R.string.drink_ron_description), true, R.drawable.ron_barcelo));
