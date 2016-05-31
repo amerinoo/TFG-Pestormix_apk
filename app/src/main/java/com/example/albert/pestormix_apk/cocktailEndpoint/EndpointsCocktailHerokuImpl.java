@@ -57,10 +57,7 @@ public class EndpointsCocktailHerokuImpl implements CocktailBag {
         }
         List<Valve> valves = ValveRepository.getValves(pestormixApplication.getRealm());
         valveBeans.clear();
-        for (Valve valve : valves) {
-            ValveBean valveBean = ValveRepository.toValveBean(valve);
-            valveBeans.add(valveBean);
-        }
+        valveBeans =  ValveRepository.getValvesAsValvesBeen(valves);
     }
 
     @Override

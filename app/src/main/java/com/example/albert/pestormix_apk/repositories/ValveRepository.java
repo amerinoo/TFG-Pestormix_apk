@@ -42,4 +42,13 @@ public abstract class ValveRepository {
         valveBean.setDrinkAlcohol(valve.isDrinkAlcohol());
         return valveBean;
     }
+
+
+    public static List<ValveBean> getValvesAsValvesBeen(List<Valve> valves) {
+        List<ValveBean> valveBeen = new ArrayList<>();
+        for (Valve valve : valves) {
+            valveBeen.add(toValveBean(valve));
+        }
+        return valveBeen;
+    }
 }

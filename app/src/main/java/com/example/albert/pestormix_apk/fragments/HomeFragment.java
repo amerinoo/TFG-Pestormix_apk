@@ -33,6 +33,7 @@ import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ScanQrActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
+import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
 import com.example.albert.pestormix_apk.controllers.NetworkController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
@@ -220,7 +221,9 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
             @Override
             public void onClick(View v) {
                 List<Valve> valves = ValveRepository.getValves(getRealm());
-                Boolean sended = NetworkController.send(valves, cocktail, glassCapacity);
+                List<ValveBean> valvesBeen = ValveRepository.getValvesAsValvesBeen(valves);
+                String cocktailDrinks = CocktailRepository.getDrinksAsString(cocktail);
+                Boolean sended = NetworkController.send(valvesBeen, cocktailDrinks, glassCapacity);
                 if (sended) {
                     showToast(String.format(getString(R.string.send_ok), cocktail.getName()));
                 } else {

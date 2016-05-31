@@ -3,9 +3,7 @@ package com.example.albert.pestormix_apk.controllers;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.albert.pestormix_apk.models.Cocktail;
-import com.example.albert.pestormix_apk.models.Valve;
-import com.example.albert.pestormix_apk.repositories.CocktailRepository;
+import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
 import com.example.albert.pestormix_apk.utils.Constants;
 
 import org.json.JSONException;
@@ -23,8 +21,7 @@ import java.util.concurrent.ExecutionException;
  */
 public abstract class NetworkController {
 
-    public static Boolean send(List<Valve> valves, Cocktail cocktail, int glassName) {
-        String cocktailDrinks = CocktailRepository.getDrinksAsString(cocktail);
+    public static Boolean send(List<ValveBean> valves, String cocktailDrinks, int glassName) {
         String jsonMessage = getJsonAsString(valves, cocktailDrinks, glassName);
         System.out.println(jsonMessage);
         AsyncTask<String, Void, Boolean> execute = new SendMessageTask().execute(jsonMessage);
@@ -36,17 +33,17 @@ public abstract class NetworkController {
         return false;
     }
 
-    private static String getJsonAsString(List<Valve> valves, String cocktailDrinks, int glassName) {
+    private static String getJsonAsString(List<ValveBean> valves, String cocktailDrinks, int glassName) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(Constants.NETWORK_GLASS, glassName);
         } catch (JSONException ignored) {
         }
-        for (Valve valve : valves) {
+        for (ValveBean valve : valves) {
             try {
                 JSONObject valveObject = new JSONObject();
                 valveObject.put(Constants.NETWORK_USE, cocktailDrinks.contains(valve.getDrinkName()));
-                valveObject.put(Constants.NETWORK_ALCOHOL, valve.isDrinkAlcohol());
+                valveObject.put(Constants.NETWORK_ALCOHOL, valve.getDrinkAlcohol());
                 jsonObject.put(String.format(Constants.NETWORK_VALVE, valve.getId()), valveObject);
             } catch (JSONException ignored) {
             }
