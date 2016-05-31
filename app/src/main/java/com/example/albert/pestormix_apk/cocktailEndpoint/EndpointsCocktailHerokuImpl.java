@@ -4,11 +4,15 @@ import android.util.Log;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.api.CocktailEndpoint;
+import com.example.albert.pestormix_apk.api.ValveEndpoint;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
 import com.example.albert.pestormix_apk.backend.cocktailApi.model.CocktailBean;
 import com.example.albert.pestormix_apk.backend.messaging.Messaging;
+import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
 import com.example.albert.pestormix_apk.models.Cocktail;
+import com.example.albert.pestormix_apk.models.Valve;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
+import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -27,13 +31,16 @@ import java.util.List;
 public class EndpointsCocktailHerokuImpl implements CocktailBag {
     final CocktailEndpoint cocktailApi;
     final Messaging messaging;
+    private final ValveEndpoint valveApi;
     protected List<CocktailBean> cocktailBeans = new ArrayList<>();
     protected Date lastSync = null;
+    private List<ValveBean> valveBeans = new ArrayList<>();
     private PestormixApplication pestormixApplication;
 
     public EndpointsCocktailHerokuImpl(PestormixApplication pestormixApplication) {
         this.pestormixApplication = pestormixApplication;
         cocktailApi = new CocktailEndpoint();
+        valveApi = new ValveEndpoint();
 
         Messaging.Builder builder1 = new Messaging.Builder(AndroidHttp.newCompatibleTransport(),
                 new AndroidJsonFactory(), null);
@@ -45,12 +52,14 @@ public class EndpointsCocktailHerokuImpl implements CocktailBag {
         List<Cocktail> cocktails = CocktailRepository.getCocktails(pestormixApplication.getRealm());
         cocktailBeans.clear();
         for (Cocktail cocktail : cocktails) {
-            CocktailBean cocktailBean = new CocktailBean();
-            cocktailBean.setName(cocktail.getName());
-            cocktailBean.setDescription(cocktail.getDescription());
-            cocktailBean.setAlcohol(cocktail.isAlcohol());
-            cocktailBean.setDrinks(CocktailRepository.getDrinksAsString(cocktail,true));
+            CocktailBean cocktailBean = CocktailRepository.toCocktailBean(cocktail);
             cocktailBeans.add(cocktailBean);
+        }
+        List<Valve> valves = ValveRepository.getValves(pestormixApplication.getRealm());
+        valveBeans.clear();
+        for (Valve valve : valves) {
+            ValveBean valveBean = ValveRepository.toValveBean(valve);
+            valveBeans.add(valveBean);
         }
     }
 
@@ -84,5 +93,10 @@ public class EndpointsCocktailHerokuImpl implements CocktailBag {
             Log.e(EndpointsCocktailHerokuImpl.class.getSimpleName(), "Error when loading cocktailBeans", e);
         }
         return cocktails;
+    }
+
+    @Override
+    public void pushValvesToRemote(String userId) {
+        //TODO
     }
 }

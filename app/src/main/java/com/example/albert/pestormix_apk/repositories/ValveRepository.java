@@ -1,6 +1,7 @@
 package com.example.albert.pestormix_apk.repositories;
 
 import com.example.albert.pestormix_apk.R;
+import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Valve;
@@ -32,5 +33,13 @@ public abstract class ValveRepository {
 
     public static void updateValve(Realm realm, Valve valve, Drink drink, int position) {
         DataController.updateValve(realm, valve, drink, position);
+    }
+
+    public static ValveBean toValveBean(Valve valve) {
+        ValveBean valveBean = new ValveBean();
+        valveBean.setId(valve.getId() + 1);
+        valveBean.setDrinkName(valve.getDrinkName());
+        valveBean.setDrinkAlcohol(valve.isDrinkAlcohol());
+        return valveBean;
     }
 }

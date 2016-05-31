@@ -69,7 +69,6 @@ public abstract class DataController {
             }
         }
         realm.commitTransaction();
-
     }
 
     public static void addCocktail(Realm realm, Cocktail cocktail) {
@@ -248,7 +247,8 @@ public abstract class DataController {
 
     public static void updateValve(Realm realm, Valve valve, Drink drink, int position) {
         realm.beginTransaction();
-        valve.setDrink(drink);
+        valve.setDrinkName(drink.getName());
+        valve.setDrinkAlcohol(drink.isAlcohol());
         valve.setDrinkPosition(position);
         realm.copyToRealmOrUpdate(valve);
         realm.commitTransaction();

@@ -69,6 +69,7 @@ public class PestormixApplication extends Application {
         intentFilter.addAction(Constants.ACTION_START_SYNC_WITH_REMOTE);
         intentFilter.addAction(Constants.ACTION_START_SYNC_TO_REMOTE);
         intentFilter.addAction(Constants.ACTION_START_SYNC_FROM_REMOTE);
+        intentFilter.addAction(Constants.ACTION_START_SYNC_VALVES_REMOTE);
         intentFilter.addAction(Constants.ACTION_ASYNC_FAILED);
 
         if (cloudBroadcastReceiver == null) {
@@ -276,12 +277,18 @@ public class PestormixApplication extends Application {
                     pushToRemote();
                 } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_FROM_REMOTE)) {
                     pullFromRemote();
+                } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_START_SYNC_VALVES_REMOTE)) {
+                    pullValvesRemote();
                 } else if (intent.getAction().equalsIgnoreCase(Constants.ACTION_ASYNC_FAILED)) {
                     m_pulling = false;
                     m_pushing = false;
                 }
             }
         }
+    }
+
+    private void pullValvesRemote() {
+
     }
 
     private class BroadcastReceiverNetwork extends BroadcastReceiver {

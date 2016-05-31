@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
+import com.example.albert.pestormix_apk.backend.cocktailApi.model.CocktailBean;
 import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.exceptions.CocktailFormatException;
 import com.example.albert.pestormix_apk.models.Cocktail;
@@ -191,5 +192,14 @@ public abstract class CocktailRepository {
     public static void restartCocktails(Realm realm) {
         removeAllCocktails(realm);
         DataController.generateCocktails(realm);
+    }
+
+    public static CocktailBean toCocktailBean(Cocktail cocktail) {
+        CocktailBean cocktailBean = new CocktailBean();
+        cocktailBean.setName(cocktail.getName());
+        cocktailBean.setDescription(cocktail.getDescription());
+        cocktailBean.setAlcohol(cocktail.isAlcohol());
+        cocktailBean.setDrinks(CocktailRepository.getDrinksAsString(cocktail, true));
+        return cocktailBean;
     }
 }

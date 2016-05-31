@@ -10,9 +10,26 @@ public class Valve extends RealmObject {
     @PrimaryKey
     private int id;
     private int drinkPosition;
-    private Drink drink;
+    private String drinkName;
+    private boolean drinkAlcohol;
 
     public Valve() {
+    }
+
+    public boolean isDrinkAlcohol() {
+        return drinkAlcohol;
+    }
+
+    public void setDrinkAlcohol(boolean drinkAlcohol) {
+        this.drinkAlcohol = drinkAlcohol;
+    }
+
+    public String getDrinkName() {
+        return drinkName;
+    }
+
+    public void setDrinkName(String drinkName) {
+        this.drinkName = drinkName;
     }
 
     public int getId() {
@@ -29,13 +46,5 @@ public class Valve extends RealmObject {
 
     public void setDrinkPosition(int drinkPosition) {
         this.drinkPosition = drinkPosition;
-    }
-
-    public Drink getDrink() {
-        return drink;
-    }
-
-    public void setDrink(Drink drink) {
-        this.drink = drink;
     }
 }

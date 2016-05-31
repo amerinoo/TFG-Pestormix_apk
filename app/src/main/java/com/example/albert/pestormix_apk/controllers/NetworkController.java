@@ -45,8 +45,8 @@ public abstract class NetworkController {
         for (Valve valve : valves) {
             try {
                 JSONObject valveObject = new JSONObject();
-                valveObject.put(Constants.NETWORK_USE, cocktailDrinks.contains(valve.getDrink().getName()));
-                valveObject.put(Constants.NETWORK_ALCOHOL, valve.getDrink().isAlcohol());
+                valveObject.put(Constants.NETWORK_USE, cocktailDrinks.contains(valve.getDrinkName()));
+                valveObject.put(Constants.NETWORK_ALCOHOL, valve.isDrinkAlcohol());
                 jsonObject.put(String.format(Constants.NETWORK_VALVE, valve.getId()), valveObject);
             } catch (JSONException ignored) {
             }

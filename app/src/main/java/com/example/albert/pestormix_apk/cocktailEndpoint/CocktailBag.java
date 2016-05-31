@@ -13,4 +13,6 @@ public interface CocktailBag {
     void pushToRemote(String userId);
 
     List<CocktailBean> pullFromRemote(String userId);
+
+    void pushValvesToRemote(String userId);
 }

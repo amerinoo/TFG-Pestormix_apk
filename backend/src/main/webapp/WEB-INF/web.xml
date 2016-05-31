@@ -13,8 +13,11 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>com.example.Albert.pestormix_apk.backend.RegistrationEndpoint,
-                com.example.Albert.pestormix_apk.backend.MessagingEndpoint,com.example.Albert.pestormix_apk.backend.CocktailEndpoint
+            <param-value>
+                com.example.Albert.pestormix_apk.backend.RegistrationEndpoint,
+                com.example.Albert.pestormix_apk.backend.MessagingEndpoint,
+                com.example.Albert.pestormix_apk.backend.CocktailEndpoint,
+                com.example.Albert.pestormix_apk.backend.ValveEndpoint
             </param-value>
         </init-param>
     </servlet>

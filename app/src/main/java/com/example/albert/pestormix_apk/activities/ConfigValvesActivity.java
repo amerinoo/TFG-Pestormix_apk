@@ -3,6 +3,7 @@ package com.example.albert.pestormix_apk.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,13 +16,18 @@ import android.widget.TextView;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ScreenSlidePagerAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
+import com.example.albert.pestormix_apk.backend.valveApi.ValveApi;
+import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.models.Valve;
 import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.utils.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,7 +170,43 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
             ValveRepository.updateValve(getRealm(), valves.get(i), drink, position);
         }
         setIsSaved(true);
+        saveValveOnCloud();
         showToast(R.string.save_completed);
+    }
+
+    private void saveValveOnCloud() {
+        final String userId = getPestormixApplication().getUserId();
+        if (!userId.equals(Constants.DEFAULT_USER_ID)) {
+            List<Valve> valves = ValveRepository.getValves(getRealm());
+            final List<ValveBean> valveBeen = new ArrayList<>();
+            for (Valve valve : valves) {
+                ValveBean valveBean = ValveRepository.toValveBean(valve);
+                valveBeen.add(valveBean);
+            }
+            new AsyncTask<String, Void, Boolean>() {
+                @Override
+                protected Boolean doInBackground(String... params) {
+                    ValveApi.Builder builder2 = new ValveApi.Builder(AndroidHttp.newCompatibleTransport(),
+                            new AndroidJsonFactory(), null);
+                    ValveApi valveApi = builder2.build();
+                    for (ValveBean valveBean : valveBeen) {
+                        try {
+                            valveApi.insertValve(userId, valveBean).execute();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                @Override
+                protected void onPostExecute(Boolean finish) {
+                    String s = finish ? "Valves On Cloud" : "ERROR VALVES";
+                    showToast(s);
+                }
+            }.execute(userId);
+        }
     }
 
     private String getTitle(int position) {
