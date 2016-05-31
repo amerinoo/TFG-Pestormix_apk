@@ -175,7 +175,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
     }
 
     private void saveValveOnCloud() {
-        final String userId = getPestormixApplication().getUserId();
+        String userId = getPestormixApplication().getUserId();
         if (!userId.equals(Constants.DEFAULT_USER_ID)) {
             List<Valve> valves = ValveRepository.getValves(getRealm());
             final List<ValveBean> valveBeen = new ArrayList<>();
@@ -191,7 +191,7 @@ public class ConfigValvesActivity extends PestormixMasterActivity implements Vie
                     ValveApi valveApi = builder2.build();
                     for (ValveBean valveBean : valveBeen) {
                         try {
-                            valveApi.insertValve(userId, valveBean).execute();
+                            valveApi.insertValve(params[0], valveBean).execute();
                         } catch (IOException e) {
                             e.printStackTrace();
                             return false;

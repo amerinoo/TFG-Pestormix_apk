@@ -4,15 +4,15 @@ package com.example.Albert.pestormix_apk.backend;
  * Created by Albert on 29/05/2016.
  */
 public class ValveBean {
-    private int id;
+    private String id;
     private String drinkName;
     private boolean drinkAlcohol;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

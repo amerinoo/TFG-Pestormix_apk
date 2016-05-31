@@ -38,7 +38,7 @@ public class ValveEndpoint {
     private static final Logger log = Logger.getLogger(ValveEndpoint.class.getName());
 
     @ApiMethod(name = "insertValve")
-    public void insertValve(@Named("id") String id, ValveBean valveBean) {
+    public void insertValve(@Named("userId") String id, ValveBean valveBean) {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         Transaction txn = datastoreService.beginTransaction();
         try {
@@ -66,7 +66,7 @@ public class ValveEndpoint {
                 .asList(FetchOptions.Builder.withDefaults());
         for (Entity entity : results) {
             ValveBean valveBean = new ValveBean();
-            valveBean.setId((int) entity.getProperty("id"));
+            valveBean.setId((String) entity.getProperty("id"));
             valveBean.setDrinkName((String) entity.getProperty("drinkName"));
             valveBean.setDrinkAlcohol((boolean) entity.getProperty("drinkAlcohol"));
             valveBeen.add(valveBean);

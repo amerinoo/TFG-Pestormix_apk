@@ -37,7 +37,7 @@ public abstract class ValveRepository {
 
     public static ValveBean toValveBean(Valve valve) {
         ValveBean valveBean = new ValveBean();
-        valveBean.setId(valve.getId() + 1);
+        valveBean.setId(String.valueOf(valve.getId()));
         valveBean.setDrinkName(valve.getDrinkName());
         valveBean.setDrinkAlcohol(valve.isDrinkAlcohol());
         return valveBean;

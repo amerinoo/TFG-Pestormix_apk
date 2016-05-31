@@ -91,7 +91,7 @@ public class ValveEndpoint {
 
     private ValveBean jsonToValveBean(JSONObject jsonObject) throws JSONException {
         ValveBean bean = new ValveBean();
-        bean.setId(jsonObject.getInt(Constants.VALVE_ID));
+        bean.setId(jsonObject.getString(Constants.VALVE_ID));
         bean.setDrinkName(jsonObject.getString(Constants.VALVE_DRINK_NAME));
         bean.setDrinkAlcohol(jsonObject.getBoolean(Constants.VALVE_DRINK_ALCOHOL));
         return bean;
