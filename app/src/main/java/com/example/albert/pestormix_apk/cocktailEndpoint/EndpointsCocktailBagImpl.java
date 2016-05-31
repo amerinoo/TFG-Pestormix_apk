@@ -60,17 +60,14 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
         }
         List<Valve> valves = ValveRepository.getValves(pestormixApplication.getRealm());
         valveBeans.clear();
-        valveBeans =  ValveRepository.getValvesAsValvesBeen(valves);
+        valveBeans = ValveRepository.getValvesAsValvesBeen(valves);
     }
 
     @Override
     public void pushToRemote(String userId) {
+
         try {
             cocktailApi.deleteAllCocktails(userId).execute();
-            messaging.messagingEndpoint().sendMessage(String.format(
-                    Utils.getStringResource(R.string.push_to_remote),
-                    pestormixApplication.getString(Constants.PREFERENCES_USER_NAME,
-                            Utils.getStringResource(R.string.default_only)))).execute();
             for (CocktailBean cocktailBean : cocktailBeans) {
                 cocktailApi.insertCocktail(userId, cocktailBean).execute();
             }
@@ -78,20 +75,24 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
         } catch (IOException e) {
             Log.e(EndpointsCocktailBagImpl.class.getName(), "Error when storing cocktailBeans", e);
         }
+        sendMessage(String.format(
+                Utils.getStringResource(R.string.push_to_remote),
+                pestormixApplication.getString(Constants.PREFERENCES_USER_NAME,
+                        Utils.getStringResource(R.string.default_only))));
     }
 
     @Override
     public List<CocktailBean> pullFromRemote(String userId) {
         List<CocktailBean> cocktails = null;
         try {
-            messaging.messagingEndpoint().sendMessage(String.format(
-                    Utils.getStringResource(R.string.pull_from_remote),
-                    pestormixApplication.getString(Constants.PREFERENCES_USER_NAME,
-                            Utils.getStringResource(R.string.default_only)))).execute();
             cocktails = cocktailApi.getCocktails(userId).execute().getItems();
         } catch (IOException e) {
             Log.e(EndpointsCocktailBagImpl.class.getSimpleName(), "Error when loading cocktailBeans", e);
         }
+        sendMessage(String.format(
+                Utils.getStringResource(R.string.pull_from_remote),
+                pestormixApplication.getString(Constants.PREFERENCES_USER_NAME,
+                        Utils.getStringResource(R.string.default_only))));
         return cocktails;
     }
 
@@ -103,6 +104,14 @@ public class EndpointsCocktailBagImpl implements CocktailBag {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void sendMessage(String text) {
+        try {
+            messaging.messagingEndpoint().sendMessage(text).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
