@@ -39,8 +39,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-vision:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
-    compile project(path: ':backend', configuration: 'android-endpoints')
     wearApp project(":wear")
+    compile project(':pestormixlibrary')
 }
 
 apply plugin: 'com.google.gms.google-services'
