@@ -34,7 +34,7 @@ import com.example.albert.pestormix_apk.activities.ScanQrActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
-import com.example.albert.pestormix_apk.controllers.NetworkController;
+import com.example.albert.pestormixlibrary.NetworkController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
