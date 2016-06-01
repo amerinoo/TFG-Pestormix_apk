@@ -19,7 +19,7 @@ import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 /**
  * Created by Albert on 24/01/2016.

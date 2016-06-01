@@ -46,7 +46,7 @@ import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.repositories.GlassRepository;
 import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
 
 import java.util.List;

@@ -15,7 +15,7 @@ import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
 import com.example.albert.pestormix_apk.enums.CreateCocktailType;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 public class GiveCocktailNameActivity extends PestormixMasterActivity {
 

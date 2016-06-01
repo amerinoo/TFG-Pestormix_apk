@@ -20,7 +20,7 @@ import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
 import com.example.albert.pestormix_apk.repositories.DrinkRepository;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@ import android.util.Log;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
 import com.example.albert.pestormix_apk.backend.registration.Registration;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;

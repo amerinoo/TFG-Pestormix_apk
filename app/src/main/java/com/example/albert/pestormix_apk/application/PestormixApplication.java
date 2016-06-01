@@ -16,7 +16,7 @@ import com.example.albert.pestormix_apk.cocktailEndpoint.CocktailBag;
 import com.example.albert.pestormix_apk.cocktailEndpoint.CocktailBagFactory;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;

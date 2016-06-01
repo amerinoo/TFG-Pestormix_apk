@@ -10,7 +10,7 @@ import com.example.albert.pestormix_apk.controllers.DataController;
 import com.example.albert.pestormix_apk.exceptions.CocktailFormatException;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
 
 import java.util.ArrayList;

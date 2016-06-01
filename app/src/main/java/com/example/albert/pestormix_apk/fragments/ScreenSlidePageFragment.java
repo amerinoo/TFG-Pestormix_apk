@@ -12,7 +12,7 @@ import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.listeners.OnInformationClickListener;
 import com.example.albert.pestormix_apk.models.Drink;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 /**
  * Created by Albert on 01/02/2016.

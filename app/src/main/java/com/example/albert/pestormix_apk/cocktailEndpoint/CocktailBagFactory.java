@@ -4,7 +4,7 @@ import android.preference.PreferenceManager;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixApplication;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 /**
  * Created by Albert on 29/03/2016.

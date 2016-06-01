@@ -15,7 +15,7 @@ import com.example.albert.pestormix_apk.activities.DetailHelpActivity;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.repositories.QuestionRepository;
 import com.example.albert.pestormix_apk.models.Question;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 import java.util.List;
 

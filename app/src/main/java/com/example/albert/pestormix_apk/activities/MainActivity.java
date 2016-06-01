@@ -39,7 +39,7 @@ import com.example.albert.pestormix_apk.fragments.MuseFragment;
 import com.example.albert.pestormix_apk.fragments.SettingsFragment;
 import com.example.albert.pestormix_apk.nfc.NfcController;
 import com.example.albert.pestormix_apk.repositories.CocktailRepository;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

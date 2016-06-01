@@ -11,7 +11,7 @@ import android.view.View;
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.activities.ConfigValvesActivity;
 import com.example.albert.pestormix_apk.activities.MainActivity;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
 
 /**

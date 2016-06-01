@@ -6,7 +6,7 @@ import android.os.Handler;
 
 import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.application.PestormixMasterActivity;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 public class AllReadyActivity extends PestormixMasterActivity {
 

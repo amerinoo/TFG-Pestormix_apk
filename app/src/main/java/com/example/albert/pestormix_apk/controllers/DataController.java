@@ -10,7 +10,7 @@ import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.repositories.GlassRepository;
 import com.example.albert.pestormix_apk.repositories.QuestionRepository;
 import com.example.albert.pestormix_apk.repositories.ValveRepository;
-import com.example.albert.pestormix_apk.utils.Constants;
+import com.example.albert.pestormixlibrary.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
