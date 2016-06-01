@@ -11,6 +11,9 @@ import com.example.albert.pestormix_apk.R;
 import com.example.albert.pestormix_apk.adapters.ListAdapter;
 import com.example.albert.pestormix_apk.backend.cocktailApi.CocktailApi;
 import com.example.albert.pestormix_apk.backend.cocktailApi.model.CocktailBean;
+import com.example.albert.pestormix_apk.backend.valveApi.ValveApi;
+import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
+import com.example.albert.pestormixlibrary.NetworkController;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
@@ -19,8 +22,9 @@ import java.util.List;
 
 public class MainActivity extends Activity implements WearableListView.ClickListener {
 
+    private List<ValveBean> valveBeen = null;
     private MainActivity context;
-    private WearableListView listView;
+    private WearableListView listView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,35 @@ public class MainActivity extends Activity implements WearableListView.ClickList
                 // Set a click listener
                 listView.setClickListener(context);
                 getCocktails();
+                getValves();
             }
         });
+    }
+
+    private void getValves() {
+        new AsyncTask<Void, Void, List<ValveBean>>() {
+            @Override
+            protected List<ValveBean> doInBackground(Void... params) {
+                ValveApi.Builder builder = new ValveApi.Builder(AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null);
+                ValveApi valveApi = builder.build();
+                List<ValveBean> beanList = null;
+                try {
+                    beanList = valveApi.getValves("107431289723167670765").execute().getItems();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return beanList;
+            }
+
+            @Override
+            protected void onPostExecute(List<ValveBean> valvesBeen) {
+                if (valvesBeen != null) {
+                    valveBeen = valvesBeen;
+                } else
+                    showToast("NULL Valves");
+            }
+        }.execute();
     }
 
     private void getCocktails() {
@@ -77,7 +108,12 @@ public class MainActivity extends Activity implements WearableListView.ClickList
     public void onClick(WearableListView.ViewHolder v) {
         Integer pos = (Integer) v.itemView.getTag();
         CocktailBean bean = ((ListAdapter) listView.getAdapter()).getElement(pos);
-        showToast(bean.getName());
+        Boolean send = NetworkController.send(valveBeen, bean.getDrinks(), 33);
+        if (send) {
+            showToast(String.format(getString(R.string.send_ok), bean.getName()));
+        } else {
+            showToast(String.format(getString(R.string.send_error), bean.getName()));
+        }
     }
 
     @Override

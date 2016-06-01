@@ -14,8 +14,6 @@
     <string name="information">Información</string>
     <string name="activate_nfc">¿Quieres activar el NFC?</string>
     <string name="nfc_disabled">NFC está desactivado</string>
-    <string name="send_ok">%s ha sido enviado con éxito</string>
-    <string name="send_error">"Fallo al enviar %s"</string>
     <string name="default_only">Default</string>
 
     <!-- Tutorial -->

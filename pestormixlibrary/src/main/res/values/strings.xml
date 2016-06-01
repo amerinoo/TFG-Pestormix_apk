@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">PestormixLibrary</string>
+    <string name="app_name" translatable="false">Pestormix</string>
+    <string name="send_ok">%s has been sent successfully</string>
+    <string name="send_error">"Failed to send %s"</string>
 </resources>

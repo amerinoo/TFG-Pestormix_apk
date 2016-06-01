@@ -1,7 +1,6 @@
 <resources>
 
     <!-- Ttiles -->
-    <string name="app_name" translatable="false">Pestormix</string>
     <string name="title_cocktails">Cocktails</string>
     <string name="title_create_cocktail">Create cocktail</string>
     <string name="title_settings">Settings</string>
@@ -15,8 +14,6 @@
     <string name="information">Information</string>
     <string name="activate_nfc">Do you want to activate the NFC?</string>
     <string name="nfc_disabled">NFC is disabled</string>
-    <string name="send_ok">%s has been sent successfully</string>
-    <string name="send_error">"Failed to send %s"</string>
     <string name="default_only">Default</string>
     <string name="default_separator">,</string>
 
