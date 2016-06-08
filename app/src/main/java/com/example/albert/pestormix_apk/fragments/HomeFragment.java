@@ -34,7 +34,6 @@ import com.example.albert.pestormix_apk.activities.ScanQrActivity;
 import com.example.albert.pestormix_apk.adapters.CocktailAdapter;
 import com.example.albert.pestormix_apk.application.PestormixMasterFragment;
 import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
-import com.example.albert.pestormixlibrary.NetworkController;
 import com.example.albert.pestormix_apk.listeners.OnNfcDataReceived;
 import com.example.albert.pestormix_apk.models.Cocktail;
 import com.example.albert.pestormix_apk.models.Drink;
@@ -46,8 +45,10 @@ import com.example.albert.pestormix_apk.repositories.DrinkRepository;
 import com.example.albert.pestormix_apk.repositories.GlassRepository;
 import com.example.albert.pestormix_apk.repositories.ValveRepository;
 import com.example.albert.pestormix_apk.utils.ActivityRequestCodes;
-import com.example.albert.pestormixlibrary.Constants;
 import com.example.albert.pestormix_apk.utils.Utils;
+import com.example.albert.pestormixlibrary.ConfigurationException;
+import com.example.albert.pestormixlibrary.Constants;
+import com.example.albert.pestormixlibrary.NetworkController;
 
 import java.util.List;
 import java.util.Locale;
@@ -223,12 +224,18 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                 List<Valve> valves = ValveRepository.getValves(getRealm());
                 List<ValveBean> valvesBeen = ValveRepository.getValvesAsValvesBeen(valves);
                 String cocktailDrinks = CocktailRepository.getDrinksAsString(cocktail);
-                Boolean sended = NetworkController.send(valvesBeen, cocktailDrinks, glassCapacity);
-                if (sended) {
-                    showToast(String.format(getString(R.string.send_ok), cocktail.getName()));
-                } else {
-                    showToast(String.format(getString(R.string.send_error), cocktail.getName()));
+                Boolean sended;
+                try {
+                    sended = NetworkController.send(valvesBeen, cocktailDrinks, glassCapacity);
+                    if (sended) {
+                        showToast(String.format(getString(R.string.send_ok), cocktail.getName()));
+                    } else {
+                        showToast(String.format(getString(R.string.send_error), cocktail.getName()));
+                    }
+                } catch (ConfigurationException e) {
+                    showToast("Hay alguna bebida inválida");
                 }
+
                 dialog.dismiss();
             }
         });

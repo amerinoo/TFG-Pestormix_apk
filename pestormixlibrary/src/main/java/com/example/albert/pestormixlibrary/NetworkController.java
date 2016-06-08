@@ -20,7 +20,8 @@ import java.util.concurrent.ExecutionException;
  */
 public abstract class NetworkController {
 
-    public static Boolean send(List<ValveBean> valves, String cocktailDrinks, int glassName) {
+    public static Boolean send(List<ValveBean> valves, String cocktailDrinks, int glassName) throws ConfigurationException {
+        if (!checkAviability(valves, cocktailDrinks)) throw new ConfigurationException();
         String jsonMessage = getJsonAsString(valves, cocktailDrinks, glassName);
         System.out.println(jsonMessage);
         AsyncTask<String, Void, Boolean> execute = new SendMessageTask().execute(jsonMessage);
@@ -48,6 +49,17 @@ public abstract class NetworkController {
             }
         }
         return jsonObject.toString();
+    }
+
+    public static boolean checkAviability(List<ValveBean> valves, String drinks) {
+        int numDrinks = drinks.split(",").length;
+        if (valves.size() < numDrinks)
+            return false;
+        int ok = 0;
+        for (ValveBean valve : valves) {
+            if (drinks.contains(valve.getDrinkName())) ok++;
+        }
+        return ok == numDrinks;
     }
 
     static class SendMessageTask extends AsyncTask<String, Void, Boolean> {
