@@ -233,7 +233,7 @@ public class HomeFragment extends PestormixMasterFragment implements OnNfcDataRe
                         showToast(String.format(getString(R.string.send_error), cocktail.getName()));
                     }
                 } catch (ConfigurationException e) {
-                    showToast("Hay alguna bebida inválida");
+                    showToast(R.string.invalid_drink);
                 }
 
                 dialog.dismiss();

@@ -2,4 +2,5 @@
 <resources>
     <string name="send_ok">%s ha sido enviado con éxito</string>
     <string name="send_error">"Fallo al enviar %s"</string>
+    <string name="invalid_drink">Hay alguna bebida inválida en este coctel</string>
 </resources>

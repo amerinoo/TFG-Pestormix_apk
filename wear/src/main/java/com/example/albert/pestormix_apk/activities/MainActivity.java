@@ -13,6 +13,7 @@ import com.example.albert.pestormix_apk.backend.cocktailApi.CocktailApi;
 import com.example.albert.pestormix_apk.backend.cocktailApi.model.CocktailBean;
 import com.example.albert.pestormix_apk.backend.valveApi.ValveApi;
 import com.example.albert.pestormix_apk.backend.valveApi.model.ValveBean;
+import com.example.albert.pestormixlibrary.ConfigurationException;
 import com.example.albert.pestormixlibrary.NetworkController;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -103,16 +104,24 @@ public class MainActivity extends Activity implements WearableListView.ClickList
     private void showToast(String text) {
         Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
     }
+    private void showToast(int id) {
+        Toast.makeText(MainActivity.this, id, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onClick(WearableListView.ViewHolder v) {
         Integer pos = (Integer) v.itemView.getTag();
         CocktailBean bean = ((ListAdapter) listView.getAdapter()).getElement(pos);
-        Boolean send = NetworkController.send(valveBeen, bean.getDrinks(), 33);
-        if (send) {
-            showToast(String.format(getString(R.string.send_ok), bean.getName()));
-        } else {
-            showToast(String.format(getString(R.string.send_error), bean.getName()));
+        Boolean send;
+        try {
+            send = NetworkController.send(valveBeen, bean.getDrinks(), 33);
+            if (send) {
+                showToast(String.format(getString(R.string.send_ok), bean.getName()));
+            } else {
+                showToast(String.format(getString(R.string.send_error), bean.getName()));
+            }
+        } catch (ConfigurationException e) {
+            showToast(R.string.invalid_drink);
         }
     }
 
