@@ -52,14 +52,22 @@ public abstract class NetworkController {
     }
 
     public static boolean checkAviability(List<ValveBean> valves, String drinks) {
-        int numDrinks = drinks.split(",").length;
+        String[] drinksA = drinks.split(",");
+        int numDrinks = drinksA.length;
         if (valves.size() < numDrinks)
             return false;
-        int ok = 0;
-        for (ValveBean valve : valves) {
-            if (drinks.contains(valve.getDrinkName())) ok++;
+        boolean a = true;
+        for (String aDrinksA : drinksA) {
+            boolean b = false;
+            for (ValveBean valve : valves) {
+                if (valve.getDrinkName().equals(aDrinksA)) {
+                    b = true;
+                    break;
+                }
+            }
+            a = a && b;
         }
-        return ok == numDrinks;
+        return a;
     }
 
     static class SendMessageTask extends AsyncTask<String, Void, Boolean> {

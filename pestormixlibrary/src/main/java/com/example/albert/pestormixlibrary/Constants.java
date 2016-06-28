@@ -19,8 +19,7 @@ public abstract class Constants {
     public static final String PREFERENCES_NETWORK_CONNECTED = "network_connected";
 
     //Network
-    public static final String NETWORK_RASPBERRY_IP = "192.168.1.100";
-//    public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";
+    public static final String NETWORK_RASPBERRY_IP = "192.168.42.1";
     public static final String NETWORK_RASPBERRY_PORT = "1110";
     public static final String NETWORK_GLASS = "glass";
     public static final String NETWORK_USE = "use";
