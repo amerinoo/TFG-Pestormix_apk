@@ -13,6 +13,11 @@
         android:entryValues="@array/backends_values"
         android:key="@string/PREFERENCE_HEROKU"
         android:title="Backend" />
+    <ListPreference
+        android:entries="@array/languages"
+        android:entryValues="@array/languages_values"
+        android:key="@string/PREFERENCE_LANGUAGE"
+        android:title="Language" />
 
 
 </PreferenceScreen>

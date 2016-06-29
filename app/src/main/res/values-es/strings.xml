@@ -90,4 +90,11 @@
     <string name="push_to_remote">Google PushToRemote by %s</string>
     <string name="heroku_push_to_remote">Heroku PushToRemote by %s</string>
     <string name="heroku_pull_from_remote">Heroku PullFromRemote by %s</string>
+    <string name="connect">Conectar</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="glass_name">Vaso %d  cl</string>
+    <string name="status">Status Conexión</string>
+    <string name="undefined"></string>
+    <string name="version">Versión:</string>
+    <string name="accel">Datos Accelerometro:</string>
 </resources>

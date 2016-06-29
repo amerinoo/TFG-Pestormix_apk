@@ -96,6 +96,7 @@
     <string name="PREFERENCE_LOGIN" translatable="false">preference_login</string>
     <string name="PREFERENCE_VALVES" translatable="false">preference_valves</string>
     <string name="PREFERENCE_HEROKU" translatable="false">preference_heroku</string>
+    <string name="PREFERENCE_LANGUAGE" translatable="false">preference_language</string>
     <string name="glass_name">Glass %d  cl</string>
     <string name="error_login">Error with login</string>
 
@@ -104,5 +105,18 @@
     <string name="push_to_remote">Google PushToRemote by %s</string>
     <string name="heroku_push_to_remote">Heroku PushToRemote by %s</string>
     <string name="heroku_pull_from_remote">Heroku PullFromRemote by %s</string>
+
+    <!-- Muse-->
+    <string name="connect">Connect</string>
+    <string name="status">Connection Status:</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="refresh">Refresh</string>
+    <string name="init_val" translatable="false">0.0</string>
+    <string name="eeg" translatable="false">EEG data:</string>
+    <string name="accel">Accelerometer Data:</string>
+    <string name="version">Version:</string>
+    <string name="undefined">unknown</string>
+    <string name="pause">Pause/Resume</string>
+    <string name="muse_elem">Elements:</string>
 
 </resources>

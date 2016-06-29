@@ -104,7 +104,7 @@ public class MainActivity extends PestormixMasterActivity implements NavigationV
         Toolbar toolbar = initToolbar();
         initNavigationDrawer(toolbar);
         checkUserInformation();
-        museVisible(getPestormixApplication().getBoolean(getString(R.string.PREFERENCE_MUSE), false));
+        museVisible(Utils.getBooleanPreference(getString(R.string.PREFERENCE_MUSE), false));
         nfcAdapter = NfcController.getInstance(this).getAdapter();
         initGoogleApiClient();
     }

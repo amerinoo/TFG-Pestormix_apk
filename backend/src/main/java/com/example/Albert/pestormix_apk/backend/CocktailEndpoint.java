@@ -82,7 +82,8 @@ public class CocktailEndpoint {
         Transaction txn = datastoreService.beginTransaction();
         try {
             Key parent = new Entity("User", id).getKey();
-            Query query = new Query("Cocktail").setAncestor(parent).setFilter(new Query.FilterPredicate("name", Query.FilterOperator.EQUAL, name));
+            Query query = new Query("Cocktail").setAncestor(parent)
+                    .setFilter(new Query.FilterPredicate("name", Query.FilterOperator.EQUAL, name));
             Entity result = datastoreService.prepare(query)
                     .asList(FetchOptions.Builder.withDefaults()).get(0);
             datastoreService.delete(result.getKey());

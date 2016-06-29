@@ -22,7 +22,6 @@ import java.io.IOException;
 public class ScanQrActivity extends PestormixMasterActivity {
 
     private SurfaceView cameraView;
-    private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
 
     @Override
@@ -35,10 +34,9 @@ public class ScanQrActivity extends PestormixMasterActivity {
         cameraView = new SurfaceView(this);
         ((LinearLayout) findViewById(R.id.window)).addView(cameraView,
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        barcodeDetector =
-                new BarcodeDetector.Builder(this)
-                        .setBarcodeFormats(Barcode.QR_CODE)
-                        .build();
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
+                .setBarcodeFormats(Barcode.QR_CODE)
+                .build();
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)
                 .build();

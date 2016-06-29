@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Ttiles -->
+    <string name="title_cocktails">Cockteil-uri</string>
+    <string name="title_create_cocktail">Creaza un cocktail</string>
+    <string name="title_settings">Setari</string>
+    <string name="title_valves">Supape</string>
+    <string name="title_help">Ajutor</string>
+    <string name="title_about_author">Despre autor</string>
+
+    <!-- General -->
+    <string name="loading">Se incarca...</string>
+    <string name="information">Informatii</string>
+    <string name="activate_nfc">Vreti sa activati NFC-ul?</string>
+    <string name="nfc_disabled">NFC este activat</string>
+    <string name="default_only">Default</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_continue">Continuati</string>
+    <string name="tutorial_welcome">Bine ati venit! Acesta este un scurt tutorial pentru realizarea setarilor
+		de porinire a aplicatiei. In primul rand va trebuii sa configurati supapele, stabilind un produs pentru 
+		fiecare. Poti vedea numarul fiecareia pe depozitele prezente pe aparat. Odata ce ati ales produsele
+		celor patru supape, puteti trece la urmatorul nivel al tutorialului.</string>
+    <string name="tutorial_all_ready">Felicitari! Ati finalizat configurarea de baza. Incepand de acum puteti 
+		sa va creati cocktailuri personalizate pentru a le comanda in orice moment. Mult succes! </string>
+    <string name="network_first_time">Imi pare rau, conexiunea la internet este necesara!</string>
+
+    <!-- Cocktail -->
+    <string name="option_1">Detalii</string>
+    <string name="option_2">Editeaza</string>
+    <string name="option_3">Elimina</string>
+    <string name="youre_asking">"Dumneavoastra vreti"</string>
+    <string name="quit">Sunteti sigur ca vreti sa iesiti?</string>
+    <string name="accept">Accepta</string>
+    <string name="cancel">Anuleaza</string>
+    <string name="cocktail_removed">Cocktail-ul este eliminat definitiv</string>
+    <string name="search">Cauta</string>
+
+    <!-- Cocktail Details -->
+    <string name="name">Nume</string>
+    <string name="description">Descriere</string>
+    <string name="drinks">Bauturi</string>
+    <string name="missing_description">Nicio descriere disponibila pentru acest cocktail</string>
+
+    <!-- Create cocktail-->
+    <string name="how_will_create_cocktail">In ce modo dorti sa creati cocktailul?</string>
+    <string name="manually">In mod manual</string>
+    <string name="qr_code">Cod QR</string>
+    <string name="nfc_tag">Eticheta NFC</string>
+    <string name="valid_drinks">Trebuie sa rostiti bauturi valide</string>
+    <string name="speech_not_supported">Vocea nu este acceptata</string>
+
+    <!-- Manually-->
+    <string name="select_drink">Selectionati o bautura</string>
+    <string name="obligate_add_drink">Trebuie sa adaugati niste bauturi</string>
+    <string name="no_more_drinks_available">Nu mai sunt bauturi disponibile</string>
+
+    <!-- Give Cocktail Name-->
+    <string name="give_name">Dati-i un nume!</string>
+    <string name="give_description">Descrieti-l!</string>
+    <string name="cocktail_name">Numele cocktail-ului</string>
+    <string name="cocktail_description">Descrierea cocktail-ului(Optional)</string>
+    <string name="save">Salveaza</string>
+    <string name="are_you_sure">Sunteti sigur?</string>
+    <string name="cocktail_removed_restart_creation">Cocktail-ul nu va fii creat si va trebuii sa reinitiati crearea acestuia.</string>
+    <string name="cocktail_not_updated_restart_edition">Cocktailul nu va fii editat si va trebuii sa reinitiati editatrea acestuia.</string>
+    <string name="cocktail_name_already_exist">Deja exista un cocktail cu acest nume!</string>
+    <string name="give_name_mandatory">Denumiti cocktailul!</string>
+    <string name="cocktail_format_error">Formatul cocktail-ului nu este valid!</string>
+
+    <!-- About the author-->
+    <string name="about_me">Albert Eduard Merino Pulido\nUniversitatea Politehnica(UdL)\nProiect
+		de final Grad\nCurs 2015–2016</string>
+
+    <!-- Settings -->
+    <string name="configure_valves">Configureaza valvulele</string>
+    <string name="sign_in_google">Initiaza sesiune cu Google</string>
+    <string name="sign_out_google">Inchide sesiunea cu Google</string>
+    <string name="exit_without_saving">Doriti sa salvati?</string>
+    <string name="save_completed">Salvare completa!</string>
+    <string name="error_login">Error with login</string>
+
+    <!-- Endpoints -->
+    <string name="pull_from_remote">Google PullFromRemote by %s</string>
+    <string name="push_to_remote">Google PushToRemote by %s</string>
+    <string name="heroku_push_to_remote">Heroku PushToRemote by %s</string>
+    <string name="heroku_pull_from_remote">Heroku PullFromRemote by %s</string>
+</resources>
